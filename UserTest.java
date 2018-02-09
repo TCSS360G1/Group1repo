@@ -13,7 +13,7 @@ public class UserTest {
     }
 	
 	@Test
-	public void isStaffMember_ExistingUserGiven_ShouldReturnTrue() {
+	public void isStaffMember_ExistingUserGiven_true() {
 		User existingUser = users.checkUserExists("harmelody2897");
 		User givenStaffMemberUser = existingUser;
 		
@@ -21,7 +21,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void isStaffMember_ExistingUserGiven_ShouldReturnFalse() {
+	public void isStaffMember_ExistingUserGiven_false() {
 		User existingUser = users.checkUserExists("potatOS360");
 		User givenNonStaffMemberUser = existingUser;
 		
@@ -29,7 +29,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void isParkManager_ExistingUserGiven_ShouldReturnTrue() {
+	public void isParkManager_ExistingUserGiven_true() {
 		User existingUser = users.checkUserExists("cjohnson2");
 		User givenParkManagerUser = existingUser;
 		
@@ -37,15 +37,15 @@ public class UserTest {
 	}
 	
 	@Test
-	public void isParkManager_ExistingUserGiven_ShouldReturnFalse() {
+	public void isParkManager_ExistingUserGiven_false() {
 		User existingUser = users.checkUserExists("potatOS360");
 		User givenNonParkManagerUser = existingUser;
 		
-		assertFalse(existingUser.isStaffMember(givenNonParkManagerUser));
+		assertFalse(existingUser.isParkManager(givenNonParkManagerUser));
 	}
 	
 	@Test
-	public void isVolunteer_ExistingUserGiven_ShouldReturnTrue() {
+	public void isVolunteer_ExistingUserGiven_true() {
 		User existingUser = users.checkUserExists("Stanley427");
 		User givenVolunteerUser = existingUser;
 		
@@ -53,11 +53,11 @@ public class UserTest {
 	}
 	
 	@Test
-	public void isVolunteer_ExistingUserGiven_ShouldReturnFalse() {
+	public void isVolunteer_ExistingUserGiven_false() {
 		User existingUser = users.checkUserExists("potatOS360");
 		User givenNonVolunteerUser = existingUser;
 		
-		assertFalse(existingUser.isStaffMember(givenNonVolunteerUser));
+		assertFalse(existingUser.isVolunteer(givenNonVolunteerUser));
 	}
 
 }

@@ -4,11 +4,10 @@ import java.io.Serializable;
  * User Object which contains username, name, and type.
  * 
  * @author Jenzel Villanueva
- * @version February 4, 2018
+ * @version February 9, 2018
  */
 
 public class User implements Serializable {
-	
 	/**
 	 * Generated Serial ID
 	 */
@@ -32,6 +31,8 @@ public class User implements Serializable {
     
     /**
      * Gets the User's username.
+     * 
+     * @return the User's username.
      */
     public String getUsername() {
     	return username;
@@ -39,6 +40,8 @@ public class User implements Serializable {
     
     /**
      * Gets the User's name.
+     * 
+     * @return the User's name.
      */
     public String getName() {
     	return name;
@@ -46,6 +49,8 @@ public class User implements Serializable {
     
     /**
      * Gets the User's member type.
+     * 
+     * @return the User's member type.
      */
     public String getType() {
     	return type;
