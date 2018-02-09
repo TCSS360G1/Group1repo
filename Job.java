@@ -2,7 +2,7 @@ package model;
 import java.awt.List;
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.time.LocalDate;
 public class Job {
 
   ////Fields
@@ -56,7 +56,7 @@ public class Job {
     	this.startDate = theStartDate;
     }
     
-    public Date getStartDate(){
+    public LocalDate getStartDate(){
     	return this.startDate;
     }
     
@@ -67,7 +67,7 @@ public class Job {
     	this.endDate = theEndDate;
     }
     
-    public Date getEndDate(){
+    public LocalDate getEndDate(){
     	return this.endDate;
     }
 //    private void setStartDate(Date theDate){
