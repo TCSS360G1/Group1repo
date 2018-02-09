@@ -1,5 +1,6 @@
 package model;
 
+
 public abstract class User {	
 	
 	private String userName;
@@ -9,6 +10,7 @@ public abstract class User {
 	private String email;
 	private int phone;
 	private int age;
+	private String credentials;
 	private String workload;    //Do we need to have the user specify their potential workload for their account?
 								//Could have user choose which workload to sign up for within job sign up. 
 	
