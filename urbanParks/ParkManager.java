@@ -26,11 +26,9 @@ public class ParkManager extends User {
 	private int currentDate = d.getDate();
 	
 	/*Business Rule: There can be more than the maximum 
-	 * number of pending jobs at a time in the entire system,
-	 *  default of 20
+	 * number of pending jobs at a time in the entire system
 	 *  Check the job class to see how many jobs there are 
-	 *  in the entire system and compare to 20. 
-	 *  @return true is there are 20 jobs. False if there are under 20.
+	 *  @return true is there are  exactly max jobs in system.
 	 */
 	public boolean isMaxJobAmountReached() throws FileNotFoundException { //check system for the amount of jobs. 
 		/*1. Parse through the text file and count the amount of jobs in the system.*/
@@ -43,11 +41,11 @@ public class ParkManager extends User {
 	
 	/*Business Rule:
 	 *  No job can be specified that takes more than the maximum 
-	 *  number of days, default of 3
-	 *  @param cadidateJob- true if the job will take 3 days or less.. this will allow 
-	 *  the park manager to submit job. return false if the job takes more than 3 days.
+	 *  number of days
+	 *  @param cadidateJob- 
+	 *  @return true if the job will take under max specified days
 	 */
-	public boolean isMaxDays3Under(Job candidateJob) { 
+	public boolean isMaxDaysUnder(Job candidateJob) { 
 		
 		if (candidateJob.getLength() > MAX_LENGTH) {
 			return false;
@@ -56,9 +54,9 @@ public class ParkManager extends User {
 	}
 	
 	/*Business Rule:
-	 * No job can be 75 days into the future.
+	 * No job can be maximum days into the future.
 	 * @param cadidateJob- a prospective job.
-	 * @return if it is over 75 days away then return false else return true.
+	 * @return true if it is over max days away then return false else return true.
 	 */
 	public boolean isJobTooFar(Job candidateJob) {
 		
