@@ -9,8 +9,8 @@ public class Job {
     private String title;
     private String description;
     private String location;
-    private Date startDate;      //use .equals 
-    private Date endDate;
+    private LocalDate startDate;      //use .equals 
+    private LocalDate endDate;
 //    private int numberVolsNeeded;
 
   ////List of Volunteers for Job
