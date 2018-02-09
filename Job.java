@@ -52,7 +52,7 @@ public class Job {
     
     
     
-    public void setStartDate(Date theStartDate){
+    public void setStartDate(LocalDate theStartDate){
     	this.startDate = theStartDate;
     }
     
@@ -63,7 +63,7 @@ public class Job {
     
     
     
-    public void setEndDate(Date theEndDate){
+    public void setEndDate(LocalDate theEndDate){
     	this.endDate = theEndDate;
     }
     
