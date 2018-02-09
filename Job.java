@@ -1,7 +1,7 @@
 package model;
 import java.awt.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Job {
 
@@ -9,8 +9,8 @@ public class Job {
     private String title;
     private String description;
     private String location;
-    private Date startDate;      //use .equals 
-    private Date endDate;
+    private LocalDate startDate;      //use .equals 
+    private LocalDate endDate;
 //    private int numberVolsNeeded;
 
   ////List of Volunteers for Job
@@ -52,22 +52,22 @@ public class Job {
     
     
     
-    public void setStartDate(Date theStartDate){
+    public void setStartDate(LocalDate theStartDate){
     	this.startDate = theStartDate;
     }
     
-    public Date getStartDate(){
+    public LocalDate getStartDate(){
     	return this.startDate;
     }
     
     
     
     
-    public void setEndDate(Date theEndDate){
+    public void setEndDate(LocalDate theEndDate){
     	this.endDate = theEndDate;
     }
     
-    public Date getEndDate(){
+    public LocalDate getEndDate(){
     	return this.endDate;
     }
 //    private void setStartDate(Date theDate){

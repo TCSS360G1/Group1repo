@@ -9,14 +9,13 @@ public abstract class User {
 	//private String birthdate;
 	//private String email;
 	private int phone;
-<<<<<<< HEAD
+
 	private int age;
 	private String credentials;
 	private String workload;    //Do we need to have the user specify their potential workload for their account?
-=======
+
 	//private int age;
 	//private String workload;    //Do we need to have the user specify their potential workload for their account?
->>>>>>> 812e54708389dcfb2079377efa3d8ce18ac24340
 								//Could have user choose which workload to sign up for within job sign up. 
 	
 
