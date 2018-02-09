@@ -7,9 +7,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import model.Job;
+import model.User;
 
 
 
@@ -31,7 +33,7 @@ public class Driver {
 
 	static Scanner user = new Scanner(System.in);
 
-	public static void signIn() throws IOException {
+	public static void signIn() {
 		
 		
 
@@ -57,29 +59,33 @@ public class Driver {
 	
 
 	public static void showVolunteerMenu() {
-
+		String choice = user.next();
 		
-
 		System.out.println("1. View jobs volunteered for.");
-
 		System.out.println("2. Sign Up for upcoming jobs.");
-
 		System.out.println("3. Sign Out of account.");
-
-		// TODO: scan for user input volunteerMenu
+		if (choice == "1") {
+			
+		} else if (choice == "2") {
+			volunteerSignUpForJob();
+		} else if (choice == "3") {
+			signIn();
+		} else {
+			System.out.println("You did not input a valid answer so the menu will be displayed again.");
+			showVolunteerMenu();
+		}
+		
 
 	}
 
 	
 
 	public static void showParkManagerMenu() {
-		System.out.println("P");
+		System.out.println("Please choose from one of the following (1-3): ");
 		
 
 		System.out.println("1. View current active jobs.");
-
 		System.out.println("2. Create a new park job.");
-
 		System.out.println("3. Sign Out of account.");
 		System.out.println("Please type a number between 1 and 3: ");
 		String choice = user.next();
@@ -87,12 +93,17 @@ public class Driver {
 		// TODO: scan for user input parkManagerMenu
 		if (choice == "1") {
 			//parse through the list and display the jobs.
-			//call the method that displays the job that will let the user decide what job
+			//call the method that displays the job that will let the user decide what job they want to choose.
 			
 		} else if (choice == "2") {
 			//add all of this to the collection. 
 			//CHECK THE AMOUNT OF JOBS
 			newParkJob();
+		} else if (choice == "3") {
+			signIn();
+		} else {
+			System.out.println("You did not input a valid answer so the menu will be displayed again.");
+			showParkManagerMenu();
 		}
 	}
 
@@ -100,102 +111,67 @@ public class Driver {
 
 	public static void volunteerSignUpForJob() {
 
-		System.out.println("");
+		System.out.println("Here are all of the current jobs that are available. "
+				+ "Please choose which job you want by selecting a number. ");
 
 
 		// TODO: Show valid available jobs the user can choose
 
-		System.out.println("-Event Dates-");
+		
 
+		System.out.println("-Which job would you like to sign up for this job?-");
 
-		System.out.println("-Event Locations-");
-
-
-		System.out.println("-Difficulty-");
-
-
-		System.out.println("-Would you like to sign up for this job?-");
-
-		// TODO: Confirm choice by showing the job info the user picked
-
-		System.out.println("1. Yes.");
-
-		System.out.println("2. No.");
-
+		
+		//add the job to the users list. 
 		
 
 		System.out.println("-You have successfully signed up for this job-");
-
-		// TODO: Showing the job info again
-
 		
-
-		// TODO: Return to volunteer's main menu
-
+		showVolunteerMenu();
 	}
 
 	
 
 	public static void newParkJob() {
-
-		System.out.println("-What is the starting date for this job?-");
-
-		System.out.print("Date (MM/DD/YYYY): ");
-
-		// TODO: scan for user input job start date
-
-		
-
-		System.out.println("-What is the ending date for this job?-");
-
-		System.out.print("Date (MM/DD/YYYY): ");
-
-		// TODO: scan for user input job end date
-
-		
-
-		System.out.println("-Please provide a job title-");
-
-		System.out.print("Job Title: ");
-
-		// TODO: scan for user input job title
-
-		
-
-		System.out.println("-Please provide a job description-");
-
-		System.out.print("Job Description: ");
-
-		// TODO: scan for user input job description
-
-		
-
-		System.out.println("-This job has been created-");
-
-		// TODO: verification of job: title, date start, date end, description
-
-		System.out.println("-What would you like to do now?-");
 		Job newJob = new Job();
-		System.out.println("What is the job title: ");
+		
+		System.out.println("-Please provide a job title-");
+		System.out.print("Job Title: ");
 		String t = user.next();
 		newJob.setJobTitle(t);
 		
-		System.out.println("What is the job description: ");
-		String d = user.next();
-		newJob.setDescription(d);
-		
-		System.out.println("What is the jobs starting date: ");
+		System.out.println("-What is the starting date for this job?-");
+		System.out.print("Date (MM/DD/YYYY): ");
 		String s = user.next();
-		s.split("/");
-		newJob.setStartDate(s);
+		String[] dateArray = s.split("/");
+		LocalDate start = LocalDate.of(Integer.parseInt(dateArray[2]), Integer.parseInt(dateArray[0]), 
+							Integer.parseInt(dateArray[1]));
+		newJob.setStartDate(start);
+
+		System.out.println("-What is the ending date for this job?-");
+		System.out.print("Date (MM/DD/YYYY): ");
+		String e = user.next();
 		
-		System.out.println("What is the jobs ending date: ");
+		String[] dateArray2 = e.split("/");
+		LocalDate end = LocalDate.of(Integer.parseInt(dateArray2[2]), Integer.parseInt(dateArray2[0]), 
+							Integer.parseInt(dateArray2[1]));
+		newJob.setStartDate(end);
+
+
+		System.out.println("-Please provide a job description-");
+		System.out.print("Job Description: ");
 		String d = user.next();
 		newJob.setDescription(d);
+
+
+
+		System.out.println("-This job has been created-");
+		System.out.println(newJob.getTitle()+ " " + newJob.getStartDate() + " To " + 
+							newJob.getEndDate() + " Description: " + newJob.getDescription());
 		
 
-		// TODO: return to show park manager menu
-
+		showParkManagerMenu();
+		
 	}
 
 }
