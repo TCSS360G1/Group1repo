@@ -15,6 +15,7 @@ public class Main {
     	// TODO: Refactor any methods/names/etc. if needed
     	Driver.signIn();
     	Driver.showVolunteerMenu();
+    	Driver.volunteerSignUpForJob();
     	Driver.showParkManagerMenu();
     	Driver.newParkJob();
     }
