@@ -3,6 +3,8 @@ package model;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -40,16 +42,40 @@ public class Volunteer {
      * date.
      * @return whether there is no conflict (true) or a conflict (false).
      */
-    public boolean isNoNcheduleConflicts(Job theCandidate) {
+    public boolean isNoScheduleConflicts(Job theCandidate) {
         boolean isGood = true;
         
         for (Job aJob : myCurrentJobs) {
-            isGood = (aJob.isNotSameStartDate(theCandidate) &&
-                            aJob.isNotSameEndDate(theCandidate));
+            isGood = (isGoodStart(aJob, theCandidate) &&
+                            isGoodEnd(aJob, theCandidate));
             if (!isGood)
                 break;
         }
         
+        return isGood;
+    }
+    
+    private boolean isGoodStart(Job theCurrent, Job theCandidate) {
+        boolean isGood = true;
+        long lengthOfCurr = ChronoUnit.DAYS.between(theCurrent.getStartDate(),
+                        theCurrent.getEndDate());
+        
+        long between = ChronoUnit.DAYS.between(theCurrent.getEndDate(),
+                        theCandidate.getStartDate());
+        if (between < 0 && between > lengthOfCurr * -1)
+            isGood = false;
+        return isGood;
+    }
+    
+    private boolean isGoodEnd(Job theCurrent, Job theCandidate) {
+        boolean isGood = true;
+        long lengthOfCurr = ChronoUnit.DAYS.between(theCurrent.getStartDate(),
+                        theCurrent.getEndDate());
+        
+        long between = ChronoUnit.DAYS.between(theCurrent.getStartDate(),
+                        theCandidate.getEndDate());
+        if (between > 0 && between < lengthOfCurr)
+            isGood = false;
         return isGood;
     }
     
@@ -73,7 +99,7 @@ public class Volunteer {
         return isGood;
     }
     
-    public boolean notSignedUp(Job theJob) {
+    public boolean isNotSignedUp(Job theJob) {
         return !myCurrentJobs.contains(theJob);
     }
 
@@ -106,19 +132,17 @@ public class Volunteer {
 	 * signed up for.
 	 * 
 	 * @param theJob A job that may already be in the current jobs.
-	 * @return whether or not the job was successfully added. Enables output to
-	 * user for success or failure.
+	 * @throws exceptions based on what failed in adding the job.
 	 */
-	public boolean addJob(Job theJob) {
-	    boolean isSuccessful;
-	    if (this.notSignedUp(theJob) && this.isMoreThanMinimumDays(theJob) &&
-	                    this.isNoNcheduleConflicts(theJob)) {
-	        myCurrentJobs.add(theJob);
-	        isSuccessful = true;
-	    } else {
-	        isSuccessful = false;
-	    }
-	    return isSuccessful;
+	public void addJob(Job theJob) throws AlreadySignedUpException,
+	                           MinimumDaysException, ScheduleConflictException {
+	    if (!this.isNotSignedUp(theJob))
+	        throw new AlreadySignedUpException();
+	    if (!this.isMoreThanMinimumDays(theJob))
+	        throw new MinimumDaysException();
+	    if (!this.isNoScheduleConflicts(theJob))
+	        throw new ScheduleConflictException();
+	    myCurrentJobs.add(theJob);
 	}
 	
 	
