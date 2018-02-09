@@ -25,7 +25,7 @@ public class Driver {
 		System.out.println("-You are not registered-");
 		
 		// TODO: If User exists, greet them like "Welcome, Employee Stanley"
-		System.out.print("-Welcome, -");
+		System.out.print("-Welcome, ");
 	}
 	
 	public static void showVolunteerMenu() {
@@ -33,7 +33,7 @@ public class Driver {
 		System.out.println("2. View jobs volunteered for.");
 		System.out.println("3. Sign Up for upcoming jobs.");
 		System.out.println("4. Sign Out of account.");
-		
+		// TODO: scan for user input volunteerMenu
 	}
 	
 	public static void showParkManagerMenu() {
@@ -41,6 +41,30 @@ public class Driver {
 		System.out.println("2. View current active jobs.");
 		System.out.println("3. Create a new park job.");
 		System.out.println("4. Sign Out of account.");
+		// TODO: scan for user input parkManagerMenu
+	}
+	
+	public static void newParkJob() {
+		System.out.println("-What is the starting date for this job?-");
+		System.out.print("Date (MM/DD/YYYY): ");
+		// TODO: scan for user input job start date
 		
+		System.out.println("-What is the ending date for this job?-");
+		System.out.print("Date (MM/DD/YYYY): ");
+		// TODO: scan for user input job end date
+		
+		System.out.println("-Please provide a job title-");
+		System.out.print("Job Title: ");
+		// TODO: scan for user input job title
+		
+		System.out.println("-Please provide a job description-");
+		System.out.print("Job Description: ");
+		// TODO: scan for user input job description
+		
+		System.out.println("-This job has been created-");
+		// TODO: verification of job: title, date start, date end, description
+		System.out.println("-What would you like to do now?-");
+		
+		// TODO: return to show park manager menu
 	}
 }

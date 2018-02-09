@@ -11,7 +11,11 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+    	// TODO: Testing print of Driver's contents.
+    	// TODO: Refactor any methods/names/etc. if needed
     	Driver.signIn();
     	Driver.showVolunteerMenu();
+    	Driver.showParkManagerMenu();
+    	Driver.newParkJob();
     }
 }
