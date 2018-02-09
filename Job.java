@@ -20,54 +20,54 @@ public class Job {
     }
 
 
-    private void setJobTitle(String theTitle){
+    public void setJobTitle(String theTitle){
         this.title = theTitle;
     }
     
-    private String getTitle(){
+    public String getTitle(){
     	return this.title;
     }
     
     
     
-    private void setDescription(String theDescription){
+    public void setDescription(String theDescription){
     	this.description = theDescription;
     }
     
-    private String getDescription(){
+    public String getDescription(){
     	return this.description;
     }
     
     
     
     
-    private void setLocation(String theLocation){
+    public void setLocation(String theLocation){
     	this.location = theLocation;
     }
     
-    private String getLocation(){
+    public String getLocation(){
     	return this.location;
     }
     
     
     
     
-    private void setStartDate(Date theStartDate){
+    public void setStartDate(Date theStartDate){
     	this.startDate = theStartDate;
     }
     
-    private Date getStartDate(){
+    public Date getStartDate(){
     	return this.startDate;
     }
     
     
     
     
-    private void setEndDate(Date theEndDate){
+    public void setEndDate(Date theEndDate){
     	this.endDate = theEndDate;
     }
     
-    private Date getEndDate(){
+    public Date getEndDate(){
     	return this.endDate;
     }
 //    private void setStartDate(Date theDate){
