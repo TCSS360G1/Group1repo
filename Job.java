@@ -29,7 +29,8 @@ public class Job  implements Serializable{
 //    public ArrayList<User> Volunteers = new ArrayList<User>();
 
 
-    public Job(String theTitle, String theDescription, String theLocation, LocalDate theStartDate, LocalDate theEndDate) {
+    public Job(String theTitle, String theDescription, String theLocation, 
+    		LocalDate theStartDate, LocalDate theEndDate) {
     	title = theTitle;
     	description = theDescription;
     	location = theLocation;
