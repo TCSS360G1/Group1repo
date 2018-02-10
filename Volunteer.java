@@ -3,8 +3,6 @@ package model;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -13,24 +11,14 @@ import java.util.List;
  * able to sign up for jobs, cancel jobs, and view jobs that they would like to
  * possibly sign up for.
  * @author Kai Stansfield
- * @version February 4, 2018
+ * @version February 10, 2018 1:59pm
  */
-public class Volunteer {
-
+public class Volunteer extends User{
 	public static final int MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP = 2;
-
-	private String myName;
-
-	private String myEmail;
-	
-	private String myNumber;
-	
 	private List<Job> myCurrentJobs;
 
-	public Volunteer(String theName, String theEmail, String theNumber) {
-		this.setMyName(theName);
-		this.setMyEmail(theEmail);
-		this.setMyNumber(theNumber);
+	public Volunteer(String theFirstName, String theLastName) {
+	    super(theFirstName, theLastName, "Volunteer");
 		this.myCurrentJobs = new ArrayList<Job>();
 	}
 
@@ -102,30 +90,6 @@ public class Volunteer {
     public boolean isNotSignedUp(Job theJob) {
         return !myCurrentJobs.contains(theJob);
     }
-
-	public String getMyName() {
-		return myName;
-	}
-
-	public void setMyName(String theName) {
-		this.myName = theName;
-	}
-
-	public String getMyEmail() {
-		return myEmail;
-	}
-
-	public void setMyEmail(String theEmail) {
-		this.myEmail = theEmail;
-	}
-
-	public String getMyNumber() {
-		return myNumber;
-	}
-
-	public void setMyNumber(String theNumber) {
-		this.myNumber = theNumber;
-	}
 	
 	/**
 	 * Adds a job to the volunteer's current jobs if the job isn't already
