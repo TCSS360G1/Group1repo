@@ -166,9 +166,9 @@ public class Driver {
 
 
 		System.out.println("-This job has been created-");
-		System.out.println(newJob.getTitle()+ " " + newJob.getStartDate() + " To " + 
-							newJob.getEndDate() + " Description: " + newJob.getDescription());
-		
+		//System.out.println(newJob.getTitle()+ " " + newJob.getStartDate() + " To " + 
+							//newJob.getEndDate() + " Description: " + newJob.getDescription());
+		newJob.toString();
 
 		showParkManagerMenu();
 		
