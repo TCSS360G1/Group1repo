@@ -8,10 +8,13 @@ import java.io.IOException;
 
 import java.io.InputStreamReader;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import model.Job;
 import model.User;
+import model.Volunteer;
 
 
 
@@ -109,28 +112,38 @@ public class Driver {
 
 	
 
-	public static void volunteerSignUpForJob() {
 
+	public static void volunteerSignUpForJob() {
+	    List<Job> array = new ArrayList<Job>();
 		System.out.println("Here are all of the current jobs that are available. "
 				+ "Please choose which job you want by selecting a number. ");
-
-
-		// TODO: Show valid available jobs the user can choose
-
-		
+		for (int i = 0; i < array.size(); i++) {
+		    System.out.println(array.get(i).getTitle()+ " " +
+		                array.get(i).getStartDate() + " To " +
+		                array.get(i).getEndDate() + " Description: " +
+		                array.get(i).getDescription());
+		}
 
 		System.out.println("-Which job would you like to sign up for this job?-");
 
-		
-		//add the job to the users list. 
-		
+		try {
+		    volunteer.addJob(array.get(value));
+		catch (AlreadySignedUpException ex) {
+		    System.out.println("Sorry, you have already" +
+		                       "signed up for that job");
+		} catch (MinimumDaysException ec) {
+		    System.out.println("Sorry, that job is too close. We ask" + 
+		                       "That jobs are signed up for no sooner than" + 
+		                       Volunteer.MINIMUM_DAYS_OUT + "Days out");
+		} catch (ScheduleConflictException ed) {
+		    System.out.println("Sorry, looks like that jobs' dates conflict" +
+		                       "with one of your current ones.");
+		}
 
 		System.out.println("-You have successfully signed up for this job-");
-		
+
 		showVolunteerMenu();
 	}
-
-	
 
 	public static void newParkJob() {
 		Job newJob = new Job();
