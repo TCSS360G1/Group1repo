@@ -22,14 +22,14 @@ import user_interface.Driver;
  *
  */
 public class ParkManagerTest {
+	private static final int MAX_DISTANCE = 75;
 	private ParkManager myManager;
-	
-	private Driver driver;
-	/*There can be more than the maximum number of pending myManagers at a time in the entire system, default of 20
+	/*There can be more than the maximum number of pending myManagers at a
+	 *  time in the entire system, default of 20
 	 */
 	@Before
     public void setUp() {
-       myManager = new ParkManager();
+       myManager = new ParkManager("Deepjot", "Kaur");
       
     }
 
@@ -54,44 +54,48 @@ public class ParkManagerTest {
 //	}
 	
 	
-	/*No myManager can be specified that takes more than the maximum number of days, default of 3*/
+	/*No myManager can be specified that takes more than the maximum number of 
+	 * days, default of 3*/
 	/*test max number 3*/
 	@Test
 	public void isMaxDaysUnder_Max_true() {
-		assertTrue(myManager.isMaxDaysUnder(new Job("Gas Works", "Clean up the trash", "Seattle", 
-				LocalDate.of(2018, 3, 9), LocalDate.of(2018, 3, 9))));
+		assertTrue(myManager.isMaxDaysUnder(LocalDate.of(2018, 3, 9), 
+				LocalDate.of(2018, 3, 9)));
 	}
 
 	/*test under 3*/
 	@Test
 	public void isMaxDaysUnder_under_true() {
-		assertTrue(myManager.isMaxDaysUnder(new Job("Gas Works", "Clean up the trash", "Seattle", 
-				LocalDate.of(2018, 3, 9), LocalDate.of(2018, 3, 9))));
+		assertTrue(myManager.isMaxDaysUnder(LocalDate.of(2018, 3, 9), 
+				LocalDate.of(2018, 3, 9)));
 	}
 
 	/*test above max number 3*/
 	@Test
 	public void isMaxDaysUnder_over_false() {
-		assertFalse(myManager.isMaxDaysUnder(new Job("Gas Works", "Clean up the trash", "Seattle", 
-				LocalDate.of(2018, 3, 9), LocalDate.of(2018, 3, 15))));
+		assertFalse(myManager.isMaxDaysUnder(LocalDate.of(2018, 3, 9), 
+				LocalDate.of(2018, 3, 15)));
 	}
 	
-	
+	/**/
 	@Test
 	public void isJobTooFar_OneFar_false() {
-		assertFalse(myManager.isJobNotTooFar(new Job("Gas Works", "Clean up the trash", "Seattle", 
-				LocalDate.of(2018, 3, 06), LocalDate.of(2018, 6, 31))));
+		LocalDate OneFar = LocalDate.now().plusDays(MAX_DISTANCE+1);
+		assertFalse(myManager.isJobNotTooFar(OneFar));
 	}
+	/**/
 	@Test
 	public void isJobTooFar_OneFewer_True() {
-		assertTrue(myManager.isJobNotTooFar(new Job("Gas Works", "Clean up the trash", "Seattle", 
-				LocalDate.of(2018, 9, 03), LocalDate.of(2018, 13, 03))));
+		LocalDate OneFewer= LocalDate.now().plusDays(MAX_DISTANCE-1);
+		assertTrue(myManager.isJobNotTooFar(OneFewer));
 	}
+	/**/
 	@Test
 	public void isJobTooFar_MaxDistance_True() {
-		assertTrue(myManager.isJobNotTooFar(new Job("Gas Works", "Clean up the trash", "Seattle", 
-				LocalDate.of(2018, 9, 03), LocalDate.of(2018, 13, 03))));
-		//System.out.println(ChronoUnit.DAYS.between(LocalDate.of(2018, 9, 03), LocalDate.of(2018, 13, 03)));
+		LocalDate max = LocalDate.now().plusDays(MAX_DISTANCE);
+		assertTrue(myManager.isJobNotTooFar(max));
+		//System.out.println(ChronoUnit.DAYS.between(LocalDate.of
+		//(2018, 9, 03), LocalDate.of(2018, 13, 03)));
 	}
 	
 
