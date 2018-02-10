@@ -38,6 +38,9 @@ public abstract class User {
 		lastName = theLastName;
 		type = theType;
 	}
+	public User(){
+		//empty constructor.
+	}
 	
 	public void setType(String theType){
 		this.type = theType;
@@ -65,7 +68,10 @@ public abstract class User {
 		return this.firstName + " " + this.lastName; 
 	}
 	
-	
+	@Override
+	public String toString() {
+		return getName() + " " + getType();
+	}
 	
 	/*public void setBirthdate(String theDate){
 		this.birthdate = theDate;

@@ -77,8 +77,6 @@ public class Driver {
 			System.out.println("You did not input a valid answer so the menu will be displayed again.");
 			showVolunteerMenu();
 		}
-		
-
 	}
 
 	

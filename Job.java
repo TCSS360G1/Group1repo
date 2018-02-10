@@ -39,7 +39,9 @@ public class Job  implements Serializable{
 
 //    public ArrayList<User> Volunteers = new ArrayList<User>();
 
-    
+    public Job() {
+    	//empty constructor
+    }
 
     public Job(String theTitle, String theDescription, String theLocation, LocalDate theStartDate, LocalDate theEndDate) {
     	title = theTitle;
@@ -131,7 +133,11 @@ public class Job  implements Serializable{
 
     }
 
-    
+    @Override
+    public String toString() {
+    	return getTitle()+ " " + getStartDate() + " To " + 
+				getEndDate() + " Description: " + getDescription();
+    }
 
     
 
