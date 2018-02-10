@@ -28,9 +28,9 @@ public class ParkManager extends User  implements Serializable{
 	 *  @param cadidateJob- 
 	 *  @return true if the job will take under max specified days
 	 */
-	public boolean isMaxDaysUnder(Job theCandidateJob) { 
-		long amountDays = ChronoUnit.DAYS.between(theCandidateJob.getStartDate(),
-				theCandidateJob.getEndDate());
+	public boolean isMaxDaysUnder(LocalDate theEnd, LocalDate theStart) { 
+		long amountDays = ChronoUnit.DAYS.between(theStart,
+				theEnd);
 		
 		if (amountDays > MAX_LENGTH) {
 			return false;
@@ -43,10 +43,10 @@ public class ParkManager extends User  implements Serializable{
 	 * @return true if it is over max days away then return false else return 
 	 * true.
 	 */
-	public boolean isJobNotTooFar(Job theCandidateJob) {
+	public boolean isJobNotTooFar(LocalDate theStart) {
 		LocalDate farthestDate = LocalDate.now().plusDays(MAX_DISTANCE);
 		if(ChronoUnit.DAYS.between(farthestDate, 
-				theCandidateJob.getStartDate()) > 0) {
+				theStart) > 0) {
 			//a job is more than 75 days into the future- FALSE
 			return false;
 		} else {
