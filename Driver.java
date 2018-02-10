@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import model.Job;
+import model.ParkManager;
 import model.User;
 import model.Volunteer;
 
@@ -35,6 +36,7 @@ import model.Volunteer;
 public class Driver {
 
 	static Scanner user = new Scanner(System.in);
+	ParkManager myManager = new ParkManager();
 
 	public static void signIn() {
 		
@@ -68,7 +70,7 @@ public class Driver {
 		System.out.println("2. Sign Up for upcoming jobs.");
 		System.out.println("3. Sign Out of account.");
 		if (choice == "1") {
-			
+			///////////////////////////////////////////////////////
 		} else if (choice == "2") {
 			volunteerSignUpForJob();
 		} else if (choice == "3") {
@@ -144,12 +146,17 @@ public class Driver {
 	}
 
 	public static void newParkJob() {
-		Job newJob = new Job();
 		
 		System.out.println("-Please provide a job title-");
 		System.out.print("Job Title: ");
 		String t = user.next();
-		newJob.setJobTitle(t);
+		//newJob.setJobTitle(t);
+		
+		System.out.println("-Please provide a job location-");
+		System.out.print("Job Location: ");
+		String l = user.next();
+		//newJob.setLocation(l);
+		
 		
 		System.out.println("-What is the starting date for this job?-");
 		System.out.print("Date (MM/DD/YYYY): ");
@@ -157,23 +164,35 @@ public class Driver {
 		String[] dateArray = s.split("/");
 		LocalDate start = LocalDate.of(Integer.parseInt(dateArray[2]), Integer.parseInt(dateArray[0]), 
 							Integer.parseInt(dateArray[1]));
-		newJob.setStartDate(start);
+		//newJob.setStartDate(start);
 
 		System.out.println("-What is the ending date for this job?-");
 		System.out.print("Date (MM/DD/YYYY): ");
 		String e = user.next();
-		
+		LocalDate end;
 		String[] dateArray2 = e.split("/");
-		LocalDate end = LocalDate.of(Integer.parseInt(dateArray2[2]), Integer.parseInt(dateArray2[0]), 
-							Integer.parseInt(dateArray2[1]));
-		newJob.setStartDate(end);
+		if(Integer.parseInt(dateArray2[0]) <= Integer.parseInt(dateArray[0]) && 
+				Integer.parseInt(dateArray2[1]) < Integer.parseInt(dateArray[1])) {
+			//this jobs end date is in the past.
+			System.out.println("The end date is invalid please try again");
+			System.out.print("Date (MM/DD/YYYY): ");
+			e = user.next();
+			dateArray2 = e.split("/");
+			end = LocalDate.of(Integer.parseInt(dateArray2[2]), Integer.parseInt(dateArray2[0]), 
+					Integer.parseInt(dateArray2[1]));
+		} else {
+			end = LocalDate.of(Integer.parseInt(dateArray2[2]), Integer.parseInt(dateArray2[0]), 
+					Integer.parseInt(dateArray2[1]));
+		}
+		
 
 
 		System.out.println("-Please provide a job description-");
 		System.out.print("Job Description: ");
 		String d = user.next();
-		newJob.setDescription(d);
-
+		//newJob.setDescription(d);
+		
+		Job newJob = new Job(t,d,l, start, end);
 
 
 		System.out.println("-This job has been created-");
