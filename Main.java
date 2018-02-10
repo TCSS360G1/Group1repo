@@ -41,7 +41,7 @@ public class Main implements Serializable{
 
 
 
-		ArrayList<User> Users = new ArrayList<User>();
+//		ArrayList<User> Users = new ArrayList<User>();
 
 		ParkManager tempManager = new ParkManager();
 
