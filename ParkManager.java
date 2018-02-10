@@ -1,6 +1,3 @@
-/**
- * 
- */
 package model;
 
 import java.io.Serializable;
@@ -15,13 +12,16 @@ import java.time.temporal.ChronoUnit;
  * @date 2/8
  *
  */
-public class ParkManager extends User  implements Serializable{	
+public class ParkManager extends User implements Serializable{	
 
 	private static final long serialVersionUID = 1L;
-	private int MAX_LENGTH = 3;
-	private int MAX_JOBS = 20;
-	private int MAX_DISTANCE = 75;
+	private static final int MAX_LENGTH = 3;
+	private static final int MAX_JOBS = 20;
+	private static final int MAX_DISTANCE = 75;
 
+	public ParkManager(String theFirstName, String theLastName) {
+	    super(theFirstName, theLastName, "Manager");
+	}
 	
 	/*  No job can be specified that takes more than the maximum 
 	 *  number of days
@@ -52,8 +52,5 @@ public class ParkManager extends User  implements Serializable{
 		} else {
 			return true;
 		}
-		
 	}
-	
-
 }
