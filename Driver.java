@@ -18,58 +18,57 @@ public class Driver implements Serializable{
 
 	public static void main(String[] args) {
 
+		ArrayList<User> Users = new ArrayList<User>();
 		ParkManager tempManager = new ParkManager();
 		tempManager.setName("Luke Manca");
 		System.out.println(tempManager.getName());
 		Users.add(tempManager);
 		System.out.println(Users.toString());
+		
 		serializeUserCollection();
+		
 		Users.clear();
+		
 		readInUserCollection();
+		
 		System.out.println(Users.toString());
 		
 }
 	
 
 private static void serializeUserCollection(){
-    try
-    {   
-        //Saving of object in a file
-        FileOutputStream usersToByte = new FileOutputStream("userFile");
-        ObjectOutputStream out = new ObjectOutputStream(usersToByte);
-         
-        // Method for serialization of object
+	
+	
+	try {
+        FileOutputStream fileOut =
+        new FileOutputStream("userFile.ser");
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(Users);
-         
         out.close();
-        usersToByte.close();
-         
-        System.out.println("Object has been serialized");
+        fileOut.close();
+        System.out.println("Serialized data is saved!");
+     } catch (IOException i) {
+        i.printStackTrace();
     }
-     
-    catch(IOException ex)
-    {
-        System.out.println("IOException is caught: Serialize");
-    }
-
 }
+
 
 private static void readInUserCollection(){
 	 // De-serialization
     try
     {   
         // Reading the object from a file
-        FileInputStream byteToUsers = new FileInputStream("userFile");
+        FileInputStream byteToUsers = new FileInputStream("userFile.ser");
         ObjectInputStream in = new ObjectInputStream(byteToUsers);
          
-        // Method for deserialization of object
+        // Method for de-serialization of object
         //REnew users arraylist to a casted serialized object.
         Users = (ArrayList<User>)in.readObject();
          
         in.close();
         byteToUsers.close();
          
-        System.out.println("Object has been deserialized ");
+        System.out.println("Object has been deserialized");
     }
      
     catch(IOException ex)
@@ -83,6 +82,7 @@ private static void readInUserCollection(){
     }
 }
 }
+
 //	public void readUserFile(){
 //			//Delimiters used in the CSV file
 //			 String COMMA_DELIMITER = ",";
