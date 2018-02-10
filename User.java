@@ -3,7 +3,7 @@ package model;
 
 public abstract class User {	
 	
-	private String myUserName;
+	//private String myUserName;
 	private String myFirstName;
 	private String myLastName;
 	private String myType;
@@ -12,9 +12,7 @@ public abstract class User {
 	//private int myPhone;
 	//private int myAge;
 	
-	public User(String theUserName, String theFirstName,
-	                String theLastName, String theType) {
-		this.myUserName = theUserName;
+	public User(String theFirstName, String theLastName, String theType) {
 		this.myFirstName = theFirstName;
 		this.myLastName = theLastName;
 		this.myType = theType;
@@ -26,15 +24,6 @@ public abstract class User {
 	public String getType() {
 		return this.myType;
 	}
-	
-	public void setUserName(String theUserName){
-		this.myUserName = theUserName;
-	}
-	
-	public String getUserName(){
-		return this.myUserName;
-	}
-	
 	
 	/* Have user enter full name in one step. Ex:"Luke Manca" */
 	public void setName(String theName){
@@ -52,6 +41,14 @@ public abstract class User {
 	}
 	
 	/*
+	public void setUserName(String theUserName){
+        this.myUserName = theUserName;
+    }
+    
+    public String getUserName(){
+        return this.myUserName;
+    }
+    
 	public void setBirthdate(String theDate){
 		this.myBirthdate = theDate;
 	}
