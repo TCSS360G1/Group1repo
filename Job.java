@@ -2,7 +2,12 @@ package model;
 import java.awt.List;
 import java.time.LocalDate;
 import java.util.ArrayList;
+<<<<<<< HEAD
 
+=======
+import java.util.Date;
+import java.time.LocalDate;
+>>>>>>> 6c597166ac76a8a256fdefce49fa0a93fdbde635
 public class Job {
 
   ////Fields
