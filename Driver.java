@@ -51,12 +51,12 @@ public class Driver {
 		boolean userFound = false;
 		System.out.println("Before Branch: " + userFound);
 		if (name.equals("exit")) {
-		    userFound = true;
 		    System.out.println("In if: " + userFound);
 		} else {
 		    System.out.println("In else: " + userFound);
     		for(int i = 0; i<theUsers.size(); i++) {
     			if (theUsers.get(i).getName().equals(name)) {
+    				userFound = true;
     				if(theUsers.get(i).getType() == "Manager") {
     					ParkManager myManager = (ParkManager) (theUsers.get(i));
     					System.out.print("\n-Welcome, Manager: "+ 
@@ -75,7 +75,7 @@ public class Driver {
     		}
 		}
 		System.out.println("outside of branch: " + userFound);
-		if (!userFound) {
+		if (userFound == false && !name.equals("exit")) {
 		    System.out.println("Invalid user. Please check the spelling.\n");
             signIn(theUsers, theJobs);
 		}
