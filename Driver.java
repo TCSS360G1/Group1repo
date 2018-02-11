@@ -159,7 +159,6 @@ public class Driver {
 			else {
 				System.out.println("Sorry, we are currently filled with the max"
 						+ " amount of jobs, please check back in tomorrow.");
-				
 			}
 			
 		} else if (choice.equals("3")) {
@@ -227,14 +226,29 @@ public class Driver {
 		System.out.println("-Please provide a job title-");
 		System.out.print("Job Title: ");
 		String t = user.nextLine();
+		while(t.isEmpty()) {
+			System.out.println("-Please provide a VALID job title-");
+			System.out.print("Job Title: ");
+			t = user.nextLine();
+		}
 		
 		System.out.println("-Please provide a job location-");
 		System.out.print("Job Location: ");
 		String l = user.nextLine();
+		while(l.isEmpty()){
+			System.out.println("-Please provide a VALID job location-");
+			System.out.print("Job Location: ");
+			l = user.nextLine();
+		}
 		
 		System.out.println("-What is the starting date for this job?-");
 		System.out.print("Date (MM/DD/YYYY): ");
 		String s = user.nextLine();
+		while(s.isEmpty()){
+			System.out.println("-Please provide a VALID job starting date-");
+			System.out.print("Date (MM/DD/YYYY): ");
+			s = user.nextLine();
+		}
 		String[] dateArray = s.split("/");
 		LocalDate start = LocalDate.of(Integer.parseInt(dateArray[2]), 
 				Integer.parseInt(dateArray[0]), 
@@ -256,6 +270,11 @@ public class Driver {
 		System.out.println("-What is the ending date for this job?-");
 		System.out.print("Date (MM/DD/YYYY): ");
 		String e = user.nextLine();
+		while(e.isEmpty()){
+			System.out.println("-Please provide a VALID job ending date-");
+			System.out.print("Date (MM/DD/YYYY): ");
+			e = user.nextLine();
+		}
 		LocalDate end;
 		String[] dateArray2 = e.split("/");
 		end = LocalDate.of(Integer.parseInt(dateArray2[2]), 
@@ -274,6 +293,11 @@ public class Driver {
 		System.out.println("-Please provide a job description-");
 		System.out.print("Job Description: ");
 		String d = user.nextLine();
+		while(d.isEmpty()){
+			System.out.println("-Please provide a valid job description-");
+			System.out.print("Job Description: ");
+			d = user.nextLine();
+		}
 		Job newJob = new Job(t,d,l, start, end);
 		System.out.println("-This job has been created-");
 
