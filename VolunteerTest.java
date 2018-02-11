@@ -6,8 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import model.AlreadySignedUpException;
 import model.Job;
@@ -21,7 +21,7 @@ import model.Volunteer;
  *@author Kai Stansfield
  *@version February 10, 2018
  */
-class VolunteerTest {
+public class VolunteerTest {
 	static int NUMBER_OF_DAYS_TO_SIGN_UP = 2;
 
 	static Volunteer volunteerDoesntMatter;
@@ -35,8 +35,8 @@ class VolunteerTest {
 	static Job endsDuringCurrent;
 	static Job noConflicts;
 	
-	@BeforeAll
-	public static void setup() {
+	@Before
+	public void setup() {
 	    volunteerDoesntMatter = new Volunteer("Kai", "Stansfield");
 	    // DM = Doesn't matter -- isMoreThanTwoDays testers.
 	    wayAfter = new Job("DM", "DM", "DM", LocalDate.now().plusDays(
