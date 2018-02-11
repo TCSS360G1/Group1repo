@@ -49,22 +49,20 @@ public class Driver {
 		
 		String name = user.nextLine();
 		boolean userFound = false;
-		System.out.println("Before Branch: " + userFound);
 		if (name.equals("exit")) {
-		    System.out.println("In if: " + userFound);
+		    //Dummy branch
 		} else {
-		    System.out.println("In else: " + userFound);
     		for(int i = 0; i<theUsers.size(); i++) {
     			if (theUsers.get(i).getName().equals(name)) {
     				userFound = true;
-    				if(theUsers.get(i).getType() == "Manager") {
+    				if(theUsers.get(i).getType().equals("Manager")) {
     					ParkManager myManager = (ParkManager) (theUsers.get(i));
     					System.out.print("\n-Welcome, Manager: "+ 
     						theUsers.get(i).getFirst()+ " " + 
     					                theUsers.get(i).getLast() + "\n");
     					showParkManagerMenu(myManager, theUsers, theJobs);
     					
-    				} else if(theUsers.get(i).getType() == "Volunteer") {
+    				} else if(theUsers.get(i).getType().equals("Volunteer")) {
     					System.out.print("\n-Welcome, Volunteer: "+ 
     							theUsers.get(i).getFirst()+ " " + 
     					                theUsers.get(i).getLast() + "\n");
@@ -74,9 +72,7 @@ public class Driver {
     			}
     		}
 		}
-		System.out.println("outside of branch: " + userFound);
 		if (userFound == false && !name.equals("exit")) {
-		    System.out.println("Invalid user. Please check the spelling.\n");
             signIn(theUsers, theJobs);
 		}
 	}
