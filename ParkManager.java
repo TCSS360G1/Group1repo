@@ -32,7 +32,8 @@ public class ParkManager extends User implements Serializable{
 		long amountDays = ChronoUnit.DAYS.between(theStart,
 				theEnd);
 		
-		if (amountDays > MAX_LENGTH) {
+		if (amountDays > MAX_LENGTH-1) {
+			//need to subtract one because the last day is not counted.
 			return false;
 		}
 		return true;
