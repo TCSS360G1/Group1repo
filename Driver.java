@@ -38,25 +38,30 @@ import model.Volunteer;
 
 public class Driver {
 	
+	private static final int MAX_JOBS_IN_SYSTEM = 20;
 	static Scanner user = new Scanner(System.in);
 
 	/*The initial display. this will decide if the user is a volunteer or a PM
 	 *then will call methods to display the correct menus for type.*/
-	public static void signIn() {System.out.print("-Sign in-\nFULL NAME: ");
+	
+	public static void signIn(ArrayList<User> theUsers, 
+			ArrayList<Job> theJobs) {
+		System.out.print("-Sign in-\nFULL NAME: ");
+	
 
 		String username = user.next();
 
-		// TODO: Check if User exists
+		// TODO: Check if User exists*********************************************
 		System.out.println("-Fetching information-\n...\n");
 
 		if(type == "Park Manager") {
-			ParkManager myManager = new ParkManager();/////////////add constructor fields once the collections have been created.
+			ParkManager myManager = new ParkManager();
 			System.out.print("-Welcome, ");
-			showParkManagerMenu(myManager);
+			showParkManagerMenu(myManager, theUsers, theJobs);
 		} else if(type == "Volunteer") {
 			System.out.print("-Welcome, ");
 			Volunteer myVolunteer = new Volunteer();
-			showVolunteerMenu(myVolunteer);
+			showVolunteerMenu(myVolunteer, theUsers, theJobs);
 		}
 		
 		else {
@@ -69,7 +74,8 @@ public class Driver {
 	 * the users job info.
 	 * @param- theVolunteer- the volunteer that has signed in.
 	 */
-	public static void showVolunteerMenu(Volunteer theVolunteer) {
+	public static void showVolunteerMenu(Volunteer theVolunteer, 
+			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		String choice = user.next();
 		
 		System.out.println("1. View jobs volunteered for.");
@@ -78,19 +84,20 @@ public class Driver {
 		if (choice == "1") {
 			///////////////////////////////////////////////////////
 		} else if (choice == "2") {
-			volunteerSignUpForJob(theVolunteer);
+			volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
 		} else if (choice == "3") {
-			signIn();
+			signIn(theUsers, theJobs);
 		} else {
 			System.out.println("You did not input a valid answer so the "
 					+ "menu will be displayed again.");
-			showVolunteerMenu(theVolunteer);
+			showVolunteerMenu(theVolunteer, theUsers, theJobs);
 		}
 	}
 
 	
 
-	public static void showParkManagerMenu(ParkManager theManager) {
+	public static void showParkManagerMenu(ParkManager theManager, 
+			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		System.out.println("Please choose from one of the following (1-3): ");
 		
 		System.out.println("1. View current active jobs.");
@@ -107,25 +114,29 @@ public class Driver {
 			
 		} else if (choice == "2") {
 			//add all of this to the collection. 
-			//CHECK THE AMOUNT OF JOBS
-			//if job amount is not yet reached
-			newParkJob(theManager);
-			//else- 
-			//System.out.println("Sorry, we are currently filled, please check back in tomorrow.");
-			//display park manager menu.
+			if(isJobsAmountLegal(theJobs)) {
+				newParkJob(theManager, theUsers, theJobs);
+			}
+			else {
+				System.out.println("Sorry, we are currently filled with the max"
+						+ " amount of jobs, please check back in tomorrow.");
+				
+			}
+			
 		} else if (choice == "3") {
-			signIn();
+			signIn(theUsers, theJobs);
 		} else {
 			System.out.println("You did not input a valid answer so the menu "
 					+ "will be displayed again.");
-			showParkManagerMenu(theManager);
+			showParkManagerMenu(theManager, theUsers, theJobs);
 		}
 	}
 
 	
 
 	/*Allows Volunteer to sign up for a job.*/
-	public static void volunteerSignUpForJob(Volunteer theVolunteer) {
+	public static void volunteerSignUpForJob(Volunteer theVolunteer, 
+			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 	    List<Job> array = new ArrayList<Job>();
 		System.out.println("Here are all of the current jobs that are available. "
 				+ "Please choose which job you want by selecting a number. ");
@@ -146,7 +157,7 @@ public class Driver {
 		} catch (MinimumDaysException ec) {
 		    System.out.println("Sorry, that job is too close. We ask" + 
 		                       "That jobs are signed up for no sooner than" + 
-		                       Volunteer.MINIMUM_DAYS_OUT + "Days out");
+		                       Volunteer.MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP + "Days out");
 		} catch (ScheduleConflictException ed) {
 		    System.out.println("Sorry, looks like that jobs' dates conflict" +
 		                       "with one of your current ones.");
@@ -154,13 +165,14 @@ public class Driver {
 
 		System.out.println("-You have successfully signed up for this job-");
 
-		showVolunteerMenu(theVolunteer);
+		showVolunteerMenu(theVolunteer, theUsers, theJobs);
 	}
 	
 	/*Asks for information for a new job. Checks to see if the job length is max days or under.
 	 * checks to see if the job is not too far away,
 	 * and checks to see how many jobs there are.*/
-	public static void newParkJob(ParkManager theManager) {
+	public static void newParkJob(ParkManager theManager, 
+			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		
 		System.out.println("-Please provide a job title-");
 		System.out.print("Job Title: ");
@@ -178,8 +190,10 @@ public class Driver {
 		LocalDate start = LocalDate.of(Integer.parseInt(dateArray[2]), 
 				Integer.parseInt(dateArray[0]), 
 				Integer.parseInt(dateArray[1]));
-		//CHECK TO SEE IF START DATE IS NOT TOO FAR.
-		while(!theManager.isJobNotTooFar(start)) { //while this is false. ask for a new input
+		
+		while(!theManager.isJobNotTooFar(start)) { 
+			
+			//while this is false. ask for a new input
 			System.out.println("This date is too far. Please input a date that "
 					+ "is closer.");
 			System.out.print("Date (MM/DD/YYYY): ");
@@ -225,9 +239,26 @@ public class Driver {
 		//newJob.getStartDate() + " To " + 
 		//newJob.getEndDate() + " Description: " + newJob.getDescription());
 		newJob.toString();
-
-		showParkManagerMenu(theManager);
+		
+		showParkManagerMenu(theManager, theUsers, theJobs);
 		
 	}
+	
+	/*
+	 * If the size of the jobs is greater than the max amount that there can 
+	 * be return false.
+	 * else return true.
+	 * */
+	public static boolean isJobsAmountLegal(ArrayList<Job> theJobs) {
+		
+		if(theJobs.size() > MAX_JOBS_IN_SYSTEM) {
+			return false;
+		} else {
+			return true;
+		}
+		
+	}
+	
+	
 
 }
