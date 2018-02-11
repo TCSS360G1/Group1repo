@@ -43,13 +43,18 @@ public class Driver {
 	
 	public static void signIn(ArrayList<User> theUsers, 
 			ArrayList<Job> theJobs) {
-	    System.out.println("Press 0 to exit sign in.\n");
+	    System.out.println("Type 'exit' to exit sign in.\n");
 		System.out.print("-Sign in-\nFirst and last name "
 		                + "(separated by a space): ");
-	
-		String name = user.nextLine();
-		if (!(name.charAt(0) == '0' && name.length() == 1)) {
 		
+		String name = user.nextLine();
+		boolean userFound = false;
+		System.out.println("Before Branch: " + userFound);
+		if (name.equals("exit")) {
+		    userFound = true;
+		    System.out.println("In if: " + userFound);
+		} else {
+		    System.out.println("In else: " + userFound);
     		for(int i = 0; i<theUsers.size(); i++) {
     			if (theUsers.get(i).getName().equals(name)) {
     				if(theUsers.get(i).getType() == "Manager") {
@@ -67,8 +72,11 @@ public class Driver {
     					showVolunteerMenu(myVolunteer, theUsers, theJobs);
     				}
     			}
-		    }
-    		System.out.println("Invalid user. Please check the spelling.\n");
+    		}
+		}
+		System.out.println("outside of branch: " + userFound);
+		if (!userFound) {
+		    System.out.println("Invalid user. Please check the spelling.\n");
             signIn(theUsers, theJobs);
 		}
 	}
