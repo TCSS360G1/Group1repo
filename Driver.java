@@ -46,7 +46,8 @@ public class Driver {
 	
 	public static void signIn(ArrayList<User> theUsers, 
 			ArrayList<Job> theJobs) {
-		System.out.print("-Sign in-\nFirst and last name (separated by a space): ");
+		System.out.print("-Sign in-\nFirst and last name "
+		                + "(separated by a space): ");
 	
 
 		String name = user.nextLine();
@@ -60,40 +61,62 @@ public class Driver {
 					ParkManager myManager = new ParkManager
 						(theUsers.get(i).getFirst(), theUsers.get(i).getLast());
 					System.out.print("-Welcome, Manager: "+ 
-						theUsers.get(i).getFirst()+ " " + theUsers.get(i).getLast());
+						theUsers.get(i).getFirst()+ " " + 
+					                theUsers.get(i).getLast() + "\n");
 					showParkManagerMenu(myManager, theUsers, theJobs);
 				} else if(theUsers.get(i).getType() == "Volunteer") {
 					System.out.print("-Welcome, Volunteer: "+ 
-							theUsers.get(i).getFirst()+ " " + theUsers.get(i).getLast());
+							theUsers.get(i).getFirst()+ " " + 
+					                theUsers.get(i).getLast() + "\n");
 					Volunteer myVolunteer = new Volunteer
 						(theUsers.get(i).getFirst(), theUsers.get(i).getLast());
 					showVolunteerMenu(myVolunteer, theUsers, theJobs);
 				}
 			}
 		}
+		System.out.println("Invalid user. Please check the spelling.\n");
+		signIn(theUsers, theJobs);
 	}
 
 	
-	/*Shows volunteers menu. 3 options to choose from and shows 
+	/**Shows volunteers menu. 3 options to choose from and shows 
 	 * the users job info.
 	 * @param- theVolunteer- the volunteer that has signed in.
 	 */
 	public static void showVolunteerMenu(Volunteer theVolunteer, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
-		String choice = user.nextLine();
+		
 		
 		System.out.println("1. View jobs volunteered for.");
 		System.out.println("2. Sign Up for upcoming jobs.");
 		System.out.println("3. Sign Out of account.");
+		
+		String choice = user.next();
 		if (choice.equals("1")) {
-			///////////////////////////////////////////////////////
+			ArrayList<Job> volunteerJobs = theVolunteer.getJobs();
+			if (volunteerJobs.isEmpty()) {
+			    System.out.println("No jobs signed up for!\n");
+			    showVolunteerMenu(theVolunteer, theUsers, theJobs);
+			} else {
+			    for (int i = 0; i < volunteerJobs.size(); i++) {
+			        System.out.println((i+1)+ ". " +
+                                volunteerJobs.get(i).getTitle() + " At: " +
+                                volunteerJobs.get(i).getLocation() +" " +
+                                volunteerJobs.get(i).getStartDate() + " To " +
+                                volunteerJobs.get(i).getEndDate() +
+                                " Description: " +
+                                volunteerJobs.get(i).getDescription());
+			    }
+			    System.out.println();
+			    showVolunteerMenu(theVolunteer, theUsers, theJobs);
+			}
 		} else if (choice.equals("2")) {
 			volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
 		} else if (choice.equals("3")) {
 			signIn(theUsers, theJobs);
 		} else {
 			System.out.println("You did not input a valid answer so the "
-					+ "menu will be displayed again.");
+					+ "menu will be displayed again.\n");
 			showVolunteerMenu(theVolunteer, theUsers, theJobs);
 		}
 	}
@@ -113,11 +136,12 @@ public class Driver {
 		
 		if (choice.equals("1")) {
 			
-			System.out.println("Here are all of the current Jobs in the System, "
-					+ "you will be re-directed to the main menu: ");
+			System.out.println("Here are all of the current Jobs in the System,"
+					+ " you will be re-directed to the main menu: ");
 			for (int i = 0; i < theJobs.size(); i++) {
 				
-			    System.out.println((i+1)+ ". " + theJobs.get(i).getTitle()+ " At: " +
+			    System.out.println((i+1)+ ". " + theJobs.get(i).getTitle()+ 
+			                    " At: " +
 			    			theJobs.get(i).getLocation() +" " +
 			                theJobs.get(i).getStartDate() + " To " +
 			                theJobs.get(i).getEndDate() + " Description: " +
@@ -150,37 +174,49 @@ public class Driver {
 	/*Allows Volunteer to sign up for a job.*/
 	public static void volunteerSignUpForJob(Volunteer theVolunteer, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
-		System.out.println("Here are all of the current jobs that are available. "
+		System.out.println("Here are all of the jobs that are available. "
 				+ "Please choose which job you want by selecting a number. ");
 		for (int i = 0; i < theJobs.size(); i++) {
-		    System.out.println(theJobs.get(i).getTitle()+ " " +
+		    System.out.println((i + 1) + ")" + "Location:  " +
+		                theJobs.get(i).getTitle()+ " " + "Date:  " +
 		                theJobs.get(i).getStartDate() + " To " +
-		                theJobs.get(i).getEndDate() + " Description: " +
+		                theJobs.get(i).getEndDate() + " Description:  " +
 		                theJobs.get(i).getDescription());
 		}
 
-		System.out.println("-Which job would you like to sign up for this job?-");
-			
-		try {
-		    theVolunteer.addJob(theJobs.get(value));
-		catch (AlreadySignedUpException ex) {
-		    System.out.println("Sorry, you have already" +
-		                       "signed up for that job");
-		} catch (MinimumDaysException ec) {
-		    System.out.println("Sorry, that job is too close. We ask" + 
-		                       "That jobs are signed up for no sooner than" + 
-		                       Volunteer.MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP + "Days out");
-		} catch (ScheduleConflictException ed) {
-		    System.out.println("Sorry, looks like that jobs' dates conflict" +
-		                       "with one of your current ones.");
+		System.out.println("-Which job would you like to sign up for? "
+		                   + "0 to exit to main menu.");
+		int value = user.nextInt() - 1;
+		if (value == -1)
+		    showVolunteerMenu(theVolunteer, theUsers, theJobs);
+		else {
+    		try {
+    		    theVolunteer.addJob(theJobs.get(value));
+    		    System.out.println("-You have successfully "
+    		                       + "signed up for this job-");
+    		} catch (AlreadySignedUpException ex) {
+    		    System.out.println("Sorry, you have already" +
+    		                       " signed up for that job\n");
+    		    volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
+    		} catch (MinimumDaysException ec) {
+    		    System.out.println("Sorry, that job is too close. We ask " + 
+    		                      "That jobs are signed up for no sooner than "+ 
+    		                      Volunteer.MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP +
+    		                      "Days out\n");
+    		    volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
+    		} catch (ScheduleConflictException ed) {
+    		    System.out.println("Sorry, looks like that jobs' "
+    		                       + " dates conflict" +
+    		                       "with one of your current ones.\n");
+    		    volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
+    		}
+    
+    		showVolunteerMenu(theVolunteer, theUsers, theJobs);
 		}
-
-		System.out.println("-You have successfully signed up for this job-");
-
-		showVolunteerMenu(theVolunteer, theUsers, theJobs);
 	}
 	
-	/*Asks for information for a new job. Checks to see if the job length is max days or under.
+	/*Asks for information for a new job. Checks to see if the job length is 
+	 * max days or under.
 	 * checks to see if the job is not too far away,
 	 * and checks to see how many jobs there are.*/
 	public static void newParkJob(ParkManager theManager, 

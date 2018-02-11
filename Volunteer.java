@@ -24,8 +24,9 @@ import java.util.List;
  */
 
 public class Volunteer extends User implements Serializable {
+    private static final long serialVersionUID = 7001992405582133870L;
 
-	public static final int MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP = 2;
+    public static final int MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP = 2;
 
 	private List<Job> myCurrentJobs;
 
@@ -86,7 +87,7 @@ public class Volunteer extends User implements Serializable {
 
 				theCandidate.getStartDate());
 
-		if (between < 0 && between > lengthOfCurr * -1)
+		if (between <= 0 && between >= lengthOfCurr * -1)
 
 			isGood = false;
 
@@ -106,7 +107,7 @@ public class Volunteer extends User implements Serializable {
 
 				theCandidate.getEndDate());
 
-		if (between > 0 && between < lengthOfCurr)
+		if (between >= 0 && between <= lengthOfCurr)
 
 			isGood = false;
 
@@ -195,6 +196,11 @@ public class Volunteer extends User implements Serializable {
 
 		myCurrentJobs.remove(theJob);
 
+	}
+	
+	public ArrayList<Job> getJobs() {
+	    ArrayList<Job> ret = new ArrayList<Job>(myCurrentJobs);
+	    return ret;
 	}
 
 }
