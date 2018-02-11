@@ -59,18 +59,18 @@ public class Driver {
 				if(theUsers.get(i).getType() == "Manager") {
 					ParkManager myManager = new ParkManager
 						(theUsers.get(i).getFirst(), theUsers.get(i).getLast());
-					System.out.print("-Welcome, ");
+					System.out.print("-Welcome, Manager: "+ 
+						theUsers.get(i).getFirst()+ " " + theUsers.get(i).getLast());
 					showParkManagerMenu(myManager, theUsers, theJobs);
 				} else if(theUsers.get(i).getType() == "Volunteer") {
-					System.out.print("-Welcome, ");
+					System.out.print("-Welcome, Volunteer: "+ 
+							theUsers.get(i).getFirst()+ " " + theUsers.get(i).getLast());
 					Volunteer myVolunteer = new Volunteer
 						(theUsers.get(i).getFirst(), theUsers.get(i).getLast());
 					showVolunteerMenu(myVolunteer, theUsers, theJobs);
 				}
 			}
 		}
-		
-		
 	}
 
 	
@@ -245,7 +245,7 @@ public class Driver {
 		System.out.println("-This job has been created-");
 
 		System.out.println(newJob.toString());
-		
+		theJobs.add(newJob);
 		showParkManagerMenu(theManager, theUsers, theJobs);
 		
 	}
