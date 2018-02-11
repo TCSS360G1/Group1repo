@@ -33,9 +33,6 @@ import model.Volunteer;
  * @version February 9, 2018
 
  */
-
-
-
 public class Driver {
 	
 	private static final int MAX_JOBS_IN_SYSTEM = 20;
@@ -49,9 +46,7 @@ public class Driver {
 		System.out.print("-Sign in-\nFirst and last name "
 		                + "(separated by a space): ");
 	
-
 		String name = user.nextLine();
-
 		
 		for(int i = 0; i<theUsers.size(); i++) {
 			
@@ -60,12 +55,12 @@ public class Driver {
 				if(theUsers.get(i).getType() == "Manager") {
 					ParkManager myManager = new ParkManager
 						(theUsers.get(i).getFirst(), theUsers.get(i).getLast());
-					System.out.print("-Welcome, Manager: "+ 
+					System.out.print("\n-Welcome, Manager: "+ 
 						theUsers.get(i).getFirst()+ " " + 
 					                theUsers.get(i).getLast() + "\n");
 					showParkManagerMenu(myManager, theUsers, theJobs);
 				} else if(theUsers.get(i).getType() == "Volunteer") {
-					System.out.print("-Welcome, Volunteer: "+ 
+					System.out.print("\n-Welcome, Volunteer: "+ 
 							theUsers.get(i).getFirst()+ " " + 
 					                theUsers.get(i).getLast() + "\n");
 					Volunteer myVolunteer = new Volunteer
@@ -85,7 +80,6 @@ public class Driver {
 	 */
 	public static void showVolunteerMenu(Volunteer theVolunteer, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
-		
 		
 		System.out.println("1. View jobs volunteered for.");
 		System.out.println("2. Sign Up for upcoming jobs.");
@@ -113,6 +107,7 @@ public class Driver {
 		} else if (choice.equals("2")) {
 			volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
 		} else if (choice.equals("3")) {
+		    user.nextLine();
 			signIn(theUsers, theJobs);
 		} else {
 			System.out.println("You did not input a valid answer so the "
@@ -120,7 +115,6 @@ public class Driver {
 			showVolunteerMenu(theVolunteer, theUsers, theJobs);
 		}
 	}
-
 	
 
 	public static void showParkManagerMenu(ParkManager theManager, 
@@ -169,13 +163,12 @@ public class Driver {
 		}
 	}
 
-	
 
 	/*Allows Volunteer to sign up for a job.*/
 	public static void volunteerSignUpForJob(Volunteer theVolunteer, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
-		System.out.println("Here are all of the jobs that are available. "
-				+ "Please choose which job you want by selecting a number. ");
+		System.out.println("\nHere are all of the jobs that are available. "
+				+ "Please choose which job you want by typing a number.\n");
 		for (int i = 0; i < theJobs.size(); i++) {
 		    System.out.println((i + 1) + ")" + "Location:  " +
 		                theJobs.get(i).getTitle()+ " " + "Date:  " +
@@ -184,7 +177,7 @@ public class Driver {
 		                theJobs.get(i).getDescription());
 		}
 
-		System.out.println("-Which job would you like to sign up for? "
+		System.out.println("\n-Which job would you like to sign up for? "
 		                   + "0 to exit to main menu.");
 		int value = user.nextInt() - 1;
 		if (value == -1)
@@ -196,24 +189,25 @@ public class Driver {
     		                       + "signed up for this job-");
     		} catch (AlreadySignedUpException ex) {
     		    System.out.println("Sorry, you have already" +
-    		                       " signed up for that job\n");
+    		                       " signed up for that job");
     		    volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
     		} catch (MinimumDaysException ec) {
     		    System.out.println("Sorry, that job is too close. We ask " + 
     		                      "That jobs are signed up for no sooner than "+ 
     		                      Volunteer.MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP +
-    		                      "Days out\n");
+    		                      "Days out");
     		    volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
     		} catch (ScheduleConflictException ed) {
     		    System.out.println("Sorry, looks like that jobs' "
-    		                       + " dates conflict" +
-    		                       "with one of your current ones.\n");
+    		                       + "dates conflict " +
+    		                       "with one of your current ones.");
     		    volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
     		}
     
     		showVolunteerMenu(theVolunteer, theUsers, theJobs);
 		}
 	}
+	
 	
 	/*Asks for information for a new job. Checks to see if the job length is 
 	 * max days or under.
@@ -229,7 +223,6 @@ public class Driver {
 		System.out.println("-Please provide a job location-");
 		System.out.print("Job Location: ");
 		String l = user.nextLine();
-		
 		
 		System.out.println("-What is the starting date for this job?-");
 		System.out.print("Date (MM/DD/YYYY): ");
@@ -251,8 +244,6 @@ public class Driver {
 					Integer.parseInt(dateArray[0]), 
 					Integer.parseInt(dateArray[1]));
 		}
-			
-		
 
 		System.out.println("-What is the ending date for this job?-");
 		System.out.print("Date (MM/DD/YYYY): ");
@@ -272,8 +263,6 @@ public class Driver {
 					Integer.parseInt(dateArray2[1]));
 		}
 		
-
-
 		System.out.println("-Please provide a job description-");
 		System.out.print("Job Description: ");
 		String d = user.nextLine();
@@ -283,8 +272,8 @@ public class Driver {
 		System.out.println(newJob.toString());
 		theJobs.add(newJob);
 		showParkManagerMenu(theManager, theUsers, theJobs);
-		
 	}
+	
 	
 	/*
 	 * If the size of the jobs is greater than the max amount that there can 
@@ -292,15 +281,10 @@ public class Driver {
 	 * else return true.
 	 * */
 	public static boolean isJobsAmountLegal(ArrayList<Job> theJobs) {
-		
 		if(theJobs.size() >= MAX_JOBS_IN_SYSTEM) {
 			return false;
 		} else {
 			return true;
 		}
-		
 	}
-	
-	
-
 }
