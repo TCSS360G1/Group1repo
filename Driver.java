@@ -72,7 +72,9 @@ public class Driver {
     			}
     		}
 		}
+
 		if (userFound == false && !name.equals("exit")) {
+			System.out.println("Invalid user. Please check the spelling!\n");
             signIn(theUsers, theJobs);
 		}
 	}
