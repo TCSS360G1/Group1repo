@@ -15,7 +15,9 @@ import model.Volunteer;
 import model.Job;
 
 public class Main implements Serializable {
-	private static ArrayList<User> myUsers = new ArrayList<User>();
+    private static final long serialVersionUID = 1L;
+    
+    private static ArrayList<User> myUsers = new ArrayList<User>();
 	private static ArrayList<Job> myJobs = new ArrayList<Job>();
 	private static Driver myDriver = new Driver();
 	
@@ -25,14 +27,17 @@ public class Main implements Serializable {
 		System.out.println(myJobs.toString());
 		
 		myDriver.signIn(myUsers, myJobs);
-		
+		System.out.println(myUsers.toString()); /////////////////////////////
 		serializeUserCollection();
 		serializeJobCollection();
-		
+		System.out.println(myUsers.toString()); ///////////////////////////////
 		myUsers.clear();
 		myJobs.clear();
+		
 		readInUserCollection();
 		readInJobCollection();
+		System.out.println(myJobs.toString());//////////////////////////
+		System.out.println(myUsers.toString()); ////////////////////
 	}
 
 	private static void fillCollections() {
@@ -116,7 +121,6 @@ public class Main implements Serializable {
 
 			in.close();
 			byteToUsers.close();
-			// System.out.println("Object has been deserialized");
 		}
 		catch (IOException ex)
 		{

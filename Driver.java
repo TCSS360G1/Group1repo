@@ -53,9 +53,7 @@ public class Driver {
     		for(int i = 0; i<theUsers.size(); i++) {
     			if (theUsers.get(i).getName().equals(name)) {
     				if(theUsers.get(i).getType() == "Manager") {
-    					ParkManager myManager = new ParkManager
-    						(theUsers.get(i).getFirst(), 
-    						 theUsers.get(i).getLast());
+    					ParkManager myManager = (ParkManager) (theUsers.get(i));
     					System.out.print("\n-Welcome, Manager: "+ 
     						theUsers.get(i).getFirst()+ " " + 
     					                theUsers.get(i).getLast() + "\n");
@@ -65,9 +63,7 @@ public class Driver {
     					System.out.print("\n-Welcome, Volunteer: "+ 
     							theUsers.get(i).getFirst()+ " " + 
     					                theUsers.get(i).getLast() + "\n");
-    					Volunteer myVolunteer = new Volunteer
-    						(theUsers.get(i).getFirst(), 
-    						 theUsers.get(i).getLast());
+    					Volunteer myVolunteer = (Volunteer) (theUsers.get(i));
     					showVolunteerMenu(myVolunteer, theUsers, theJobs);
     				}
     			}
@@ -199,7 +195,7 @@ public class Driver {
     		    System.out.println("Sorry, that job is too close. We ask " + 
     		                      "That jobs are signed up for no sooner than "+ 
     		                      Volunteer.MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP +
-    		                      "Days out");
+    		                      " Days out");
     		    volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
     		} catch (ScheduleConflictException ed) {
     		    System.out.println("Sorry, looks like that jobs' "
