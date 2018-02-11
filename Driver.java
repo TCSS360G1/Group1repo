@@ -38,29 +38,38 @@ import model.Volunteer;
 
 public class Driver {
 	
+	private static final int MAX_JOBS_IN_SYSTEM = 20;
 	static Scanner user = new Scanner(System.in);
 
 	/*The initial display. this will decide if the user is a volunteer or a PM
 	 *then will call methods to display the correct menus for type.*/
-	public static void signIn() {System.out.print("-Sign in-\nFULL NAME: ");
+	
+	public static void signIn(ArrayList<User> theUsers, 
+			ArrayList<Job> theJobs) {
+		System.out.print("-Sign in-\nFirst and last name (separated by a space): ");
+	
 
-		String username = user.next();
+		String name = user.nextLine();
 
-		// TODO: Check if User exists
-		System.out.println("-Fetching information-\n...\n");
-
-		if(type == "Park Manager") {
-			ParkManager myManager = new ParkManager();/////////////add constructor fields once the collections have been created.
-			System.out.print("-Welcome, ");
-			showParkManagerMenu(myManager);
-		} else if(type == "Volunteer") {
-			System.out.print("-Welcome, ");
-			Volunteer myVolunteer = new Volunteer();
-			showVolunteerMenu(myVolunteer);
-		}
 		
-		else {
-			System.out.println("-You are not registered-");
+		for(int i = 0; i<theUsers.size(); i++) {
+			
+			//System.out.println(theUsers.get(i).getName());
+			if (theUsers.get(i).getName().equals(name)) {
+				if(theUsers.get(i).getType() == "Manager") {
+					ParkManager myManager = new ParkManager
+						(theUsers.get(i).getFirst(), theUsers.get(i).getLast());
+					System.out.print("-Welcome, Manager: "+ 
+						theUsers.get(i).getFirst()+ " " + theUsers.get(i).getLast());
+					showParkManagerMenu(myManager, theUsers, theJobs);
+				} else if(theUsers.get(i).getType() == "Volunteer") {
+					System.out.print("-Welcome, Volunteer: "+ 
+							theUsers.get(i).getFirst()+ " " + theUsers.get(i).getLast());
+					Volunteer myVolunteer = new Volunteer
+						(theUsers.get(i).getFirst(), theUsers.get(i).getLast());
+					showVolunteerMenu(myVolunteer, theUsers, theJobs);
+				}
+			}
 		}
 	}
 
@@ -69,84 +78,98 @@ public class Driver {
 	 * the users job info.
 	 * @param- theVolunteer- the volunteer that has signed in.
 	 */
-	public static void showVolunteerMenu(Volunteer theVolunteer) {
-		String choice = user.next();
+	public static void showVolunteerMenu(Volunteer theVolunteer, 
+			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
+		String choice = user.nextLine();
 		
 		System.out.println("1. View jobs volunteered for.");
 		System.out.println("2. Sign Up for upcoming jobs.");
 		System.out.println("3. Sign Out of account.");
-		if (choice == "1") {
+		if (choice.equals("1")) {
 			///////////////////////////////////////////////////////
-		} else if (choice == "2") {
-			volunteerSignUpForJob(theVolunteer);
-		} else if (choice == "3") {
-			signIn();
+		} else if (choice.equals("2")) {
+			volunteerSignUpForJob(theVolunteer, theUsers, theJobs);
+		} else if (choice.equals("3")) {
+			signIn(theUsers, theJobs);
 		} else {
 			System.out.println("You did not input a valid answer so the "
 					+ "menu will be displayed again.");
-			showVolunteerMenu(theVolunteer);
+			showVolunteerMenu(theVolunteer, theUsers, theJobs);
 		}
 	}
 
 	
 
-	public static void showParkManagerMenu(ParkManager theManager) {
+	public static void showParkManagerMenu(ParkManager theManager, 
+			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		System.out.println("Please choose from one of the following (1-3): ");
 		
 		System.out.println("1. View current active jobs.");
 		System.out.println("2. Create a new park job.");
 		System.out.println("3. Sign Out of account.");
 		System.out.println("Please type a number between 1 and 3: ");
-		String choice = user.next();
+		String choice = user.nextLine();
 		
 		
-		if (choice == "1") {
-			//parse through the list and display the jobs.
-			//call the method that displays the job that will let the user 
-			//decide what job they want to choose.
+		if (choice.equals("1")) {
 			
-		} else if (choice == "2") {
+			System.out.println("Here are all of the current Jobs in the System, "
+					+ "you will be re-directed to the main menu: ");
+			for (int i = 0; i < theJobs.size(); i++) {
+				
+			    System.out.println((i+1)+ ". " + theJobs.get(i).getTitle()+ " At: " +
+			    			theJobs.get(i).getLocation() +" " +
+			                theJobs.get(i).getStartDate() + " To " +
+			                theJobs.get(i).getEndDate() + " Description: " +
+			                theJobs.get(i).getDescription());
+			} 
+			System.out.println();
+			showParkManagerMenu(theManager, theUsers, theJobs);
+		} else if (choice.equals("2")) {
 			//add all of this to the collection. 
-			//CHECK THE AMOUNT OF JOBS
-			//if job amount is not yet reached
-			newParkJob(theManager);
-			//else- 
-			//System.out.println("Sorry, we are currently filled, please check back in tomorrow.");
-			//display park manager menu.
-		} else if (choice == "3") {
-			signIn();
+			if(isJobsAmountLegal(theJobs)) {
+				newParkJob(theManager, theUsers, theJobs);
+			}
+			else {
+				System.out.println("Sorry, we are currently filled with the max"
+						+ " amount of jobs, please check back in tomorrow.");
+				
+			}
+			
+		} else if (choice.equals("3")) {
+			signIn(theUsers, theJobs);
 		} else {
 			System.out.println("You did not input a valid answer so the menu "
 					+ "will be displayed again.");
-			showParkManagerMenu(theManager);
+			showParkManagerMenu(theManager, theUsers, theJobs);
 		}
 	}
 
 	
 
 	/*Allows Volunteer to sign up for a job.*/
-	public static void volunteerSignUpForJob(Volunteer theVolunteer) {
-	    List<Job> array = new ArrayList<Job>();
+	public static void volunteerSignUpForJob(Volunteer theVolunteer, 
+			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		System.out.println("Here are all of the current jobs that are available. "
 				+ "Please choose which job you want by selecting a number. ");
-		for (int i = 0; i < array.size(); i++) {
-		    System.out.println(array.get(i).getTitle()+ " " +
-		                array.get(i).getStartDate() + " To " +
-		                array.get(i).getEndDate() + " Description: " +
-		                array.get(i).getDescription());
+		for (int i = 0; i < theJobs.size(); i++) {
+		    System.out.println(theJobs.get(i).getTitle()+ " " +
+		                theJobs.get(i).getStartDate() + " To " +
+		                theJobs.get(i).getEndDate() + " Description: " +
+		                theJobs.get(i).getDescription());
 		}
 
 		System.out.println("-Which job would you like to sign up for this job?-");
-
+			
 		try {
-		    theVolunteer.addJob(array.get(value));
+		    theVolunteer.addJob(theJobs.get(value));
 		catch (AlreadySignedUpException ex) {
 		    System.out.println("Sorry, you have already" +
 		                       "signed up for that job");
 		} catch (MinimumDaysException ec) {
 		    System.out.println("Sorry, that job is too close. We ask" + 
 		                       "That jobs are signed up for no sooner than" + 
-		                       Volunteer.MINIMUM_DAYS_OUT + "Days out");
+		                       Volunteer.MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP + "Days out");
 		} catch (ScheduleConflictException ed) {
 		    System.out.println("Sorry, looks like that jobs' dates conflict" +
 		                       "with one of your current ones.");
@@ -154,36 +177,39 @@ public class Driver {
 
 		System.out.println("-You have successfully signed up for this job-");
 
-		showVolunteerMenu(theVolunteer);
+		showVolunteerMenu(theVolunteer, theUsers, theJobs);
 	}
 	
 	/*Asks for information for a new job. Checks to see if the job length is max days or under.
 	 * checks to see if the job is not too far away,
 	 * and checks to see how many jobs there are.*/
-	public static void newParkJob(ParkManager theManager) {
+	public static void newParkJob(ParkManager theManager, 
+			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		
 		System.out.println("-Please provide a job title-");
 		System.out.print("Job Title: ");
-		String t = user.next();
+		String t = user.nextLine();
 		
 		System.out.println("-Please provide a job location-");
 		System.out.print("Job Location: ");
-		String l = user.next();
+		String l = user.nextLine();
 		
 		
 		System.out.println("-What is the starting date for this job?-");
 		System.out.print("Date (MM/DD/YYYY): ");
-		String s = user.next();
+		String s = user.nextLine();
 		String[] dateArray = s.split("/");
 		LocalDate start = LocalDate.of(Integer.parseInt(dateArray[2]), 
 				Integer.parseInt(dateArray[0]), 
 				Integer.parseInt(dateArray[1]));
-		//CHECK TO SEE IF START DATE IS NOT TOO FAR.
-		while(!theManager.isJobNotTooFar(start)) { //while this is false. ask for a new input
+		
+		while(!theManager.isJobNotTooFar(start)) { 
+			
+			//while this is false. ask for a new input
 			System.out.println("This date is too far. Please input a date that "
 					+ "is closer.");
 			System.out.print("Date (MM/DD/YYYY): ");
-			s = user.next();
+			s = user.nextLine();
 			dateArray = s.split("/");
 			start = LocalDate.of(Integer.parseInt(dateArray[2]), 
 					Integer.parseInt(dateArray[0]), 
@@ -194,7 +220,7 @@ public class Driver {
 
 		System.out.println("-What is the ending date for this job?-");
 		System.out.print("Date (MM/DD/YYYY): ");
-		String e = user.next();
+		String e = user.nextLine();
 		LocalDate end;
 		String[] dateArray2 = e.split("/");
 		end = LocalDate.of(Integer.parseInt(dateArray2[2]), 
@@ -203,7 +229,7 @@ public class Driver {
 		while(!theManager.isMaxDaysUnder(start, end)) {
 			System.out.println("Please limit your job to 3 days or under.");
 			System.out.print("Date (MM/DD/YYYY): ");
-			e = user.next();
+			e = user.nextLine();
 			dateArray2 = e.split("/");
 			end = LocalDate.of(Integer.parseInt(dateArray2[2]), 
 					Integer.parseInt(dateArray2[0]), 
@@ -214,20 +240,31 @@ public class Driver {
 
 		System.out.println("-Please provide a job description-");
 		System.out.print("Job Description: ");
-		String d = user.next();
-		//newJob.setDescription(d);
-		
+		String d = user.nextLine();
 		Job newJob = new Job(t,d,l, start, end);
-
-
 		System.out.println("-This job has been created-");
-		//System.out.println(newJob.getTitle()+ " " + 
-		//newJob.getStartDate() + " To " + 
-		//newJob.getEndDate() + " Description: " + newJob.getDescription());
-		newJob.toString();
 
-		showParkManagerMenu(theManager);
+		System.out.println(newJob.toString());
+		theJobs.add(newJob);
+		showParkManagerMenu(theManager, theUsers, theJobs);
 		
 	}
+	
+	/*
+	 * If the size of the jobs is greater than the max amount that there can 
+	 * be return false.
+	 * else return true.
+	 * */
+	public static boolean isJobsAmountLegal(ArrayList<Job> theJobs) {
+		
+		if(theJobs.size() >= MAX_JOBS_IN_SYSTEM) {
+			return false;
+		} else {
+			return true;
+		}
+		
+	}
+	
+	
 
 }
