@@ -15,7 +15,12 @@ import model.MinimumDaysException;
 import model.ScheduleConflictException;
 import model.Volunteer;
 	 
-
+/**
+ * Tests important methods in Volunteer to ensure functionality, and to implicitly test addJob.
+ *
+ *@author Kai Stansfield
+ *@version February 10, 2018
+ */
 class VolunteerTest {
 	static int NUMBER_OF_DAYS_TO_SIGN_UP = 2;
 
