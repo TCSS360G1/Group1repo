@@ -1,7 +1,10 @@
 package model;
 
+import java.io.Serializable;
 
-public abstract class User {	
+public abstract class User implements Serializable{	
+
+	private static final long serialVersionUID = 1L;	
 	
 	//private String myUserName;
 	private String myFirstName;
@@ -34,22 +37,57 @@ public abstract class User {
 	public String getName(){
 		return this.myFirstName + " " + this.myLastName; 
 	}
-	public String getFirst() {
-		return this.myFirstName;
-	}
-	public String getLast() {
-		return this.myLastName;
-	}
-	public void setFirst(String theFirst) {
-		this.myFirstName = theFirst;		
-	}
-	public void setLast(String theLast) {
-		this.myLastName = theLast;
-	}
+	
 	@Override
 	public String toString() {
 		return getName() + " " + getType();
 	}
 	
+	/*
+	public void setUserName(String theUserName){
+        this.myUserName = theUserName;
+    }
+    
+    public String getUserName(){
+        return this.myUserName;
+    }
+    
+	public void setBirthdate(String theDate){
+		this.myBirthdate = theDate;
+	}
 	
+	public String getBirthdate(){
+		return this.myBirthdate;
+	}
+	
+	
+	
+	public void setEmail(String theEmail){
+		this.myEmail = theEmail;
+	}
+	
+	public String getEmail(){
+		return this.myEmail;
+	}
+	
+	
+	
+	public void setPhone(int theNumber){
+		this.myPhone = theNumber;
+	}
+	
+	public int getPhone(){
+		return this.myPhone;
+	}
+	
+	
+	
+	public void setAge(int theAge){
+		this.myAge = theAge;
+	}
+	
+	public int getAge(){
+		return this.myAge;
+	}
+	*/
 }
