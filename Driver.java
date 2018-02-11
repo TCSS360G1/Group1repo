@@ -43,34 +43,38 @@ public class Driver {
 	
 	public static void signIn(ArrayList<User> theUsers, 
 			ArrayList<Job> theJobs) {
+	    System.out.println("Press 0 to exit sign in.\n");
 		System.out.print("-Sign in-\nFirst and last name "
 		                + "(separated by a space): ");
 	
 		String name = user.nextLine();
+		if (!(name.charAt(0) == '0' && name.length() == 1)) {
 		
-		for(int i = 0; i<theUsers.size(); i++) {
-			
-			//System.out.println(theUsers.get(i).getName());
-			if (theUsers.get(i).getName().equals(name)) {
-				if(theUsers.get(i).getType() == "Manager") {
-					ParkManager myManager = new ParkManager
-						(theUsers.get(i).getFirst(), theUsers.get(i).getLast());
-					System.out.print("\n-Welcome, Manager: "+ 
-						theUsers.get(i).getFirst()+ " " + 
-					                theUsers.get(i).getLast() + "\n");
-					showParkManagerMenu(myManager, theUsers, theJobs);
-				} else if(theUsers.get(i).getType() == "Volunteer") {
-					System.out.print("\n-Welcome, Volunteer: "+ 
-							theUsers.get(i).getFirst()+ " " + 
-					                theUsers.get(i).getLast() + "\n");
-					Volunteer myVolunteer = new Volunteer
-						(theUsers.get(i).getFirst(), theUsers.get(i).getLast());
-					showVolunteerMenu(myVolunteer, theUsers, theJobs);
-				}
-			}
+    		for(int i = 0; i<theUsers.size(); i++) {
+    			if (theUsers.get(i).getName().equals(name)) {
+    				if(theUsers.get(i).getType() == "Manager") {
+    					ParkManager myManager = new ParkManager
+    						(theUsers.get(i).getFirst(), 
+    						 theUsers.get(i).getLast());
+    					System.out.print("\n-Welcome, Manager: "+ 
+    						theUsers.get(i).getFirst()+ " " + 
+    					                theUsers.get(i).getLast() + "\n");
+    					showParkManagerMenu(myManager, theUsers, theJobs);
+    					
+    				} else if(theUsers.get(i).getType() == "Volunteer") {
+    					System.out.print("\n-Welcome, Volunteer: "+ 
+    							theUsers.get(i).getFirst()+ " " + 
+    					                theUsers.get(i).getLast() + "\n");
+    					Volunteer myVolunteer = new Volunteer
+    						(theUsers.get(i).getFirst(), 
+    						 theUsers.get(i).getLast());
+    					showVolunteerMenu(myVolunteer, theUsers, theJobs);
+    				}
+    			}
+		    }
+    		System.out.println("Invalid user. Please check the spelling.\n");
+            signIn(theUsers, theJobs);
 		}
-		System.out.println("Invalid user. Please check the spelling.\n");
-		signIn(theUsers, theJobs);
 	}
 
 	
