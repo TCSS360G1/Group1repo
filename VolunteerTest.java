@@ -1,6 +1,5 @@
 package testing;
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -16,10 +15,11 @@ import model.ScheduleConflictException;
 import model.Volunteer;
 	 
 /**
- * Tests important methods in Volunteer to ensure functionality, and to implicitly test addJob.
+ * Tests important methods in Volunteer to ensure functionality,
+ * and to implicitly test addJob.
  *
- *@author Kai Stansfield
- *@version February 10, 2018
+ * @author Kai Stansfield
+ * @version February 11, 2018
  */
 public class VolunteerTest {
 	static int NUMBER_OF_DAYS_TO_SIGN_UP = 2;

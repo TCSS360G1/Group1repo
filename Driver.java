@@ -1,15 +1,8 @@
 package user_interface;
 
-
-
-import java.io.BufferedReader;
-
-import java.io.IOException;
-
-import java.io.InputStreamReader;
 import java.time.LocalDate;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import model.AlreadySignedUpException;
@@ -20,26 +13,20 @@ import model.ScheduleConflictException;
 import model.User;
 import model.Volunteer;
 
-
-
 /**
-
  * The User Interface for the program.
-
  * This class will have methods to display to the console.
-
+ * 
  * @author Jenzel Villanueva
-
- * @version February 9, 2018
-
+ * @version February 11, 2018
  */
 public class Driver {
 	
 	private static final int MAX_JOBS_IN_SYSTEM = 20;
 	static Scanner user = new Scanner(System.in);
 
-	/*The initial display. this will decide if the user is a volunteer or a PM
-	 *then will call methods to display the correct menus for type.*/
+	/* The initial display. this will decide if the user is a volunteer or a PM
+	 *then will call methods to display the correct menus for type. */
 	
 	public static void signIn(ArrayList<User> theUsers, 
 			ArrayList<Job> theJobs) {
@@ -58,14 +45,14 @@ public class Driver {
     				if(theUsers.get(i).getType().equals("Manager")) {
     					ParkManager myManager = (ParkManager) (theUsers.get(i));
     					System.out.print("\n-Welcome, Manager: "+ 
-    						theUsers.get(i).getFirst()+ " " + 
-    					                theUsers.get(i).getLast() + "\n");
+    						theUsers.get(i).getFirstName()+ " " + 
+    					                theUsers.get(i).getLastName() + "\n");
     					showParkManagerMenu(myManager, theUsers, theJobs);
     					
     				} else if(theUsers.get(i).getType().equals("Volunteer")) {
     					System.out.print("\n-Welcome, Volunteer: "+ 
-    							theUsers.get(i).getFirst()+ " " + 
-    					                theUsers.get(i).getLast() + "\n");
+    							theUsers.get(i).getFirstName()+ " " + 
+    					                theUsers.get(i).getLastName() + "\n");
     					Volunteer myVolunteer = (Volunteer) (theUsers.get(i));
     					showVolunteerMenu(myVolunteer, theUsers, theJobs);
     				}
@@ -80,9 +67,11 @@ public class Driver {
 	}
 
 	
-	/**Shows volunteers menu. 3 options to choose from and shows 
+	/**
+	 * Shows Volunteers Menu. 3 options to choose from and shows 
 	 * the users job info.
-	 * @param- theVolunteer- the volunteer that has signed in.
+	 * 
+	 * @param theVolunteer the Volunteer that has signed in.
 	 */
 	public static void showVolunteerMenu(Volunteer theVolunteer, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
@@ -123,6 +112,14 @@ public class Driver {
 	}
 	
 
+	/**
+	 * Shows Park Manager Menu. 3 options to choose from and shows 
+	 * the current active job info.
+	 * 
+	 * @param theManager the Park Manager that has signed in.
+	 * @param theUsers the Users that are in the system.
+	 * @param theJobs the Jobs that are in the System.
+	 */
 	public static void showParkManagerMenu(ParkManager theManager, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		System.out.println("Please choose from one of the following (1-3): ");
@@ -132,7 +129,6 @@ public class Driver {
 		System.out.println("3. Sign Out of account.");
 		System.out.println("Please type a number between 1 and 3: ");
 		String choice = user.nextLine();
-		
 		
 		if (choice.equals("1")) {
 			
@@ -169,7 +165,13 @@ public class Driver {
 	}
 
 
-	/*Allows Volunteer to sign up for a job.*/
+	/**
+	 * Allows Volunteer to sign up for a job.
+	 * 
+	 * @param theVolunteer the Volunteer that has signed in.
+	 * @param theUsers the Users that are in the System.
+	 * @param theJobs the Jobs that are in the System.
+	 */
 	public static void volunteerSignUpForJob(Volunteer theVolunteer, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		System.out.println("\nHere are all of the jobs that are available. "
@@ -214,10 +216,15 @@ public class Driver {
 	}
 	
 	
-	/*Asks for information for a new job. Checks to see if the job length is 
-	 * max days or under.
-	 * checks to see if the job is not too far away,
-	 * and checks to see how many jobs there are.*/
+	/**
+	 * Asks for information for a new job. Checks to see if the job
+	 * length is max days or under. Checks to see if the job is not
+	 * too far away, and checks to see how many jobs there are.
+	 * 
+	 * @param theManager the Park Manager that has signed in.
+	 * @param theUsers the Users that are in the system.
+	 * @param theJobs the Jobs that are in the System.
+	 */
 	public static void newParkJob(ParkManager theManager, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		
@@ -305,11 +312,14 @@ public class Driver {
 	}
 	
 	
-	/*
+	/**
 	 * If the size of the jobs is greater than the max amount that there can 
-	 * be return false.
-	 * else return true.
-	 * */
+	 * be return false, else return true.
+	 * 
+	 * @param theJobs the Jobs that the User has signed up for.
+	 * @return false if there are too many jobs a Volunteer can carry,
+	 * true otherwise.
+	 */
 	public static boolean isJobsAmountLegal(ArrayList<Job> theJobs) {
 		if(theJobs.size() >= MAX_JOBS_IN_SYSTEM) {
 			return false;

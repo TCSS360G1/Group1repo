@@ -6,14 +6,19 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 
-import model.ParkManager;
 import model.User;
-import model.Volunteer;
 import model.Job;
 
+/**
+ * The Main Class for the program, which handles console input and output.
+ * Corresponds with an existing Users in the System.
+ * 
+ * @author Jenzel Villanueva, Kai Stansfield, Deepjot Kaur
+ * @version February 11, 2018
+ */
 public class Main implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -21,6 +26,11 @@ public class Main implements Serializable {
 	private static ArrayList<Job> myJobs = new ArrayList<Job>();
 	private static Driver myDriver = new Driver();
 	
+	/**
+	 * The main method in which the program runs within.
+	 * 
+	 * @param args command line arguments, not used in this program.
+	 */
 	public static void main(String[] args) {
 		fillCollections();
 		
@@ -32,11 +42,17 @@ public class Main implements Serializable {
 
 	}
 
+	/**
+	 * 
+	 */
 	private static void fillCollections() {
 	    readInUserCollection();
         readInJobCollection();
 	}
 
+	/**
+	 * 
+	 */
 	private static void serializeUserCollection() {
 		try {
 			FileOutputStream fileOut =
@@ -52,6 +68,9 @@ public class Main implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private static void serializeJobCollection() {
 		try {
 			FileOutputStream fileOut =
@@ -67,6 +86,9 @@ public class Main implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private static void readInUserCollection() {
 		// De-serialization
 		try
@@ -94,6 +116,9 @@ public class Main implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	private static void readInJobCollection() {
 		// De-serialization
 		try
@@ -117,4 +142,5 @@ public class Main implements Serializable {
 			ex.printStackTrace();
 		}
 	}
+	
 }
