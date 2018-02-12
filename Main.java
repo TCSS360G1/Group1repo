@@ -16,7 +16,7 @@ import model.Job;
  * The Main Class for the program, which handles console input and output.
  * Corresponds with an existing Users in the System.
  * 
- * @author Jenzel Villanueva, Kai Stansfield, Deepjot Kaur
+ * @author Jenzel Villanueva, Kai Stansfield, Deepjot Kaur, Luke Manca
  * @version February 11, 2018
  */
 public class Main implements Serializable {
