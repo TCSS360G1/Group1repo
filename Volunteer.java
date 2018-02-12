@@ -17,7 +17,7 @@ import java.util.List;
  * @version February 11, 2018
  */
 public class Volunteer extends User implements Serializable {
-    private static final long serialVersionUID = 7001992405582133870L;
+    private static final long serialVersionUID = 1L;
 
     /* Fields */
     public static final int MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP = 2;
