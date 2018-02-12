@@ -43,7 +43,7 @@ public class Main implements Serializable {
 	}
 
 	/**
-	 * 
+	 * De-serializes both Jobs and Users .ser files.  
 	 */
 	private static void fillCollections() {
 	    readInUserCollection();
@@ -51,7 +51,7 @@ public class Main implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Serializes the Users ArrayList to store all Users.
 	 */
 	private static void serializeUserCollection() {
 		try {
@@ -69,7 +69,7 @@ public class Main implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Serializes the Jobs ArrayList to store all Jobs.
 	 */
 	private static void serializeJobCollection() {
 		try {
@@ -87,7 +87,7 @@ public class Main implements Serializable {
 	}
 
 	/**
-	 * 
+	 * De-serializes Users .ser file to Users Arraylist.
 	 */
 	private static void readInUserCollection() {
 		// De-serialization
@@ -117,7 +117,7 @@ public class Main implements Serializable {
 	}
 
 	/**
-	 * 
+	 * De-serializes Jobs .ser file to Jobs Arraylist.
 	 */
 	private static void readInJobCollection() {
 		// De-serialization
