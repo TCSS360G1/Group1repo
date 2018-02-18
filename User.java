@@ -16,6 +16,7 @@ public abstract class User implements Serializable{
 	private String myFirstName;
 	private String myLastName;
 	private String myType;
+	public static int myLegalJobAmount;
 	// private String myBirthdate;
 	// private String myEmail;
 	// private int myPhone;
@@ -120,4 +121,11 @@ public abstract class User implements Serializable{
 		return getName() + " " + getType();
 	}
 	
+	public static void setLegalJobAmount(int theLegalJobAmount) {
+		myLegalJobAmount = theLegalJobAmount;
+	}
+	
+	public static int getLegalJobAmount() {
+		return myLegalJobAmount;
+	}
 }
