@@ -63,6 +63,19 @@ public class JobCollection implements Serializable {
 		myJobs.clear();
 		
 	}
+	public int getSize() {
+		return myJobs.size();
+	}
+	public Job getIndex(int i) {
+		return myJobs.get(i);
+		
+	}
+	public void addNewJob(Job newJob) {
+		myJobs.add(newJob);
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

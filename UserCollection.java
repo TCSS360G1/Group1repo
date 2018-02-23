@@ -11,16 +11,12 @@ public class UserCollection {
 	
 	private static ArrayList<User> myUsers = new ArrayList<User>();
 
-	public void clearUsers() {
-		myUsers.clear();
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	/**
 	 * Serializes the Users ArrayList to store all Users.
 	 */
-	public static void serializeUserCollection() {
+	public static void serializeUserCollection() { 
 		try {
 			FileOutputStream fileOut =
 					new FileOutputStream("userFile.ser");
@@ -63,4 +59,17 @@ public class UserCollection {
 			ex.printStackTrace();
 		}
 	}
+	public void clearUsers() {
+		myUsers.clear();
+		// TODO Auto-generated method stub
+		
+	}
+	public int getSize() {
+		return myUsers.size();
+	}
+	public User getIndex(int i) {
+		return myUsers.get(i);
+		
+	}
+
 }

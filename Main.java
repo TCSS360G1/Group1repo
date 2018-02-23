@@ -36,8 +36,9 @@ public class Main implements Serializable {
 	 * @param args command line arguments, not used in this program.
 	 */
 	public static void main(String[] args) {
-		fillCollections();
 		
+		fillCollections();
+				
 		myDriver.signIn(myUsers, myJobs);
 		myUsers.serializeUserCollection();
 		myJobs.serializeJobCollection();

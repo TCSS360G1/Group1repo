@@ -32,7 +32,6 @@ public class Driver {
 	
 	public static void signIn(UserCollection myUsers, 
 			JobCollection myJobs) {
-		myUsers.clear2Users();
 	    System.out.println("Type 'exit' to exit sign in.\n");
 		System.out.print("-Sign in-\nFirst and last name "
 		                + "(separated by a space): ");
@@ -138,7 +137,7 @@ public class Driver {
 		System.out.println("4. View all my jobs");
 		System.out.println("Please type a number between 1 and 4: ");
 		String choice = user.nextLine();
-//		ArrayList<Job> managerJobs = theManager.getJobs();
+		ArrayList<Job> managerJobs = theManager.getJobs();
 		if (choice.equals("1")) {
 			
 			System.out.println("Here are all of the current Jobs in the System,"
@@ -146,7 +145,7 @@ public class Driver {
 			for (int i = 0; i < myJobs.getSize(); i++) {
 				
 			    System.out.println((i+1)+ ". " + myJobs.getIndex(i).getTitle()+ 
-			                    " At: " + 
+			                    " At: " +
 			    			myJobs.getIndex(i).getLocation() +" " +
 			                myJobs.getIndex(i).getStartDate() + " To " +
 			                myJobs.getIndex(i).getEndDate() + " Description: " +
@@ -167,7 +166,7 @@ public class Driver {
 		} else if (choice.equals("3")) {
 			signIn(myUsers, myJobs);
 		} else if (choice.equals("4")){
-			ArrayList<Job> managerJobs = theManager.getJobs();
+			
 			for (int i = 0; i < managerJobs.size(); i++) {
 		        System.out.println((i+1)+ ". " +
 		        		managerJobs.get(i).getTitle() + " At: " +
@@ -177,7 +176,7 @@ public class Driver {
                             " Description: " +
                         managerJobs.get(i).getDescription());
 		    }
-			
+			showParkManagerMenu(theManager, myUsers, myJobs);
 		}else {
 			System.out.println("You did not input a valid answer so the menu "
 					+ "will be displayed again.");
@@ -329,6 +328,7 @@ public class Driver {
 
 		System.out.println(newJob.toString());
 		myJobs.addNewJob(newJob);
+		theManager.addJob(newJob);
 		showParkManagerMenu(theManager, myUsers, myJobs);
 	}
 	
