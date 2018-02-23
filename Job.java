@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  * This class holds methods for the Job class. A Job consists of a title,
@@ -13,12 +14,14 @@ import java.time.LocalDate;
  */
 public class Job implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+    public static final int MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP = 3;
+    public static final int MINIMUM_NUMBER_OF_DAYS_TO_UNVOLUNTEER = 3;
 
-    /* Fields */
     private String title;
     private String description;
     private String location;
-    private LocalDate startDate; //use .equals to compare
+    private LocalDate startDate;
     private LocalDate endDate;
 
     /**
@@ -40,6 +43,153 @@ public class Job implements Serializable {
     	endDate = theEndDate;
     }
 
+    //---Validation methods---//
+    /**
+     * This method requires a job with a valid start and end date. This method
+     * will compare theCandidates start and end dates with this jobs', and will
+     * return a boolean to show the status of potential conflicts.
+     * 
+     * @param theCandidate A job that has a potential conflicting
+     * start and end date.
+     * @return true when there is no conflict, false otherwise.
+     * 
+     */
+    public boolean isNoScheduleConflicts(Job theCandidate) {
+        boolean isGood = true;
+            isGood = (isGoodStart(theCandidate) && isGoodEnd(theCandidate));
+        return isGood;
+    }
+
+    /**
+     * This method requires a candidate job with a valid start date. It will
+     * compare to see if this job is occurring when theCandidate starts. A
+     * boolean is returned for the status of the potential conflict. It is
+     * expected that isNoScheduleConflicts() is called instead, as it will call
+     * this method and sister method isGoodEnd().
+     * 
+     * @param theCandidate A job that has a potential conflicting
+     * start date.
+     * @return true when there is no conflict, false otherwise.
+     * 
+     */
+    public boolean isGoodStart(Job theCandidate) {
+        boolean isGood = true;
+
+        long lengthOfCurr = ChronoUnit.DAYS.between(this.startDate,
+                this.endDate);
+
+        long between = ChronoUnit.DAYS.between(this.endDate,
+                theCandidate.getStartDate());
+
+        if (between <= 0 && between >= lengthOfCurr * -1) {
+            isGood = false;
+        }
+
+        return isGood;
+    }
+    
+    /**
+     * This method requires a candidate job with a valid end date. It will
+     * compare to see if this job is occurring when theCandidate ends. A
+     * boolean is returned for the status of the potential conflict. It is
+     * expected that isNoScheduleConflicts() is called instead, as it will call
+     * this method and sister method isGoodEnd().
+     * 
+     * @param theCandidate A job that has a potential conflicting
+     * start date.
+     * @return true when there is no conflict, false otherwise.
+     * 
+     */
+    public boolean isGoodEnd(Job theCandidate) {
+        boolean isGood = true;
+
+        long lengthOfCurr = ChronoUnit.DAYS.between(this.startDate,
+                this.endDate);
+
+        long between = ChronoUnit.DAYS.between(this.startDate,
+                theCandidate.getEndDate());
+
+        if (between >= 0 && between <= lengthOfCurr) {
+            isGood = false;
+        }
+
+        return isGood;
+    }
+
+    /**
+     * This method tests to see if this job's start date is more than or equal
+     * to the minimum days for a job to be signed up for.
+     * 
+     * @return true if the time between now and the job's date is valid, false
+     * otherwise.
+     */
+    public boolean isMoreThanMinimumDays() {
+        boolean isGood = true;
+
+        LocalDate currentDate = LocalDate.now();
+        long timeBetween = ChronoUnit.DAYS.between(currentDate,
+                this.startDate);
+
+        if (timeBetween < MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP) {
+            isGood = false;
+
+        }
+        return isGood;
+    }
+    
+    /**
+     * Tests to see if this job is too close to be unvolunteered for.
+     * 
+     * @return True if the job is too close, false otherwise.
+     */
+    public boolean isTooClose() {
+        boolean isTooClose = false;
+        
+        LocalDate currentDate = LocalDate.now();
+        long timeBetween = ChronoUnit.DAYS.between(currentDate,
+                        this.startDate);
+        if (timeBetween < MINIMUM_NUMBER_OF_DAYS_TO_UNVOLUNTEER)
+            isTooClose = true;
+        
+        return isTooClose;
+    }
+    
+    /**
+     * Tests to see if this job is currently active. Active is defined as having
+     * started before or on the current day, and ending on or after the current
+     * day.
+     * 
+     * @return true if the job is active, false otherwise.
+     */
+    public boolean isActiveJob() {
+        boolean isActive = false;
+        LocalDate currentDate = LocalDate.now();
+        long currToEnd = ChronoUnit.DAYS.between(this.endDate,
+                        currentDate);
+        long currToStart = ChronoUnit.DAYS.between(this.startDate,
+                        currentDate);
+        if (currToEnd <= 0 && currToStart >= 0)
+            isActive = true;
+        
+        return isActive;
+    }
+    
+    /**
+     * This method tests if this job is in the past; The job ended before today.
+     * 
+     * @return True if the job is in the past, false otherwise.
+     */
+    public boolean isInPast() {
+        boolean inPast = false;
+        
+        LocalDate currentDate = LocalDate.now();
+        long endToCurr = ChronoUnit.DAYS.between(this.endDate, currentDate);
+        
+        if (endToCurr < 0)
+            inPast = true;
+        return inPast;
+    }
+    //---Getters and setters ---//
     /**
      * Gets the title given to the Job.
      * 
@@ -132,7 +282,7 @@ public class Job implements Serializable {
 
     @Override
     public String toString() {
-    	return getTitle()+ " " + getLocation()+ " "+ getStartDate() + " To " + 
+    	return getTitle()+ " " + getStartDate() + " To " + 
 				getEndDate() + " Description: " + getDescription();
     }
     
