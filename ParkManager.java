@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class represents a User in the Urban Parks System. A Park Manager
@@ -20,6 +22,8 @@ public class ParkManager extends User implements Serializable{
 	private static final int MAX_LENGTH = 3;
 	// private static final int MAX_JOBS = 20;
 	private static final int MAX_DISTANCE = 75;
+	
+	private List<Job> myListedJobs;
 
 	/**
 	 * The constructor for a Park Manager, which extends User,
@@ -30,6 +34,8 @@ public class ParkManager extends User implements Serializable{
 	 */
 	public ParkManager(String theFirstName, String theLastName) {
 	    super(theFirstName, theLastName, "Manager");
+	    
+	    this.myListedJobs = new ArrayList<Job>();
 	}
 	
 	/** 
@@ -66,6 +72,40 @@ public class ParkManager extends User implements Serializable{
 		} else {
 			return true;
 		}
+	}
+	
+	/**
+	 * precondition: theJob != null
+	 * postcondition: 
+	 * 
+	 * @param theJob 
+	 */
+	public void addJob(Job theJob) {
+		// are there any conflicts with Park Manager's list?
+		
+		myListedJobs.add(theJob);
+	}
+	
+	/**
+	 * precondition: theJob != null
+	 * postcondition: 
+	 * 
+	 * @param theJob 
+	 */
+	public void removeJob(Job theJob) {
+		myListedJobs.remove(theJob);
+	}
+	
+	/**
+	 * precondition: 
+	 * postcondition: non-null Jobs related to Park Manager are returned.
+	 * 
+	 * @return 
+	 */
+	public ArrayList<Job> getJobs() {
+		ArrayList<Job> listedJobs = new ArrayList<Job>(myListedJobs);
+		
+		return listedJobs;
 	}
 	
 }
