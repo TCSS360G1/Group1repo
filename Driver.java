@@ -1,74 +1,63 @@
 package user_interface;
 
-
-
-import java.io.BufferedReader;
-
-import java.io.IOException;
-
-import java.io.InputStreamReader;
 import java.time.LocalDate;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import model.AlreadySignedUpException;
 import model.Job;
+import model.JobCollection;
 import model.MinimumDaysException;
 import model.ParkManager;
 import model.ScheduleConflictException;
 import model.User;
+import model.UserCollection;
 import model.Volunteer;
 
-
-
 /**
-
  * The User Interface for the program.
-
  * This class will have methods to display to the console.
-
+ * 
  * @author Jenzel Villanueva
-
- * @version February 9, 2018
-
+ * @version February 11, 2018
  */
 public class Driver {
 	
-	private static final int MAX_JOBS_IN_SYSTEM = 20;
+	private static final int MAX_JOBS_IN_SYSTEM = 10; //change to static.
 	static Scanner user = new Scanner(System.in);
 
-	/*The initial display. this will decide if the user is a volunteer or a PM
-	 *then will call methods to display the correct menus for type.*/
+	/* The initial display. this will decide if the user is a volunteer or a PM
+	 *then will call methods to display the correct menus for type. */
 	
-	public static void signIn(ArrayList<User> theUsers, 
-			ArrayList<Job> theJobs) {
-		
+	public static void signIn(UserCollection myUsers, 
+			JobCollection myJobs) {
 	    System.out.println("Type 'exit' to exit sign in.\n");
 		System.out.print("-Sign in-\nFirst and last name "
 		                + "(separated by a space): ");
 		
 		String name = user.nextLine();
+		
 		boolean userFound = false;
 		if (name.equals("exit")) {
 		    //Dummy branch
 		} else {
-    		for(int i = 0; i<theUsers.size(); i++) {
-    			if (theUsers.get(i).getName().equals(name)) {
+    		for(int i = 0; i<myUsers.size(); i++) {
+    			if (myUsers.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
     				userFound = true;
-    				if(theUsers.get(i).getType().equals("Manager")) {
-    					ParkManager myManager = (ParkManager) (theUsers.get(i));
+    				if(myUsers.get(i).getType().equals("Manager")) {
+    					ParkManager myManager = (ParkManager) (myUsers.get(i));
     					System.out.print("\n-Welcome, Manager: "+ 
-    						theUsers.get(i).getFirst()+ " " + 
-    					                theUsers.get(i).getLast() + "\n");
-    					showParkManagerMenu(myManager, theUsers, theJobs);
+    						myUsers.get(i).getFirstName()+ " " + 
+    					                myUsers.get(i).getLastName() + "\n");
+    					showParkManagerMenu(myManager, myUsers, myJobs);
     					
-    				} else if(theUsers.get(i).getType().equals("Volunteer")) {
+    				} else if(myUsers.get(i).getType().equals("Volunteer")) {
     					System.out.print("\n-Welcome, Volunteer: "+ 
-    							theUsers.get(i).getFirst()+ " " + 
-    					                theUsers.get(i).getLast() + "\n");
-    					Volunteer myVolunteer = (Volunteer) (theUsers.get(i));
-    					showVolunteerMenu(myVolunteer, theUsers, theJobs);
+    							myUsers.get(i).getFirstName()+ " " + 
+    					                myUsers.get(i).getLastName() + "\n");
+    					Volunteer myVolunteer = (Volunteer) (myUsers.get(i));
+    					showVolunteerMenu(myVolunteer, myUsers, myJobs);
     				}
     			}
     		}
@@ -76,14 +65,16 @@ public class Driver {
 
 		if (userFound == false && !name.equals("exit")) {
 			System.out.println("Invalid user. Please check the spelling!\n");
-            signIn(theUsers, theJobs);
+            signIn(myUsers, myJobs);
 		}
 	}
 
 	
-	/**Shows volunteers menu. 3 options to choose from and shows 
+	/**
+	 * Shows Volunteers Menu. 3 options to choose from and shows 
 	 * the users job info.
-	 * @param- theVolunteer- the volunteer that has signed in.
+	 * 
+	 * @param theVolunteer the Volunteer that has signed in.
 	 */
 	public static void showVolunteerMenu(Volunteer theVolunteer, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
@@ -91,10 +82,11 @@ public class Driver {
 		System.out.println("1. View jobs volunteered for.");
 		System.out.println("2. Sign Up for upcoming jobs.");
 		System.out.println("3. Sign Out of account.");
+		System.out.println("4. Unvolunteer for a job.");
 		
 		String choice = user.next();
+		ArrayList<Job> volunteerJobs = theVolunteer.getJobs();
 		if (choice.equals("1")) {
-			ArrayList<Job> volunteerJobs = theVolunteer.getJobs();
 			if (volunteerJobs.isEmpty()) {
 			    System.out.println("No jobs signed up for!\n");
 			    showVolunteerMenu(theVolunteer, theUsers, theJobs);
@@ -116,6 +108,8 @@ public class Driver {
 		} else if (choice.equals("3")) {
 		    user.nextLine();
 			signIn(theUsers, theJobs);
+		} else if (choice.equals("4")) {
+			///
 		} else {
 			System.out.println("You did not input a valid answer so the "
 					+ "menu will be displayed again.\n");
@@ -124,6 +118,14 @@ public class Driver {
 	}
 	
 
+	/**
+	 * Shows Park Manager Menu. 3 options to choose from and shows 
+	 * the current active job info.
+	 * 
+	 * @param theManager the Park Manager that has signed in.
+	 * @param theUsers the Users that are in the system.
+	 * @param theJobs the Jobs that are in the System.
+	 */
 	public static void showParkManagerMenu(ParkManager theManager, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		System.out.println("Please choose from one of the following (1-3): ");
@@ -133,7 +135,6 @@ public class Driver {
 		System.out.println("3. Sign Out of account.");
 		System.out.println("Please type a number between 1 and 3: ");
 		String choice = user.nextLine();
-		
 		
 		if (choice.equals("1")) {
 			
@@ -170,7 +171,13 @@ public class Driver {
 	}
 
 
-	/*Allows Volunteer to sign up for a job.*/
+	/**
+	 * Allows Volunteer to sign up for a job.
+	 * 
+	 * @param theVolunteer the Volunteer that has signed in.
+	 * @param theUsers the Users that are in the System.
+	 * @param theJobs the Jobs that are in the System.
+	 */
 	public static void volunteerSignUpForJob(Volunteer theVolunteer, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		System.out.println("\nHere are all of the jobs that are available. "
@@ -215,10 +222,15 @@ public class Driver {
 	}
 	
 	
-	/*Asks for information for a new job. Checks to see if the job length is 
-	 * max days or under.
-	 * checks to see if the job is not too far away,
-	 * and checks to see how many jobs there are.*/
+	/**
+	 * Asks for information for a new job. Checks to see if the job
+	 * length is max days or under. Checks to see if the job is not
+	 * too far away, and checks to see how many jobs there are.
+	 * 
+	 * @param theManager the Park Manager that has signed in.
+	 * @param theUsers the Users that are in the system.
+	 * @param theJobs the Jobs that are in the System.
+	 */
 	public static void newParkJob(ParkManager theManager, 
 			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
 		
@@ -306,11 +318,14 @@ public class Driver {
 	}
 	
 	
-	/*
+	/**
 	 * If the size of the jobs is greater than the max amount that there can 
-	 * be return false.
-	 * else return true.
-	 * */
+	 * be return false, else return true.
+	 * 
+	 * @param theJobs the Jobs that the User has signed up for.
+	 * @return false if there are too many jobs a Volunteer can carry,
+	 * true otherwise.
+	 */
 	public static boolean isJobsAmountLegal(ArrayList<Job> theJobs) {
 		if(theJobs.size() >= MAX_JOBS_IN_SYSTEM) {
 			return false;
