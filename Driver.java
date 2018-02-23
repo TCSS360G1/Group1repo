@@ -24,7 +24,7 @@ import model.Volunteer;
  */
 public class Driver {
 	
-	private static final int MAX_JOBS_IN_SYSTEM = 10; //change to static.
+	private static final int MAX_JOBS_IN_SYSTEM = 20; //change to static.
 	static Scanner user = new Scanner(System.in);
 
 	/* The initial display. this will decide if the user is a volunteer or a PM
@@ -42,21 +42,21 @@ public class Driver {
 		if (name.equals("exit")) {
 		    //Dummy branch
 		} else {
-    		for(int i = 0; i<myUsers.size(); i++) {
-    			if (myUsers.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
+    		for(int i = 0; i<myUsers.getSize(); i++) {
+    			if (myUsers.getIndex(i).getName().toLowerCase().equals(name.toLowerCase())) {
     				userFound = true;
-    				if(myUsers.get(i).getType().equals("Manager")) {
-    					ParkManager myManager = (ParkManager) (myUsers.get(i));
+    				if(myUsers.getIndex(i).getType().equals("Manager")) {
+    					ParkManager myManager = (ParkManager) (myUsers.getIndex(i));
     					System.out.print("\n-Welcome, Manager: "+ 
-    						myUsers.get(i).getFirstName()+ " " + 
-    					                myUsers.get(i).getLastName() + "\n");
+    						myUsers.getIndex(i).getFirstName()+ " " + 
+    					                myUsers.getIndex(i).getLastName() + "\n");
     					showParkManagerMenu(myManager, myUsers, myJobs);
     					
-    				} else if(myUsers.get(i).getType().equals("Volunteer")) {
+    				} else if(myUsers.getIndex(i).getType().equals("Volunteer")) {
     					System.out.print("\n-Welcome, Volunteer: "+ 
-    							myUsers.get(i).getFirstName()+ " " + 
-    					                myUsers.get(i).getLastName() + "\n");
-    					Volunteer myVolunteer = (Volunteer) (myUsers.get(i));
+    							myUsers.getIndex(i).getFirstName()+ " " + 
+    					                myUsers.getIndex(i).getLastName() + "\n");
+    					Volunteer myVolunteer = (Volunteer) (myUsers.getIndex(i));
     					showVolunteerMenu(myVolunteer, myUsers, myJobs);
     				}
     			}
@@ -77,7 +77,7 @@ public class Driver {
 	 * @param theVolunteer the Volunteer that has signed in.
 	 */
 	public static void showVolunteerMenu(Volunteer theVolunteer, 
-			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
+			UserCollection theUsers, JobCollection theJobs) {
 		
 		System.out.println("1. View jobs volunteered for.");
 		System.out.println("2. Sign Up for upcoming jobs.");
@@ -123,11 +123,11 @@ public class Driver {
 	 * the current active job info.
 	 * 
 	 * @param theManager the Park Manager that has signed in.
-	 * @param theUsers the Users that are in the system.
-	 * @param theJobs the Jobs that are in the System.
+	 * @param myUsers the Users that are in the system.
+	 * @param myJobs the Jobs that are in the System.
 	 */
 	public static void showParkManagerMenu(ParkManager theManager, 
-			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
+			UserCollection myUsers, JobCollection myJobs) {
 		System.out.println("Please choose from one of the following (1-3): ");
 		
 		System.out.println("1. View current active jobs.");
@@ -140,21 +140,21 @@ public class Driver {
 			
 			System.out.println("Here are all of the current Jobs in the System,"
 					+ " you will be re-directed to the main menu: ");
-			for (int i = 0; i < theJobs.size(); i++) {
+			for (int i = 0; i < myJobs.getSize(); i++) {
 				
-			    System.out.println((i+1)+ ". " + theJobs.get(i).getTitle()+ 
+			    System.out.println((i+1)+ ". " + myJobs.getIndex(i).getTitle()+ 
 			                    " At: " +
-			    			theJobs.get(i).getLocation() +" " +
-			                theJobs.get(i).getStartDate() + " To " +
-			                theJobs.get(i).getEndDate() + " Description: " +
-			                theJobs.get(i).getDescription());
+			    			myJobs.getIndex(i).getLocation() +" " +
+			                myJobs.getIndex(i).getStartDate() + " To " +
+			                myJobs.getIndex(i).getEndDate() + " Description: " +
+			                myJobs.getIndex(i).getDescription());
 			} 
 			System.out.println();
-			showParkManagerMenu(theManager, theUsers, theJobs);
+			showParkManagerMenu(theManager, myUsers, myJobs);
 		} else if (choice.equals("2")) {
 			//add all of this to the collection. 
-			if(isJobsAmountLegal(theJobs)) {
-				newParkJob(theManager, theUsers, theJobs);
+			if(isJobsAmountLegal(myJobs)) {
+				newParkJob(theManager, myUsers, myJobs);
 			}
 			else {
 				System.out.println("Sorry, we are currently filled with the max"
@@ -162,11 +162,11 @@ public class Driver {
 			}
 			
 		} else if (choice.equals("3")) {
-			signIn(theUsers, theJobs);
+			signIn(myUsers, myJobs);
 		} else {
 			System.out.println("You did not input a valid answer so the menu "
 					+ "will be displayed again.");
-			showParkManagerMenu(theManager, theUsers, theJobs);
+			showParkManagerMenu(theManager, myUsers, myJobs);
 		}
 	}
 
@@ -179,15 +179,15 @@ public class Driver {
 	 * @param theJobs the Jobs that are in the System.
 	 */
 	public static void volunteerSignUpForJob(Volunteer theVolunteer, 
-			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
+			UserCollection theUsers, JobCollection theJobs) {
 		System.out.println("\nHere are all of the jobs that are available. "
 				+ "Please choose which job you want by typing a number.\n");
-		for (int i = 0; i < theJobs.size(); i++) {
+		for (int i = 0; i < theJobs.getSize(); i++) {
 		    System.out.println((i + 1) + ")" + "Location:  " +
-		                theJobs.get(i).getTitle()+ " " + "Date:  " +
-		                theJobs.get(i).getStartDate() + " To " +
-		                theJobs.get(i).getEndDate() + " Description:  " +
-		                theJobs.get(i).getDescription());
+		                theJobs.getIndex(i).getTitle()+ " " + "Date:  " +
+		                theJobs.getIndex(i).getStartDate() + " To " +
+		                theJobs.getIndex(i).getEndDate() + " Description:  " +
+		                theJobs.getIndex(i).getDescription());
 		}
 
 		System.out.println("\n-Which job would you like to sign up for? "
@@ -197,7 +197,7 @@ public class Driver {
 		    showVolunteerMenu(theVolunteer, theUsers, theJobs);
 		else {
     		try {
-    		    theVolunteer.addJob(theJobs.get(value));
+    		    theVolunteer.addJob(theJobs.getIndex(value));
     		    System.out.println("-You have successfully "
     		                       + "signed up for this job-");
     		} catch (AlreadySignedUpException ex) {
@@ -228,11 +228,11 @@ public class Driver {
 	 * too far away, and checks to see how many jobs there are.
 	 * 
 	 * @param theManager the Park Manager that has signed in.
-	 * @param theUsers the Users that are in the system.
-	 * @param theJobs the Jobs that are in the System.
+	 * @param myUsers the Users that are in the system.
+	 * @param myJobs the Jobs that are in the System.
 	 */
 	public static void newParkJob(ParkManager theManager, 
-			ArrayList<User> theUsers, ArrayList<Job> theJobs) {
+			UserCollection myUsers, JobCollection myJobs) {
 		
 		System.out.println("-Please provide a job title-");
 		System.out.print("Job Title: ");
@@ -313,8 +313,8 @@ public class Driver {
 		System.out.println("-This job has been created-");
 
 		System.out.println(newJob.toString());
-		theJobs.add(newJob);
-		showParkManagerMenu(theManager, theUsers, theJobs);
+		myJobs.addNewJob(newJob);
+		showParkManagerMenu(theManager, myUsers, myJobs);
 	}
 	
 	
@@ -322,12 +322,12 @@ public class Driver {
 	 * If the size of the jobs is greater than the max amount that there can 
 	 * be return false, else return true.
 	 * 
-	 * @param theJobs the Jobs that the User has signed up for.
+	 * @param myJobs the Jobs that the User has signed up for.
 	 * @return false if there are too many jobs a Volunteer can carry,
 	 * true otherwise.
 	 */
-	public static boolean isJobsAmountLegal(ArrayList<Job> theJobs) {
-		if(theJobs.size() >= MAX_JOBS_IN_SYSTEM) {
+	public static boolean isJobsAmountLegal(JobCollection myJobs) {
+		if(myJobs.getSize() >= MAX_JOBS_IN_SYSTEM) {
 			return false;
 		} else {
 			return true;
