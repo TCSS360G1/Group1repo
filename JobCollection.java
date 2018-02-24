@@ -15,7 +15,7 @@ public class JobCollection implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static ArrayList<Job> myJobs = new ArrayList<Job>();
-	
+	private static ArrayList<Job> myFilteredJobs = new ArrayList<Job>();
 	/**
 	 * Serializes the Jobs ArrayList to store all Jobs.
 	 */
@@ -45,6 +45,7 @@ public class JobCollection implements Serializable {
 
 			// Method for de-serialization of object
 			// REnew users arraylist to a casted serialized object.
+			// filter();
 			myJobs = (ArrayList<Job>) in.readObject();
 
 			in.close();
@@ -75,7 +76,14 @@ public class JobCollection implements Serializable {
 		// TODO Auto-generated method stub
 		
 	}
-
+	public static void filter() {
+		for(int i = 0; i<myJobs.size(); i++){
+			if(myJobs.get(i).isInPast()){
+				myJobs.remove(i);
+			}
+		}
+		System.out.println("\n\n filtered out jobs\n\n");
+	}
 
 
 }

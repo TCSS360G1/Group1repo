@@ -38,9 +38,10 @@ public class Main implements Serializable {
 	public static void main(String[] args) {
 		
 		fillCollections();
-				
+		myJobs.filter();
 		myDriver.signIn(myUsers, myJobs);
 		myUsers.serializeUserCollection();
+		
 		myJobs.serializeJobCollection();
 		myUsers.clearUsers();
 		myJobs.clearJobs();
