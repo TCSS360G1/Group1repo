@@ -185,7 +185,7 @@ public class Job implements Serializable {
         LocalDate currentDate = LocalDate.now();
         long endToCurr = ChronoUnit.DAYS.between(this.endDate, currentDate);
         
-        if (endToCurr < 0)
+        if (endToCurr > 0)
             inPast = true;
         return inPast;
     }
