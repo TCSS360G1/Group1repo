@@ -17,12 +17,12 @@ public class UrbanParksEmployee extends User implements Serializable {
 	public static boolean changeLegalJobAmount(int newAmount) {
 		//check the newAmount to see if it is a valid number. 
 		if(newAmount>=0) {
-			setLegalJobAmount(newAmount);
+			Job.setLegalJobAmount(newAmount);
 		} else {
 			return false;
 		}
 		
-		if(getLegalJobAmount() == newAmount) {
+		if(Job.getLegalJobAmount() == newAmount) {
 			return true;
 		} else {
 			return false;

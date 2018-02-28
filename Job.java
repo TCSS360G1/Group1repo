@@ -17,7 +17,14 @@ public class Job implements Serializable {
 	
     public static final int MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP = 3;
     public static final int MINIMUM_NUMBER_OF_DAYS_TO_UNVOLUNTEER = 3;
+    /* Fields */
 
+	public static final int MAX_LENGTH = 4;
+
+	// private static final int MAX_JOBS = 20;
+
+	public static final int MAX_DISTANCE = 60;
+    public static int MAX_JOBS = 5;
     private String title;
     private String description;
     private String location;
@@ -86,6 +93,19 @@ public class Job implements Serializable {
         }
 
         return isGood;
+    }
+    
+    /**
+     * check to see if the job is too far away. 
+     */
+    public static boolean isJobTooFar(LocalDate theDate) {
+    	LocalDate currentDate = LocalDate.now();
+    	long lengthTillJob = ChronoUnit.DAYS.between(currentDate, theDate);
+    	if(lengthTillJob >= MAX_DISTANCE) {
+    		return false;
+    	} else {
+    		return true;
+    	}
     }
     
     /**
@@ -185,10 +205,26 @@ public class Job implements Serializable {
         LocalDate currentDate = LocalDate.now();
         long endToCurr = ChronoUnit.DAYS.between(this.endDate, currentDate);
         
-        if (endToCurr > 0)
+        if (endToCurr < 0)
             inPast = true;
         return inPast;
     }
+    
+    /**
+	 * If the size of the jobs is greater than the max amount that there can 
+	 * be return false, else return true.
+	 * 
+	 * @param myJobs the Jobs that the User has signed up for.
+	 * @return false if there are too many jobs a Volunteer can carry,
+	 * true otherwise.
+	 */
+	public static boolean isJobsAmountLegal(JobCollection myJobs) {
+		if(myJobs.getSize() >= MAX_JOBS) {
+			return false;
+		} else {
+			return true;
+		}
+	}
     //---Getters and setters ---//
     /**
      * Gets the title given to the Job.
@@ -286,4 +322,12 @@ public class Job implements Serializable {
 				getEndDate() + " Description: " + getDescription();
     }
     
+    
+    public static void setLegalJobAmount(int theLegalJobAmount) {
+		MAX_JOBS = theLegalJobAmount;
+	}
+	
+	public static int getLegalJobAmount() {
+		return MAX_JOBS;
+	}
 }

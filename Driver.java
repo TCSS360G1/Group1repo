@@ -11,6 +11,7 @@ import model.JobCollection;
 import model.MinimumDaysException;
 import model.ParkManager;
 import model.ScheduleConflictException;
+import model.UrbanParksEmployee;
 import model.User;
 import model.UserCollection;
 import model.Volunteer;
@@ -23,7 +24,7 @@ import model.Volunteer;
  */
 public class Driver {
 	
-	private static final int MAX_JOBS_IN_SYSTEM = 20; //change to static.
+	
 	static Scanner user = new Scanner(System.in);
 	private static ArrayList<Job> myCurrentJobs;
 	/* The initial display. this will decide if the user is a volunteer or a PM
@@ -53,7 +54,7 @@ public class Driver {
     					System.out.print("\n-Welcome, Manager: "+ 
     						myUsers.getIndex(i).getFirstName()+ " " + 
     					                myUsers.getIndex(i).getLastName() + "\n");
-    					showParkManagerMenu(myManager, myUsers, myJobs, myCurrentJobs);
+    					showParkManagerMenu(myManager, myUsers, myJobs, myJobs.filterForCancellation(myCurrentJobs));
     					
     				} else if(myUsers.getIndex(i).getType().equals("Volunteer")) {
     					System.out.print("\n-Welcome, Volunteer: "+ 
@@ -61,6 +62,11 @@ public class Driver {
     					                myUsers.getIndex(i).getLastName() + "\n");
     					Volunteer myVolunteer = (Volunteer) (myUsers.getIndex(i));
     					showVolunteerMenu(myVolunteer, myUsers, myJobs, myCurrentJobs);
+    					
+    				} else if(myUsers.getIndex(i).getType().equals("Urban Parks Employee")) {
+    					System.out.println("\n-Welcome, Park Employee");
+    					UrbanParksEmployee employee = (UrbanParksEmployee) (myUsers.getIndex(i));
+    					showParkEmployeeMenu(employee, myUsers, myJobs, myCurrentJobs);
     				}
     			}
     		}
@@ -73,6 +79,26 @@ public class Driver {
 	}
 
 	
+	private static void showParkEmployeeMenu(UrbanParksEmployee employee, UserCollection theUsers, JobCollection theJobs, ArrayList<Job> myCurrentJobs2) {
+		// TODO Auto-generated method stub
+		System.out.println("1. Change the amount of jobs.");
+		String choice = user.next();
+		if(choice.equals("1")) {
+			System.out.println("Enter amount of jobs you would like to limit to: ");
+			choice = user.next();
+			Job.setLegalJobAmount(Integer.parseInt(choice));
+			System.out.println(Job.getLegalJobAmount());
+		} if(choice.equals("2")) {
+			signIn(theUsers, theJobs);
+		}
+		else {
+			showParkEmployeeMenu(employee, theUsers, theJobs, myCurrentJobs2);
+		}
+		
+		
+	}
+
+
 	/**
 	 * Shows Volunteers Menu. 3 options to choose from and shows 
 	 * the users job info.
@@ -113,7 +139,8 @@ public class Driver {
 		    user.nextLine();
 			signIn(theUsers, theJobs);
 		} else if (choice.equals("4")) {
-			///
+			
+			
 		} else {
 			System.out.println("You did not input a valid answer so the "
 					+ "menu will be displayed again.\n");
@@ -139,6 +166,7 @@ public class Driver {
 		System.out.println("2. Create a new park job.");
 		System.out.println("3. Sign Out of account.");
 		System.out.println("4. View all my jobs");
+		System.out.println("5. remove a job.");
 		System.out.println("Please type a number between 1 and 4: ");
 		String choice = user.nextLine();
 		ArrayList<Job> managerJobs = theManager.getJobs();
@@ -171,7 +199,7 @@ public class Driver {
 			showParkManagerMenu(theManager, myUsers, myJobs, myCurrentJobs);
 		} else if (choice.equals("2")) {
 			//add all of this to the collection. 
-			if(isJobsAmountLegal(myJobs)) {
+			if(Job.isJobsAmountLegal(myJobs)) {
 				newParkJob(theManager, myUsers, myJobs, myCurrentJobs);
 			}
 			else {
@@ -354,19 +382,5 @@ public class Driver {
 	}
 	
 	
-	/**
-	 * If the size of the jobs is greater than the max amount that there can 
-	 * be return false, else return true.
-	 * 
-	 * @param myJobs the Jobs that the User has signed up for.
-	 * @return false if there are too many jobs a Volunteer can carry,
-	 * true otherwise.
-	 */
-	public static boolean isJobsAmountLegal(JobCollection myJobs) {
-		if(myJobs.getSize() >= MAX_JOBS_IN_SYSTEM) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+	
 }

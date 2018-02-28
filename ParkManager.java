@@ -38,13 +38,7 @@ public class ParkManager extends User implements Serializable{
 
 	
 
-	/* Fields */
-
-	private static final int MAX_LENGTH = 3;
-
-	// private static final int MAX_JOBS = 20;
-
-	private static final int MAX_DISTANCE = 75;
+	
 
 	
 
@@ -102,7 +96,7 @@ public class ParkManager extends User implements Serializable{
 
 		
 
-		if (amountDays > MAX_LENGTH-1) {
+		if (amountDays > Job.MAX_LENGTH-1) {
 
 			// need to subtract one because the last day is not counted.
 
@@ -130,7 +124,7 @@ public class ParkManager extends User implements Serializable{
 
 	public boolean isJobNotTooFar(LocalDate theStart) {
 
-		LocalDate farthestDate = LocalDate.now().plusDays(MAX_DISTANCE);
+		LocalDate farthestDate = LocalDate.now().plusDays(Job.MAX_DISTANCE);
 
 		if(ChronoUnit.DAYS.between(farthestDate, 
 
