@@ -1,5 +1,6 @@
 package user_interface;
 
+import java.awt.EventQueue;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -36,6 +37,13 @@ public class Main implements Serializable {
 	 * @param args command line arguments, not used in this program.
 	 */
 	public static void main(String[] args) {
+		
+		EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new UrbanParksFrame();
+            }
+        });
 		
 		fillCollections();
 		myJobs.filter();
