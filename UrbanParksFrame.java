@@ -12,6 +12,9 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
+import model.JobCollection;
+import model.UserCollection;
+
 /**
  * The Graphical User Interface for this program.
  * 
@@ -20,29 +23,17 @@ import javax.swing.JFrame;
  */
 public class UrbanParksFrame extends JFrame implements Observer, PropertyChangeListener, ActionListener {
 
-	/**
-     * The default space between components.
-     */
     private static final int PADDING = 30;
-    
-    /**
-     * The top level Window for this GUI;
-     * the main JFrame window for the program.
-     */
     private final JFrame myFrame;
-    
-    /**
-     * The SignIn Panel.
-     */
     private final SignInPanel mySignInPanel;
     
     /**
      * Construct the GUI.
      */
-    public UrbanParksFrame() {
+    public UrbanParksFrame(UserCollection theUsers, JobCollection theJobs) {
         myFrame = new JFrame("TCSS 360 - Urban Parks");
         
-        mySignInPanel = new SignInPanel();
+        mySignInPanel = new SignInPanel(myFrame, theUsers, theJobs);
         
         /* TODO: Panels
         ParkManagerPanel = new ParkManagerPanel();
@@ -66,7 +57,7 @@ public class UrbanParksFrame extends JFrame implements Observer, PropertyChangeL
          * setupParkManagerPanel();
          */
         
-    	myFrame.add(mySignInPanel, BorderLayout.CENTER);
+    	myFrame.getContentPane().add(mySignInPanel, BorderLayout.CENTER);
     	
         /*
         final UrbanParksMenuBar menuBar =

@@ -27,8 +27,9 @@ public class Main implements Serializable {
     
 //    private static ArrayList<User> myUsers = new ArrayList<User>();
 //	private static ArrayList<Job> myJobs = new ArrayList<Job>();
-    private static JobCollection myJobs = new JobCollection();
-    private static UserCollection myUsers = new UserCollection();
+    private static UserCollection myUsers;
+    private static JobCollection myJobs;
+    
 	
 	/**
 	 * The main method in which the program runs within.
@@ -36,20 +37,22 @@ public class Main implements Serializable {
 	 * @param args command line arguments, not used in this program.
 	 */
 	public static void main(String[] args) {
-		
+		myUsers = new UserCollection();
+		myJobs = new JobCollection();
+		fillCollections();
+		System.out.println(myUsers.getUsers());
 		EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new UrbanParksFrame();
+                new UrbanParksFrame(myUsers, myJobs);
             }
         });
 		
-		fillCollections();
 		myUsers.serializeUserCollection();
 		
 		myJobs.serializeJobCollection();
-		myUsers.clearUsers();
-		myJobs.clearJobs();
+//		myUsers.clearUsers();
+//		myJobs.clearJobs();
 
 	}
 
@@ -60,42 +63,42 @@ public class Main implements Serializable {
 	    myUsers.readInUserCollection();
         myJobs.readInJobCollection();
 	}
-//
-//	/**
-//	 * Serializes the Users ArrayList to store all Users.
-//	 */
-//	private static void serializeUserCollection() {
-//		try {
-//			FileOutputStream fileOut =
-//					new FileOutputStream("userFile.ser");
-//			
-//			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-//			out.writeObject(myUsers);
-//
-//			out.close();
-//			fileOut.close();
-//		} catch (IOException i) {
-//			i.printStackTrace();
-//		}
-//	}
 
-//	/**
-//	 * Serializes the Jobs ArrayList to store all Jobs.
-//	 */
-//	private static void serializeJobCollection() {
-//		try {
-//			FileOutputStream fileOut =
-//					new FileOutputStream("jobFile.ser");
-//			
-//			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-//			out.writeObject(myJobs);
-//
-//			out.close();
-//			fileOut.close();
-//		} catch (IOException i) {
-//			i.printStackTrace();
-//		}
-//	}
+	/**
+	 * Serializes the Users ArrayList to store all Users.
+	 */
+	private static void serializeUserCollection() {
+		try {
+			FileOutputStream fileOut =
+					new FileOutputStream("userFile.ser");
+			
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(myUsers);
+
+			out.close();
+			fileOut.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
+
+	/**
+	 * Serializes the Jobs ArrayList to store all Jobs.
+	 */
+	private static void serializeJobCollection() {
+		try {
+			FileOutputStream fileOut =
+					new FileOutputStream("jobFile.ser");
+			
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(myJobs);
+
+			out.close();
+			fileOut.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
 
 //	/**
 //	 * De-serializes Users .ser file to Users Arraylist.
@@ -126,7 +129,7 @@ public class Main implements Serializable {
 //			ex.printStackTrace();
 //		}
 //	}
-
+//
 //	/**
 //	 * De-serializes Jobs .ser file to Jobs Arraylist.
 //	 */
