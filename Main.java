@@ -29,7 +29,6 @@ public class Main implements Serializable {
 //	private static ArrayList<Job> myJobs = new ArrayList<Job>();
     private static JobCollection myJobs = new JobCollection();
     private static UserCollection myUsers = new UserCollection();
-	private static Driver myDriver = new Driver();
 	
 	/**
 	 * The main method in which the program runs within.
@@ -46,8 +45,6 @@ public class Main implements Serializable {
         });
 		
 		fillCollections();
-		myJobs.filter();
-		myDriver.signIn(myUsers, myJobs);
 		myUsers.serializeUserCollection();
 		
 		myJobs.serializeJobCollection();
