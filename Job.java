@@ -196,7 +196,9 @@ public class Job implements Serializable {
         
         return isActive;
     }
-    
+
+	
+	
     /**
      * This method tests if this job is in the past; Being in the past is
      * defined as a job that has ended before today.
@@ -230,6 +232,21 @@ public class Job implements Serializable {
 		}
 	}
     
+         // ALWAYS PASS IN users current jobs list.
+	// will not allow user to cancell a job if it is too far.
+	public static ArrayList<Job> filterForCancellation(
+			ArrayList<Job> theJobList) {
+		ArrayList<Job> myCancellationJobs = new ArrayList<Job>();
+		for (int i = 0; i < theJobList.size(); i++) {
+			if (!theJobList.get(i).isTooClose()) {
+				myCancellationJobs.add(theJobList.get(i));
+			}
+		}
+		return myCancellationJobs;
+
+	}
+	
+	
 	//---Getters and setters ---//
     /**
      * Gets the title given to the Job.
