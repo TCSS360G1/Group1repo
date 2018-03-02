@@ -123,12 +123,16 @@ public class SignInPanel extends JPanel implements Observer {
     					myFrame.pack();
     					
     					
-    				}/* else if(myUsers.getIndex(i).getType().equals("Volunteer")) {
+    				} else if(myUsers.getIndex(i).getType().equals("Volunteer")) {
     					// TODO: Go to Volunteer
-    					Volunteer volunteer = (Volunteer) (myUsers.getIndex(i));
-    					VolunteerPanel volunteerPanel = new VolunteerPanel(volunteer);
+    					this.setVisible(false);
     					
-    				} else if(myUsers.getIndex(i).getType().equals("Urban Parks Employee")) {
+    					Volunteer volunteer = (Volunteer) (myUsers.getIndex(i));
+    					VolunteerPanel volunteerPanel = new VolunteerPanel();
+    					myFrame.getContentPane().add(volunteerPanel, BorderLayout.CENTER);
+    					myFrame.pack();
+    					
+    				}/* else if(myUsers.getIndex(i).getType().equals("Urban Parks Employee")) {
     					// TODO: Go to Employee
     					UrbanParksEmployee employee = (UrbanParksEmployee) (myUsers.getIndex(i));
     					ParkEmployeePanel employeePanel = new ParkEmployeePanel(employee);
