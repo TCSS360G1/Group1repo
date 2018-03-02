@@ -15,16 +15,12 @@ import java.time.temporal.ChronoUnit;
 public class Job implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-    public static final int MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP = 3;
+    public static final int MINIMUM_NUMBER_OF_DAYS_TO_VOLUNTEER = 3;
     public static final int MINIMUM_NUMBER_OF_DAYS_TO_UNVOLUNTEER = 3;
-    /* Fields */
-
 	public static final int MAX_LENGTH = 4;
-
-	// private static final int MAX_JOBS = 20;
-
 	public static final int MAX_DISTANCE = 60;
-    public static int MAX_JOBS = 5;
+    private static int MAX_JOBS = 10;
+
     private String title;
     private String description;
     private String location;
@@ -51,6 +47,26 @@ public class Job implements Serializable {
     }
 
     //---Validation methods---//
+    
+    /**
+     * This method requires a data (assumed to be the start date of a job) and
+     * tests if it is less than or equal to the maximum days away for a job to 
+     * start at. MAX_DISTANCE is the maximum days away. Generally for the
+     * of testing if a potential jobs' start date would be an issue.
+     * 
+     * @param theDate is the date to see if it is less than the max days away.
+     * @return True if the date is too far out, false otherwise.
+     */
+    public static boolean isDateTooFar(LocalDate theDate) {
+        boolean tooFar = false;
+        LocalDate currentDate = LocalDate.now();
+        long lengthTillJob = ChronoUnit.DAYS.between(currentDate, theDate);
+        if(lengthTillJob > MAX_DISTANCE) {
+            tooFar = true;
+        }
+        return tooFar;
+    }
+    
     /**
      * This method requires a job with a valid start and end date. This method
      * will compare theCandidates start and end dates with this jobs', and will
@@ -96,19 +112,6 @@ public class Job implements Serializable {
     }
     
     /**
-     * check to see if the job is too far away. 
-     */
-    public static boolean isJobTooFar(LocalDate theDate) {
-    	LocalDate currentDate = LocalDate.now();
-    	long lengthTillJob = ChronoUnit.DAYS.between(currentDate, theDate);
-    	if(lengthTillJob >= MAX_DISTANCE) {
-    		return false;
-    	} else {
-    		return true;
-    	}
-    }
-    
-    /**
      * This method requires a candidate job with a valid end date. It will
      * compare to see if this job is occurring when theCandidate ends. A
      * boolean is returned for the status of the potential conflict. It is
@@ -135,7 +138,7 @@ public class Job implements Serializable {
 
         return isGood;
     }
-
+    
     /**
      * This method tests to see if this job's start date is more than or equal
      * to the minimum days for a job to be signed up for.
@@ -143,14 +146,14 @@ public class Job implements Serializable {
      * @return true if the time between now and the job's date is valid, false
      * otherwise.
      */
-    public boolean isMoreThanMinimumDays() {
+    public boolean isMoreThanMinimumDaysVol() {
         boolean isGood = true;
 
         LocalDate currentDate = LocalDate.now();
         long timeBetween = ChronoUnit.DAYS.between(currentDate,
                 this.startDate);
 
-        if (timeBetween < MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP) {
+        if (timeBetween < MINIMUM_NUMBER_OF_DAYS_TO_VOLUNTEER) {
             isGood = false;
 
         }
@@ -162,16 +165,16 @@ public class Job implements Serializable {
      * 
      * @return True if the job is too close, false otherwise.
      */
-    public boolean isTooClose() {
-        boolean isTooClose = false;
+    public boolean isMoreThanMinimumDaysUnvol() {
+        boolean isGood = true;
         
         LocalDate currentDate = LocalDate.now();
         long timeBetween = ChronoUnit.DAYS.between(currentDate,
                         this.startDate);
         if (timeBetween < MINIMUM_NUMBER_OF_DAYS_TO_UNVOLUNTEER)
-            isTooClose = true;
+            isGood = false;
         
-        return isTooClose;
+        return isGood;
     }
     
     /**
@@ -195,7 +198,8 @@ public class Job implements Serializable {
     }
     
     /**
-     * This method tests if this job is in the past; The job ended before today.
+     * This method tests if this job is in the past; Being in the past is
+     * defined as a job that has ended before today.
      * 
      * @return True if the job is in the past, false otherwise.
      */
@@ -205,27 +209,28 @@ public class Job implements Serializable {
         LocalDate currentDate = LocalDate.now();
         long endToCurr = ChronoUnit.DAYS.between(this.endDate, currentDate);
         
-        if (endToCurr < 0)
+        if (endToCurr > 0)
             inPast = true;
         return inPast;
     }
     
     /**
-	 * If the size of the jobs is greater than the max amount that there can 
-	 * be return false, else return true.
+	 * This method requires a valid JobCollection, and will test the number of
+	 * jobs within the JobCollection to see if it is more than the max.
 	 * 
 	 * @param myJobs the Jobs that the User has signed up for.
 	 * @return false if there are too many jobs a Volunteer can carry,
 	 * true otherwise.
 	 */
 	public static boolean isJobsAmountLegal(JobCollection myJobs) {
-		if(myJobs.getSize() >= MAX_JOBS) {
+		if(myJobs.getSize() > MAX_JOBS) {
 			return false;
 		} else {
 			return true;
 		}
 	}
-    //---Getters and setters ---//
+    
+	//---Getters and setters ---//
     /**
      * Gets the title given to the Job.
      * 
