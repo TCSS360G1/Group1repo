@@ -93,7 +93,7 @@ public class SignInPanel extends JPanel implements Observer {
         
     }
 	
-    public static void signIn(UserCollection theUsers, 
+    public void signIn(UserCollection theUsers, 
 			JobCollection theJobs) {
 //		for(int i = 0; i<theJobs.getSize(); i++) {
 //			System.out.println(theJobs.getIndex(i).toString());
@@ -115,8 +115,12 @@ public class SignInPanel extends JPanel implements Observer {
     				System.out.println("-Found a User-");
     				if(theUsers.getIndex(i).getType().equals("Manager")) {
     					// TODO: Go to Park Manager
+    					this.setVisible(false);
+    					
     					ParkManager manager = (ParkManager)theUsers.getIndex(i);
     					ParkManagerPanel managerPanel = new ParkManagerPanel(manager, myJobs);
+    					myFrame.getContentPane().add(managerPanel, BorderLayout.CENTER);
+    					myFrame.pack();
     					
     					
     				}/* else if(myUsers.getIndex(i).getType().equals("Volunteer")) {
