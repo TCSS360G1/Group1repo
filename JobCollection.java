@@ -107,7 +107,7 @@ public class JobCollection implements Serializable {
 	}
 	
 	//always pass in current Jobs list. 
-	//returns list that gives list of jobs that are available to be cancelled from. 
+	//returns list that gives list of jobs that are available to be volunteered from. 
 	public static ArrayList<Job> filterNewJobsVolunteer(ArrayList<Job> theJobList) {
 		ArrayList<Job> myNewJobsFilters = new ArrayList<Job>();
 		for(int i = 0; i<theJobList.size(); i++) {
