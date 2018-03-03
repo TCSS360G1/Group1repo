@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 
 import java.util.Observable;
 
+import model.Job;
 import model.JobCollection;
 import model.UrbanParksEmployee;
 
@@ -126,8 +127,8 @@ public class UrbanParksPanel extends JPanel implements Observer {
 						int newMax = new Integer(userInput);
 
 						myEmployee.changeLegalJobAmount(newMax);
-
-						JOptionPane pane = new JOptionPane("Changed");
+						System.out.println(Job.getLegalJobAmount());
+						JOptionPane.showMessageDialog(null, "New amount has been updated.");
 
 					}
 
@@ -135,7 +136,7 @@ public class UrbanParksPanel extends JPanel implements Observer {
 
 					{
 
-						JOptionPane pane = new JOptionPane("Not Valid");
+						JOptionPane.showMessageDialog(null, "Please input a NUMBER.");
 
 					}
 
