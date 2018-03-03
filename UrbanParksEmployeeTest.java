@@ -3,16 +3,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.UrbanParksEmployee;
-import model.User;
 
 import static org.junit.Assert.*;
 public class UrbanParksEmployeeTest {
-	UrbanParksEmployee uP;
+    
 	@Before
     public void setUp() {
-		UrbanParksEmployee uP = new UrbanParksEmployee("Frank", "Sinatra");
-		
 	}
+	
 	@Test
 	public void changeJobAmount_zero_true() {
 		assertTrue(UrbanParksEmployee.changeLegalJobAmount(0));

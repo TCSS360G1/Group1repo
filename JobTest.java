@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.Job;
+import model.JobCollection;
      
 /**
  * Tests important methods in Volunteer to ensure functionality,
@@ -19,32 +20,37 @@ import model.Job;
  */
 public class JobTest {    
     //isMoreThanMinimumDaysVol
-    static Job wayAfterVol;
-    static Job justOnLimitVol;
-    static Job pastLimitVol;
+    private static Job wayAfterVol;
+    private static Job justOnLimitVol;
+    private static Job pastLimitVol;
     
     //isMoreThanMinimumDaysUnvol
-    static Job wayAfterUnvol;
-    static Job justOnLimitUnvol;
-    static Job pastLimitUnvol;
+    private static Job wayAfterUnvol;
+    private static Job justOnLimitUnvol;
+    private static Job pastLimitUnvol;
     
     //isNoScheduleConflicts
-    static Job testAgainstJob;
-    static Job badStart;
-    static Job badEnd;
-    static Job noConflicts;
+    private static Job testAgainstJob;
+    private static Job badStart;
+    private static Job badEnd;
+    private static Job noConflicts;
     
     //isActiveJob
-    static Job activeJob;
-    static Job inactiveJob;
+    private static Job activeJob;
+    private static Job inactiveJob;
     
     //isInPast
-    static Job inPast;
-    static Job notInPast;
+    private static Job inPast;
+    private static Job notInPast;
     
     //isJobTooFar
-    static LocalDate tooFar;
-    static LocalDate notTooFar;
+    private static LocalDate tooFar;
+    private static LocalDate notTooFar;
+    
+    //isJobAmountLegal
+    private static JobCollection lessThanMaxJobs;
+    private static JobCollection equalToMaxJobs;
+    private static JobCollection moreThanMaxJobs;
     
     @Before
     public void setup() {
@@ -114,6 +120,11 @@ public class JobTest {
         //isJobTooFar test parameters.
         tooFar = LocalDate.now().plusDays(Job.MAX_DISTANCE + 1);
         notTooFar = LocalDate.now().plusDays(Job.MAX_DISTANCE);
+        
+        //IsJobAmountLegal test parameters.
+        lessThanMaxJobs = new JobCollection();
+        equalToMaxJobs = new JobCollection();
+        moreThanMaxJobs = new JobCollection();
     }
     
     @Test
@@ -201,5 +212,35 @@ public class JobTest {
     @Test
     public void isDateTooFar_NotTooFar_False() {
         assertFalse(Job.isDateTooFar(notTooFar));
+    }
+    
+    @Test
+    public void isJobAmountLegal_LessThanMax_True() {
+        int i = 0;
+        for (i = 0; i < Job.getLegalJobAmount() - 1; i++)
+            lessThanMaxJobs.addNewJob(new Job("DM", "DM", "DM", LocalDate.now(),
+                            LocalDate.now().plusDays(3)));
+        assertTrue(Job.isJobsAmountLegal(lessThanMaxJobs));
+        lessThanMaxJobs.clearJobs();
+    }
+    
+    @Test
+    public void isJobAmountLegal_EqualToMax_True() {
+        int i = 0;
+        for (i = 0; i < Job.getLegalJobAmount(); i++)
+            equalToMaxJobs.addNewJob(new Job("DM", "DM", "DM", LocalDate.now(),
+                            LocalDate.now().plusDays(3)));
+        assertTrue(Job.isJobsAmountLegal(equalToMaxJobs));
+        equalToMaxJobs.clearJobs();
+    }
+    
+    @Test
+    public void isJobAmountLegal_MoreThanMax_False() {
+        int i = 0;
+        for (i = 0; i < Job.getLegalJobAmount() + 1; i++)
+            moreThanMaxJobs.addNewJob(new Job("DM", "DM", "DM", LocalDate.now(),
+                            LocalDate.now().plusDays(3)));
+        assertFalse(Job.isJobsAmountLegal(moreThanMaxJobs));
+        moreThanMaxJobs.clearJobs();
     }
 }

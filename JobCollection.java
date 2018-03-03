@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 public class JobCollection implements Serializable {
 
@@ -16,12 +15,16 @@ public class JobCollection implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//all jobs past and present 
-	private static ArrayList<Job> mySystemsJobs = new ArrayList<Job>();
 	//all current jobs. 
-	private static ArrayList<Job> myJobs = new ArrayList<Job>();
+	private static ArrayList<Job> myJobs;
 	//without the schedule conflicts. 
-	private static ArrayList<Job> myFilteredJobs = new ArrayList<Job>();
+	private static ArrayList<Job> myFilteredJobs;
+	
+	public JobCollection() {
+	    myJobs = new ArrayList<Job>();
+	    myFilteredJobs = new ArrayList<Job>();
+	}
+	
 	/**
 	 * Serializes the Jobs ArrayList to store all Jobs.
 	 */

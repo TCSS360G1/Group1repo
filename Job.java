@@ -226,11 +226,11 @@ public class Job implements Serializable {
 	 * true otherwise.
 	 */
 	public static boolean isJobsAmountLegal(JobCollection myJobs) {
+	    boolean isLegal = true;
 		if(myJobs.getSize() > MAX_JOBS) {
-			return false;
-		} else {
-			return true;
+			isLegal = false;
 		}
+		return isLegal;
 	}
     
          // ALWAYS PASS IN users current jobs list.

@@ -29,7 +29,7 @@ public class VolunteerTest {
 	@Before
 	public void setup() {
 	    myVolunteerDoesntMatter = new Volunteer("Kai", "Stansfield");
-	    myMinDaysToSignUp = Job.MINIMUM_NUMBER_OF_DAYS_TO_SIGN_UP;
+	    myMinDaysToSignUp = Job.MINIMUM_NUMBER_OF_DAYS_TO_VOLUNTEER;
 	    myMinDaysToUnvolunteer = Job.MINIMUM_NUMBER_OF_DAYS_TO_UNVOLUNTEER;
 	    //DM = Doesnt matter.
 	    myFirstJob = new Job("DM", "DM", "DM",

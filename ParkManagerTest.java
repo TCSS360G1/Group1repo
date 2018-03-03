@@ -15,8 +15,6 @@ import org.junit.Test;
 import model.Job;
 import model.ParkManager;
 
-import user_interface.Driver;
-
 /**
  * Test for Park Manager class.
  * 
@@ -26,7 +24,6 @@ import user_interface.Driver;
 public class ParkManagerTest {
 	private static final int MAX_DISTANCE = 75;
 	private ParkManager myManager;
-	private Driver myDriver;
 	ArrayList<Job> theJobs_farFewer;
 	private ArrayList<Job> theJobs_MAX;
 	private ArrayList<Job> theJobs_oneFewer;
@@ -37,7 +34,6 @@ public class ParkManagerTest {
 	@Before
     public void setUp() {
        myManager = new ParkManager("Deepjot", "Kaur");
-       myDriver = new Driver();
        
        theJobs_farFewer = new ArrayList<Job>();
        theJobs_oneFewer = new ArrayList<Job>();
@@ -152,25 +148,6 @@ public class ParkManagerTest {
 				LocalDate.of(2018, 2, 13), LocalDate.of(2018, 2, 13));
 		theJobs_MAX.add(job20);
     }
-
-	/* test far fewer jobs */
-	@Test
-	public void isJobAmountLegal_FarFewer_true() {
-		assertTrue(myDriver.isJobsAmountLegal(theJobs_farFewer));
-	}
-
-	/* test one fewer jobs */
-	@Test
-	public void isMaxmyManagerAmountReached_OneFewer_true() {
-		assertTrue(myDriver.isJobsAmountLegal(theJobs_oneFewer));
-	}
-	
-	/* test exactly 20 jobs */
-	@Test
-	public void isMaxmyManagerAmountReached_Max_false() {
-		assertFalse(myDriver.isJobsAmountLegal(theJobs_MAX));
-	}
-	
 	
 	/*No myManager can be specified that takes more than the maximum number of 
 	 * days, default of 3*/
