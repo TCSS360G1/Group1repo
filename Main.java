@@ -40,7 +40,7 @@ public class Main implements Serializable {
 		myUsers = new UserCollection();
 		myJobs = new JobCollection();
 		fillCollections();
-		System.out.println(myUsers.getUsers());
+		
 		EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

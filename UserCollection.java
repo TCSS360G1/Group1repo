@@ -20,7 +20,8 @@ public class UserCollection {
 		//myUsers.add(new Volunteer("Kai", "Stansfield"));
 		//myUsers.add(new UrbanParksEmployee("Deepjot", "K"));
 		//myUsers.add(new ParkManager("Jenzel", "Villanueva"));
-		//System.out.println(myUsers);
+		System.out.println(myUsers);
+		
 		try {
 			FileOutputStream fileOut =
 					new FileOutputStream("userFile.ser");
