@@ -19,12 +19,15 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 	public ParkManagerCancelJobsPanel(ArrayList<Job> theList) {
 		this.setBorder(BorderFactory.createTitledBorder("Cancel Job:"));
 		setLayout(new BorderLayout());
+		
 		updatesPanel(theList);
+		
+		
 	}
 	
 	private void updatesPanel(ArrayList<Job> listOfCancellationsJobs) {
 		myUpdatePanel = new JPanel();
-		JButton cancel = new JButton();
+		JButton cancel = new JButton("Cancel");
 		ButtonGroup myJobsGroup = new ButtonGroup();
 		for (int i = 0; i < listOfCancellationsJobs.size(); i++) {
 			JRadioButton j = new JRadioButton();

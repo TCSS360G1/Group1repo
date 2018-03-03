@@ -41,6 +41,7 @@ public class ParkManagerPanel extends JPanel implements Observer {
 		
 		
 		setLayout(new BorderLayout());
+		setPreferredSize(new Dimension(600,600));
 		x = new MenuBar();
 		add(x, BorderLayout.NORTH);
 		
@@ -71,6 +72,7 @@ public class ParkManagerPanel extends JPanel implements Observer {
 		public MenuBar() {
 			super();
 			myNewJobs = new ParkManagerNewJobPanel(myManager);
+			
 			cancellations = new ParkManagerCancelJobsPanel(Job.filterForCancellation(myManager.getJobs()));
 			current();
 			updates();
@@ -127,10 +129,18 @@ public class ParkManagerPanel extends JPanel implements Observer {
 				@Override
 				public void actionPerformed(final ActionEvent theEvent) {
 					//updatesPanel(myManager); //this is passing in entire job class. we want to only pass in jobs that are available to be cancelled.
-					myNewJobs.setVisible(false);
-					currentJobs.setVisible(false);
-					cancellations.setVisible(true);
-					add(cancellations, BorderLayout.SOUTH);
+					
+					
+					if((Job.filterForCancellation(myManager.getJobs())).size() == 0) {
+						cancellations.setVisible(false);
+						JOptionPane.showMessageDialog(null, "Sorry, you currently do not have any jobs.");
+					} else {
+						myNewJobs.setVisible(false);
+						currentJobs.setVisible(false);
+						cancellations.setVisible(true);
+						add(cancellations, BorderLayout.SOUTH);
+					}
+					
 				}
 			});
 			cancel.add(Updates);

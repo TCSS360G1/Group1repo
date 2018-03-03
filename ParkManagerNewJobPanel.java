@@ -74,11 +74,11 @@ public class ParkManagerNewJobPanel extends JPanel {
 		System.out.println("xx");
 		add(myNewJob, BorderLayout.CENTER);
 		
-//		tIn.setEnabled(true);
-//		lIn.setEnabled(false);
-//		sIn.setEnabled(false);
-//		eIn.setEnabled(false);
-//		dIn.setEnabled(false);
+		tIn.setEnabled(true);
+		lIn.setEnabled(false);
+		sIn.setEnabled(false);
+		eIn.setEnabled(false);
+		dIn.setEnabled(false);
 //		while (tIn.getText().equals("")) {
 //			JOptionPane.showMessageDialog(null, "Please enter a valid title");
 //			lIn.setEnabled(false);

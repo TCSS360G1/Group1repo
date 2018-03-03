@@ -1,6 +1,7 @@
 package user_interface;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
@@ -14,6 +15,7 @@ public class ParkManagerDisplayCurrentJobs extends JPanel {
 	ParkManager myManager;
 	public ParkManagerDisplayCurrentJobs(ParkManager theManager){
 		myManager = theManager;
+		setPreferredSize(new Dimension(600,600));
 		displayCurrentJobs(myManager);
 		
 	}
