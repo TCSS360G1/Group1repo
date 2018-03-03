@@ -115,7 +115,7 @@ public class JobCollection implements Serializable {
 	public static ArrayList<Job> filterForCancellation(ArrayList<Job> theJobList) {
 		ArrayList<Job> myCancellationJobs = new ArrayList<Job>();
 		for(int i = 0; i<theJobList.size(); i++) {
-			if(!theJobList.get(i).isTooClose()) {
+			if(!theJobList.get(i).isMoreThanMinimumDaysUnvol()) {
 				myCancellationJobs.add(theJobList.get(i));
 			}
 		}
@@ -128,7 +128,7 @@ public class JobCollection implements Serializable {
 	public static ArrayList<Job> filterNewJobsVolunteer(ArrayList<Job> theJobList) {
 		ArrayList<Job> myNewJobsFilters = new ArrayList<Job>();
 		for(int i = 0; i<theJobList.size(); i++) {
-			if(theJobList.get(i).isMoreThanMinimumDays()) {
+			if(theJobList.get(i).isMoreThanMinimumDaysUnvol()) {
 				myNewJobsFilters.add(theJobList.get(i));
 			}
 		}
