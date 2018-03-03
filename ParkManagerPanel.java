@@ -37,9 +37,11 @@ public class ParkManagerPanel extends JPanel implements Observer {
 
 	public ParkManagerPanel(ParkManager theManager) {
 		System.out.println(theManager.getFirstName());
+		
 		myManager = theManager;
-		
-		
+		System.out.println(Job.filterForCancellation(myManager.getJobs()).size());
+		//Job j = new Job("");
+		//myManager.addJob(j);
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(600,600));
 		x = new MenuBar();
