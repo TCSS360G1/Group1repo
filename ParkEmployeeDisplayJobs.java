@@ -24,10 +24,13 @@ public class ParkEmployeeDisplayJobs extends JPanel {
 	private void displayCurrentJobs(JobCollection theJobs) {
 		currentJobs = new JPanel();
 		currentJobs.setLayout(new GridLayout(theJobs.getSize(), 1));
-		System.out.println(theJobs.getSize());
-		JLabel myJobLabels = new JLabel();
+		//System.out.println("--"+theJobs.getSize());
+		
 		//create a new label for each job and add
+	
 		for (int i = 0; i<theJobs.getSize(); i++){
+			//System.out.println(i);
+			JLabel myJobLabels = new JLabel();
 			myJobLabels.setText(theJobs.getIndex(i).toString());
 			currentJobs.add(myJobLabels);
 		}
