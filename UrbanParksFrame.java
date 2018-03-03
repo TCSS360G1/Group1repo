@@ -77,7 +77,7 @@ public class UrbanParksFrame extends JFrame implements Observer, PropertyChangeL
         
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.pack();
-        myFrame.setResizable(false);
+        myFrame.setResizable(true);
         myFrame.setVisible(true);
     }
 	/**
