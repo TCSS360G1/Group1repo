@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +52,18 @@ public class JobTest {
     private static JobCollection lessThanMaxJobs;
     private static JobCollection equalToMaxJobs;
     private static JobCollection moreThanMaxJobs;
+    
+    //isJobNotTooLong
+    private static Job oneDayLonger;
+    private static Job maxDays;
+    private static Job oneDayLess;
+    
+    //filterForCancellation
+    private static ArrayList<Job> filter;
+    private static Job currentDate;
+    private static Job priorDate;
+    private static Job minDaysFuture;
+    private static Job moreMinDaysFuture;
     
     @Before
     public void setup() {
@@ -125,6 +138,29 @@ public class JobTest {
         lessThanMaxJobs = new JobCollection();
         equalToMaxJobs = new JobCollection();
         moreThanMaxJobs = new JobCollection();
+        
+        //isJobNotTooLong tests parameters
+        oneDayLonger = new Job("Seattle Center","Seattle", "Clean", 
+        		LocalDate.of(2018, 3, 16), LocalDate.of(2018, 3, 21));
+        maxDays = new Job("Seattle Center","Seattle", "Clean", 
+        		LocalDate.of(2018, 3, 16), LocalDate.of(2018, 3, 20));
+        oneDayLess = new Job("Seattle Center","Seattle", "Clean", 
+        		LocalDate.of(2018, 3, 16), LocalDate.of(2018, 3, 18));
+        
+        //filterForCancellation
+        currentDate = new Job("Seattle Center","Seattle", "Clean", 
+        		LocalDate.now(), LocalDate.now().plusDays(2));
+        	
+        priorDate = new Job("Seattle Center","Seattle", "Clean", 
+        		LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
+        minDaysFuture = new Job("Seattle Center","Seattle", "Clean", 
+        		LocalDate.of(2018, 3, 9), LocalDate.of(2018, 3, 9));
+        moreMinDaysFuture = new Job("Seattle Center","Seattle", "Clean", 
+        		LocalDate.of(2018, 3, 16), LocalDate.of(2018, 3, 20));
+        filter = new ArrayList<>();
+        filter.add(currentDate); filter.add(priorDate);
+        filter.add(minDaysFuture); filter.add(moreMinDaysFuture);
+        Job.filterForCancellation(filter);
     }
     
     @Test
@@ -243,4 +279,62 @@ public class JobTest {
         assertFalse(Job.isJobsAmountLegal(moreThanMaxJobs));
         moreThanMaxJobs.clearJobs();
     }
+    
+    @Test
+    public void isJobNotTooLong_MoreThanMax_False() {
+    	assertFalse(Job.isJobNotTooLong(oneDayLonger.getStartDate(), oneDayLonger.getEndDate()));
+    }
+    @Test
+    public void isJobNotTooLong_MaxDays_True() {
+    	assertTrue(Job.isJobNotTooLong(maxDays.getStartDate(), maxDays.getEndDate()));
+    }
+    @Test
+    public void isJobNotTooLong_oneDayLess_True() {
+    	assertTrue(Job.isJobNotTooLong(oneDayLess.getStartDate(), oneDayLess.getEndDate()));
+    }
+    
+    @Test
+    public void filterForCancellation_SameDay_False() {
+    	//loop through list if its not in list then assert false
+    	boolean check = false;
+    	for (int i = filter.size();i>0; i--) {
+    		assertFalse(currentDate.toString().equals(filter.get(i).toString()));
+    	}
+    }
+    @Test
+    public void filterForCancellation_PriorDays_False() {
+    	boolean check = false;
+    	for (int i = filter.size();i>0; i--) {
+    		if(priorDate.toString().equals(filter.get(i).toString())) {
+    			check = true;
+    		} 
+    		check = false;
+    	}
+    	assertFalse(check);
+    	
+    }
+    @Test
+    public void filterForCancellation_minDaysInFuture_True() {
+    	boolean check = false;
+    	for (int i = filter.size();i>0; i--) {
+    		if(minDaysFuture.toString().equals(filter.get(i).toString())) {
+    			//System.out.println("found");
+    			check = true;
+    		} 
+    		check = false;
+    	}
+    	assertTrue(check);
+    }
+    @Test
+    public void filterForCancellation_moreMinDaysInFuture_True() {
+    	boolean check = false;
+    	for (int i = filter.size();i>0; i--) {
+    		if(moreMinDaysFuture.toString().equals(filter.get(i).toString())) {
+    			check = true;
+    		} 
+    		check = false;
+    	}
+    	assertFalse(check);
+    }
+    
 }

@@ -17,11 +17,6 @@ public class UserCollection {
 	 * Serializes the Users ArrayList to store all Users.
 	 */
 	public static void serializeUserCollection() { 
-		//myUsers.add(new Volunteer("Kai", "Stansfield"));
-		//myUsers.add(new UrbanParksEmployee("Deepjot", "K"));
-		//myUsers.add(new ParkManager("Jenzel", "Villanueva"));
-		System.out.println(myUsers);
-		
 		try {
 			FileOutputStream fileOut =
 					new FileOutputStream("userFile.ser");
@@ -40,7 +35,6 @@ public class UserCollection {
 	 */
 	public static void readInUserCollection() {
 		// De-serialization
-		myUsers.clear();
 		try
 		{
 			// Reading the object from a file
@@ -50,7 +44,7 @@ public class UserCollection {
 			// Method for de-serialization of object
 			// Renew users arraylist to a casted serialized object.
 			myUsers = (ArrayList<User>) in.readObject();
-			//System.out.println("In collection" + myUsers);
+
 			in.close();
 			byteToUsers.close();
 		}
@@ -65,21 +59,17 @@ public class UserCollection {
 			ex.printStackTrace();
 		}
 	}
-	public void clearUsers() {
+	public static void clearUsers() {
 		myUsers.clear();
 		// TODO Auto-generated method stub
 		
 	}
-	public int getSize() {
+	public static int getSize() {
 		return myUsers.size();
 	}
 	public User getIndex(int i) {
 		return myUsers.get(i);
 		
-	}
-	
-	public ArrayList<User> getUsers() {
-		return myUsers;
 	}
 
 }
