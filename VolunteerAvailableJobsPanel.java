@@ -1,9 +1,27 @@
 package user_interface;
 
-public class VolunteerAvailableJobsPanel {
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
-    public VolunteerAvailableJobsPanel() {
-        // TODO Auto-generated constructor stub
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import model.Volunteer;
+
+public class VolunteerAvailableJobsPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
+    
+    private Volunteer myVolunteer;
+    
+    public VolunteerAvailableJobsPanel(Volunteer theVolunteer) {
+        System.out.println("Available");
+        setupPanel();
     }
 
+    private void setupPanel() {
+        //TODO: panel setup. use filters from JobCollection and display jobs
+        //probably in a text field.
+    }
 }
