@@ -10,6 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -70,6 +71,9 @@ public class SignInPanel extends JPanel implements Observer {
         setPreferredSize(DEFAULT_SIZE);
         setBackground(Color.ORANGE);
         
+        this.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Sign In"));
+        
         this.add(myUsernameLabel, BorderLayout.CENTER);
         
         myUsernameText.setEditable(true);
@@ -120,6 +124,7 @@ public class SignInPanel extends JPanel implements Observer {
     					ParkManager manager = (ParkManager)theUsers.getIndex(i);
     					ParkManagerPanel managerPanel = new ParkManagerPanel(manager, myJobs);
     					myFrame.getContentPane().add(managerPanel, BorderLayout.CENTER);
+    					myFrame.setResizable(false);
     					myFrame.pack();
     					
     					
@@ -130,13 +135,20 @@ public class SignInPanel extends JPanel implements Observer {
     					Volunteer volunteer = (Volunteer) (myUsers.getIndex(i));
     					VolunteerPanel volunteerPanel = new VolunteerPanel();
     					myFrame.getContentPane().add(volunteerPanel, BorderLayout.CENTER);
+    					myFrame.setResizable(false);
     					myFrame.pack();
     					
-    				}/* else if(myUsers.getIndex(i).getType().equals("Urban Parks Employee")) {
+    				} else if(myUsers.getIndex(i).getType().equals("Urban Parks Employee")) {
     					// TODO: Go to Employee
+    					this.setVisible(false);
+    					
     					UrbanParksEmployee employee = (UrbanParksEmployee) (myUsers.getIndex(i));
-    					ParkEmployeePanel employeePanel = new ParkEmployeePanel(employee);
-    				}*/
+    					UrbanParksPanel employeePanel = new UrbanParksPanel();
+    					
+    					myFrame.getContentPane().add(employeePanel, BorderLayout.CENTER);
+    					myFrame.setResizable(false);
+    					myFrame.pack();
+    				}
     			}
     		}
 		}
