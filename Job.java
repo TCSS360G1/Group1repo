@@ -73,7 +73,7 @@ public class Job implements Serializable {
      * @return false is the job is more than length specified
      */
     public static boolean isJobNotTooLong(LocalDate theS, LocalDate theE) {
-    	if(ChronoUnit.DAYS.between(theS, theE) > MAX_LENGTH) {
+    	if(ChronoUnit.DAYS.between(theS, theE) > MAX_LENGTH-1) {
     		return false;
     	}
     	else {

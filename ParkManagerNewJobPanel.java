@@ -47,8 +47,10 @@ public class ParkManagerNewJobPanel extends JPanel {
 	// create a new panel that has fields for input.
 	private void newJobPanel(ParkManager theManager) {
 		myNewJob = new JPanel();
-		myNewJob.setLayout(new GridLayout(23, 1));
+		myNewJob.setLayout(new GridLayout(24, 1));
 		// add all inputs.
+		JButton done = new JButton("Submit");
+		done.setEnabled(false);
 		JLabel title = new JLabel("Job Title: ");
 		JTextField tIn = new JTextField();
 		JButton tDone = new JButton("Done");
@@ -92,14 +94,14 @@ public class ParkManagerNewJobPanel extends JPanel {
 		myNewJob.add(emIn);
 		// myNewJob.add(emDone);
 
-		JLabel endd = new JLabel("Start date DAY: ");
+		JLabel endd = new JLabel("End date DAY: ");
 		JTextField edIn = new JTextField();
 		// JButton edDone = new JButton("Done");
 		myNewJob.add(endd);
 		myNewJob.add(edIn);
 		// myNewJob.add(edDone);
 
-		JLabel endy = new JLabel("Start date YEAR: ");
+		JLabel endy = new JLabel("End date YEAR: ");
 		JTextField eyIn = new JTextField();
 		JButton eyDone = new JButton("Done");
 		myNewJob.add(endy);
@@ -113,8 +115,9 @@ public class ParkManagerNewJobPanel extends JPanel {
 		myNewJob.add(discription);
 		myNewJob.add(dIn);
 		myNewJob.add(dDone);
+		myNewJob.add(done);
 		add(myNewJob, BorderLayout.CENTER);
-
+		
 		tIn.setEnabled(true);
 		tDone.setEnabled(true);
 		lIn.setEnabled(false);
@@ -140,6 +143,8 @@ public class ParkManagerNewJobPanel extends JPanel {
 				} else {
 					lIn.setEnabled(true);
 					lDone.setEnabled(true);
+					tIn.setEnabled(false);
+					tDone.setEnabled(false);
 				}
 			}
 
@@ -156,6 +161,11 @@ public class ParkManagerNewJobPanel extends JPanel {
 					syDone.setEnabled(true);
 					sdIn.setEnabled(true);
 					syIn.setEnabled(true);
+					lIn.setEnabled(false);
+					lDone.setEnabled(false);
+					tIn.setEnabled(false);
+					tDone.setEnabled(false);
+
 				}
 			}
 
@@ -174,8 +184,12 @@ public class ParkManagerNewJobPanel extends JPanel {
 			public void actionPerformed(final ActionEvent theEvent) {
 				if (smIn.getText().isEmpty() || sdIn.getText().isEmpty() ||
 						syIn.getText().isEmpty()) {
-					if (!Job.isDateTooFar(startDate) || 
-							ChronoUnit.DAYS.between(LocalDate.now(), startDate) < 0) {
+					JOptionPane.showMessageDialog(null, "Please input a valid date");
+				} else {
+					startDate = LocalDate.of(Integer.parseInt(syIn.getText()),
+							Integer.parseInt(smIn.getText()),
+							Integer.parseInt(sdIn.getText()));
+					if (Job.isDateTooFar(startDate) || startDate.isBefore(LocalDate.now())) {
 
 						JOptionPane.showMessageDialog(null,
 								"Please Enter a start date, "
@@ -184,39 +198,60 @@ public class ParkManagerNewJobPanel extends JPanel {
 										+ "days, or is not in the past.");
 						// clear the fields
 					}
-				} else {
-
-					startDate = LocalDate.of(Integer.parseInt(syIn.getText()),
+					else {
+						startDate = LocalDate.of(Integer.parseInt(syIn.getText()),
 							Integer.parseInt(smIn.getText()),
 							Integer.parseInt(sdIn.getText()));
-					emIn.setEnabled(true);
-					eyDone.setEnabled(true);
-					eyIn.setEnabled(true);
-					edIn.setEnabled(true);
+						emIn.setEnabled(true);
+						eyDone.setEnabled(true);
+						eyIn.setEnabled(true);
+						edIn.setEnabled(true);
+						smIn.setEnabled(false);
+						syDone.setEnabled(false);
+						sdIn.setEnabled(false);
+						syIn.setEnabled(false);
+						lIn.setEnabled(false);
+						lDone.setEnabled(false);
+						tIn.setEnabled(false);
+						tDone.setEnabled(false);
+					}
 				}
 			}
-
 		});
 
 		eyDone.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
-				if (emIn.getText().isEmpty()) {
-					if (Job.isJobNotTooLong(startDate, endDate)
-							|| ChronoUnit.DAYS.between(LocalDate.now(),
-									endDate) < 0
-							|| !Job.isDateTooFar(endDate)) {
-						JOptionPane.showMessageDialog(null,
-								"Please Enter a start date, "
-										+ "that is either under"
-										+ Job.MAX_DISTANCE
-										+ "days, or is not in the past.");
-					}
+				if (emIn.getText().isEmpty() || eyIn.getText().isEmpty() || edIn.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null,"Please enter a valid date");
 				} else {
 					endDate = LocalDate.of(Integer.parseInt(eyIn.getText()), Integer.parseInt(emIn.getText()), 
 							Integer.parseInt(edIn.getText()));
-					dDone.setEnabled(true);
-					dIn.setEnabled(true);
+					if (!Job.isJobNotTooLong(startDate, endDate)
+							|| endDate.isBefore(LocalDate.now())
+							|| Job.isDateTooFar(endDate)) {
+						JOptionPane.showMessageDialog(null,
+						"Please Enter a end date, "
+								+ "that is either under "
+								+ Job.MAX_DISTANCE
+								+ " days, or is not in the past, or is not more than max length of days");
+					} else {
+					
+						dDone.setEnabled(true);
+						dIn.setEnabled(true);
+						emIn.setEnabled(false);
+						eyDone.setEnabled(false);
+						eyIn.setEnabled(false);
+						edIn.setEnabled(false);
+						smIn.setEnabled(false);
+						syDone.setEnabled(false);
+						sdIn.setEnabled(false);
+						syIn.setEnabled(false);
+						lIn.setEnabled(false);
+						lDone.setEnabled(false);
+						tIn.setEnabled(false);
+						tDone.setEnabled(false);
+					}
 				}
 			}
 
@@ -228,101 +263,30 @@ public class ParkManagerNewJobPanel extends JPanel {
 				if (dIn.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Please Enter a description");
 				} else {
-					theManager.addJob(new Job(tIn.getText(), lIn.getText(), dIn.getText(), endDate, startDate));
+					done.setEnabled(true);
+					//theManager.addJob(new Job(tIn.getText(), lIn.getText(), dIn.getText(), endDate, startDate));
+					dDone.setEnabled(false);
+					dIn.setEnabled(false);
+					emIn.setEnabled(false);
+					eyDone.setEnabled(false);
+					eyIn.setEnabled(false);
+					edIn.setEnabled(false);
+					smIn.setEnabled(false);
+					syDone.setEnabled(false);
+					sdIn.setEnabled(false);
+					syIn.setEnabled(false);
+					lIn.setEnabled(false);
+					lDone.setEnabled(false);
+					tIn.setEnabled(false);
+					tDone.setEnabled(false);
 				}
 			}
 
 		});
 
-		// while (tIn.getText().isEmpty()) {
-		// JOptionPane.showMessageDialog(null, "Please enter a valid title");
-		// lIn.setEnabled(false);
-		// sIn.setEnabled(false);
-		// eIn.setEnabled(false);
-		// dIn.setEnabled(false);
-		// }
-		//
-		// lIn.setEnabled(true);
-		// while (lIn.getText().equals("")) {
-		// JOptionPane.showMessageDialog(null,
-		// "Please enter a valid location");
-		// sIn.setEnabled(false);
-		// eIn.setEnabled(false);
-		// dIn.setEnabled(false);
-		// }
-		//
-		// sIn.setEnabled(true);
-		// while (sIn.getText().equals("")) {
-		// JOptionPane.showMessageDialog(null,
-		// "Please enter a valid start date");
-		//
-		// eIn.setEnabled(false);
-		// dIn.setEnabled(false);
-		// }
-		// if(!tIn.getText().isEmpty()) {
-		// lIn.setEnabled(true);
-		//
-		// }
-		// if(!sIn.getText().isEmpty()) {
-		// String[] startDateArray = sIn.getText().split("/");
-		// startDate = LocalDate.of(Integer.parseInt(startDateArray[2]),
-		// Integer.parseInt(startDateArray[0]),
-		// Integer.parseInt(startDateArray[1]));
-		// ///////// CHECK BUSINESS RULES
-		// while
-		// (!theManager.isJobNotTooFar(startDate)/////////////////////////////////////////////////////////////////////
-		// CHECK
-		// /////////////////////////////////////////////////////////////////////
-		// THIS.
-		// || ChronoUnit.DAYS.between(LocalDate.now(), startDate) < 0
-		// || Job.isDateTooFar(startDate)) {
-		// JOptionPane.showMessageDialog(null,
-		// "Please enter a valid start date, "
-		// + "this date is too far or is in the past");
-		// sIn.setText("");// empty out the field.
-		// startDateArray = sIn.getText().split("/");
-		// startDate = LocalDate.of(Integer.parseInt(startDateArray[2]),
-		// Integer.parseInt(startDateArray[0]),
-		// Integer.parseInt(startDateArray[1]));
-		//
-		// eIn.setEnabled(false);
-		// dIn.setEnabled(false);
-		// }
-		//
-		// eIn.setEnabled(true);
-		// while (eIn.getText().equals("")) {
-		// JOptionPane.showMessageDialog(null,
-		// "Please enter a valid end date");
-		//
-		// eIn.setEnabled(false);
-		// dIn.setEnabled(false);
-		// }
-		// String[] endDateArray = eIn.getText().split("/");
-		// endDate = LocalDate.of(Integer.parseInt(endDateArray[2]),
-		// Integer.parseInt(endDateArray[0]),
-		// Integer.parseInt(endDateArray[1]));
-		// while (!theManager.isMaxDaysUnder(startDate, endDate)
-		// || Job.isDateTooFar(endDate)) {
-		// System.out.println("Please limit your job to " + Job.MAX_LENGTH
-		// + " days or under.");
-		// eIn.setText(""); // empty out the text field
-		// endDateArray = eIn.getText().split("/");
-		// endDate = LocalDate.of(Integer.parseInt(endDateArray[2]),
-		// Integer.parseInt(endDateArray[0]),
-		// Integer.parseInt(endDateArray[1]));
-		//
-		// dIn.setEnabled(false);
-		// }
-		//
-		// dIn.setEnabled(true);
-		// while (dIn.getText().equals("")) {
-		// JOptionPane.showMessageDialog(null,
-		// "Please enter a valid description");
-		// }
-		// }
+		
 
 		// add job to list.
-		JButton done = new JButton("Done");
 		done.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
@@ -334,6 +298,7 @@ public class ParkManagerNewJobPanel extends JPanel {
 			}
 
 		});
+		
 
 	}
 }
