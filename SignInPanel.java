@@ -109,8 +109,7 @@ public class SignInPanel extends JPanel implements Observer {
 		if (name.equals("exit")) {
 		    //Dummy branch
 		} else {
-			System.out.println("-Debug 1-");
-			System.out.println("size: " + theUsers.getUsers().size());
+			
     		for(int i = 0; i<theUsers.getSize(); i++) {
     			System.out.println("-Made it to for loop-");
     			if (theUsers.getIndex(i).getName().toLowerCase().equals(name.toLowerCase())) {
@@ -122,9 +121,10 @@ public class SignInPanel extends JPanel implements Observer {
     					this.setVisible(false);
     					
     					ParkManager manager = (ParkManager)theUsers.getIndex(i);
-    					ParkManagerPanel managerPanel = new ParkManagerPanel(manager, myJobs);
+    					System.out.println(manager.getJobs().get(0));
+    					ParkManagerPanel managerPanel = new ParkManagerPanel(manager);
     					myFrame.getContentPane().add(managerPanel, BorderLayout.CENTER);
-    					myFrame.setResizable(false);
+    					myFrame.setResizable(true);
     					myFrame.pack();
     					
     					
@@ -134,8 +134,8 @@ public class SignInPanel extends JPanel implements Observer {
     					
     					Volunteer volunteer = (Volunteer) (myUsers.getIndex(i));
     					VolunteerPanel volunteerPanel = new VolunteerPanel();
-    					myFrame.getContentPane().add(volunteerPanel, BorderLayout.CENTER);
-    					myFrame.setResizable(false);
+    					//myFrame.getContentPane().add(volPanel, BorderLayout.CENTER);
+    					myFrame.setResizable(true);
     					myFrame.pack();
     					
     				} else if(myUsers.getIndex(i).getType().equals("Urban Parks Employee")) {
@@ -143,10 +143,10 @@ public class SignInPanel extends JPanel implements Observer {
     					this.setVisible(false);
     					
     					UrbanParksEmployee employee = (UrbanParksEmployee) (myUsers.getIndex(i));
-    					UrbanParksPanel employeePanel = new UrbanParksPanel();
+    					UrbanParksPanel employeePanel = new UrbanParksPanel(theJobs);
     					
     					myFrame.getContentPane().add(employeePanel, BorderLayout.CENTER);
-    					myFrame.setResizable(false);
+    					myFrame.setResizable(true);
     					myFrame.pack();
     				}
     			}
