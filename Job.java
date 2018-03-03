@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 /**
  * This class holds methods for the Job class. A Job consists of a title,
@@ -238,7 +239,7 @@ public class Job implements Serializable {
 			ArrayList<Job> theJobList) {
 		ArrayList<Job> myCancellationJobs = new ArrayList<Job>();
 		for (int i = 0; i < theJobList.size(); i++) {
-			if (!theJobList.get(i).isTooClose()) {
+			if (!theJobList.get(i).isMoreThanMinimumDaysVol()) {
 				myCancellationJobs.add(theJobList.get(i));
 			}
 		}
