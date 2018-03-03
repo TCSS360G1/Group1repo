@@ -174,9 +174,8 @@ public class ParkManagerNewJobPanel extends JPanel {
 			public void actionPerformed(final ActionEvent theEvent) {
 				if (smIn.getText().isEmpty() || sdIn.getText().isEmpty() ||
 						syIn.getText().isEmpty()) {
-					if (theManager.isJobNotTooFar(startDate) || ChronoUnit.DAYS
-							.between(LocalDate.now(), startDate) < 0
-							|| Job.isDateTooFar(startDate)) {
+					if (Job.isDateTooFar(startDate) || 
+							ChronoUnit.DAYS.between(LocalDate.now(), startDate) < 0) {
 
 						JOptionPane.showMessageDialog(null,
 								"Please Enter a start date, "
@@ -203,10 +202,10 @@ public class ParkManagerNewJobPanel extends JPanel {
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
 				if (emIn.getText().isEmpty()) {
-					if (theManager.isJobNotTooFar(startDate)
+					if (Job.isJobNotTooLong(startDate, endDate)
 							|| ChronoUnit.DAYS.between(LocalDate.now(),
-									startDate) < 0
-							|| Job.isDateTooFar(startDate)) {
+									endDate) < 0
+							|| Job.isDateTooFar(endDate)) {
 						JOptionPane.showMessageDialog(null,
 								"Please Enter a start date, "
 										+ "that is either under"

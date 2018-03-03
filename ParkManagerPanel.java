@@ -16,9 +16,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import java.util.ArrayList;
 import java.util.Observable;
 
 import model.Job;
+import model.JobCollection;
 import model.ParkManager;
 
 public class ParkManagerPanel extends JPanel implements Observer {
@@ -28,29 +31,30 @@ public class ParkManagerPanel extends JPanel implements Observer {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JPanel cancellations;
+	private JPanel myCancellations;
 	private JPanel myNewJobs;
 	
 	private ParkManager myManager;
 
-	private JMenuBar x;
-	private JPanel currentJobs;
+	private JMenuBar myJMenuBar;
+	private JPanel myCurrentJobsPanel;
+	private ArrayList mySystemJobs;
 	
 
-	public ParkManagerPanel(ParkManager theManager) {
+	public ParkManagerPanel(ParkManager theManager, ArrayList<Job> theJobs) {
 		System.out.println(theManager.getFirstName());
-		
+		mySystemJobs = theJobs;
 		myManager = theManager;
 		System.out.println(Job.filterForCancellation(myManager.getJobs()).size());
 		//Job j = new Job("");
 		//myManager.addJob(j);
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(600,600));
-		x = new MenuBar();
-		add(x, BorderLayout.NORTH);
+		myJMenuBar = new MenuBar();
+		add(myJMenuBar, BorderLayout.NORTH);
 		
-		currentJobs = new ParkManagerDisplayCurrentJobs(theManager);
-		add(currentJobs, BorderLayout.CENTER);
+		myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(theManager);
+		add(myCurrentJobsPanel, BorderLayout.CENTER);
 		//displayCurrentJobs(myManager);
 		
 		
@@ -62,11 +66,11 @@ public class ParkManagerPanel extends JPanel implements Observer {
 	}
 	
 	private void addCurrentJobPanel() {
-		add(currentJobs, BorderLayout.SOUTH);
+		add(myCurrentJobsPanel, BorderLayout.SOUTH);
 	}
 
 	private void addCancellationsJobPanel() {
-		add(cancellations, BorderLayout.SOUTH);		
+		add(myCancellations, BorderLayout.SOUTH);		
 	}
 	public class MenuBar extends JMenuBar {
 
@@ -75,16 +79,16 @@ public class ParkManagerPanel extends JPanel implements Observer {
 		 */
 		private static final long serialVersionUID = 1L;
 
-		private JMenuItem SignOut;
-		private JMenuItem Updates;
-		private JMenuItem NewJob;
-		private JMenuItem ViewCurrent;
+		private JMenuItem mySignOut;
+		private JMenuItem myUpdates;
+		private JMenuItem myNewJob;
+		private JMenuItem myViewCurrent;
 		
 		public MenuBar() {
 			super();
 			myNewJobs = new ParkManagerNewJobPanel(myManager);
-			currentJobs = new ParkManagerDisplayCurrentJobs(myManager);
-			cancellations = new ParkManagerCancelJobsPanel(Job.filterForCancellation(myManager.getJobs()));
+			myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(myManager);
+			myCancellations = new ParkManagerCancelJobsPanel(Job.filterForCancellation(myManager.getJobs()));
 			current();
 			updates();
 			newJob();
@@ -96,80 +100,87 @@ public class ParkManagerPanel extends JPanel implements Observer {
 			// TODO Auto-generated method stub
 			JMenu current = new JMenu("Jobs");
 			add(current);
-			ViewCurrent = new JMenuItem("View Current Jobs");
-			ViewCurrent.addActionListener(new ActionListener() {
+			myViewCurrent = new JMenuItem("View Current Jobs");
+			myViewCurrent.addActionListener(new ActionListener() {
 				@Override
-				public void actionPerformed(final ActionEvent theEvent) {
+				public void actionPerformed(final ActionEvent theEvent) { 
 					//currentJobs.setVisible(false);
 					myNewJobs.setVisible(false);
-					cancellations.setVisible(false);
-					currentJobs.setVisible(true);
+					myCancellations.setVisible(false);
+					myCurrentJobsPanel.setVisible(true);
 					addCurrentJobPanel();
 					
 				}
 			});
-			current.add(ViewCurrent);
+			current.add(myViewCurrent);
 		}
 
 		private void newJob() {
 			// TODO Auto-generated method stub
 			JMenu newJob = new JMenu("NEW");
 			add(newJob);
-			NewJob = new JMenuItem("Create a new Job");
-			NewJob.addActionListener(new ActionListener() {
+			myNewJob = new JMenuItem("Create a new Job");
+			myNewJob.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent theEvent) {
 					
 					
-					currentJobs.setVisible(false);
 					
-					cancellations.setVisible(false);
-					myNewJobs.setVisible(true);
-					addNewJobPanel();
+					if(mySystemJobs.size()==Job.getLegalJobAmount()) {
+						JOptionPane.showMessageDialog(null, 
+								"We are sorry, at this time we are not accepting"
+								+ " any jobs please check bck in another time");
+					} else {
+						myCurrentJobsPanel.setVisible(false);
+						myCancellations.setVisible(false);
+						myNewJobs.setVisible(true);
+						addNewJobPanel();
+					}
+					
 					//JOptionPane.showMessageDialog(null, "Clicked the new job");
 				}
 			});
-			newJob.add(NewJob);
+			newJob.add(myNewJob);
 		}
 
 		private void updates() {
 			// TODO Auto-generated method stub
 			JMenu cancel = new JMenu("Cancel");
 			add(cancel);
-			Updates = new JMenuItem("Update Jobs");
-			Updates.addActionListener(new ActionListener() {
+			myUpdates = new JMenuItem("Update Jobs");
+			myUpdates.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent theEvent) {
-					//updatesPanel(myManager); //this is passing in entire job class. we want to only pass in jobs that are available to be cancelled.
+					
 					
 					
 					if((Job.filterForCancellation(myManager.getJobs())).size() == 0) {
-						cancellations.setVisible(false);
+						myCancellations.setVisible(false);
 						JOptionPane.showMessageDialog(null, "Sorry, you currently do not have any jobs.");
 					} else {
 						myNewJobs.setVisible(false);
-						currentJobs.setVisible(false);
-						cancellations.setVisible(true);
+						myCurrentJobsPanel.setVisible(false);
+						myCancellations.setVisible(true);
 						addCancellationsJobPanel();
 					}
 					
 				}
 			});
-			cancel.add(Updates);
+			cancel.add(myUpdates);
 		}
 
 		private void signOut() {
 			// TODO Auto-generated method stub
 			JMenu out = new JMenu("SignOut");
 			add(out);
-			SignOut = new JMenuItem("Sign Out");
-			SignOut.addActionListener(new ActionListener() {
+			mySignOut = new JMenuItem("Sign Out");
+			mySignOut.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent theEvent) {
 					
 				}
 			});
-			out.add(SignOut);
+			out.add(mySignOut);
 		}
 
 	}

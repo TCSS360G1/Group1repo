@@ -122,7 +122,7 @@ public class SignInPanel extends JPanel implements Observer {
     					
     					ParkManager manager = (ParkManager)theUsers.getIndex(i);
     					System.out.println(manager.getJobs().get(0));
-    					ParkManagerPanel managerPanel = new ParkManagerPanel(manager);
+    					ParkManagerPanel managerPanel = new ParkManagerPanel(manager, myJobs.filterPast());
     					myFrame.getContentPane().add(managerPanel, BorderLayout.CENTER);
     					myFrame.setResizable(true);
     					myFrame.pack();

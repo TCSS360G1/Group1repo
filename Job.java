@@ -69,6 +69,20 @@ public class Job implements Serializable {
     }
     
     /**
+     * @precondition: Dates that are passed in are non null dates
+     * @return false is the job is more than length specified
+     */
+    public static boolean isJobNotTooLong(LocalDate theS, LocalDate theE) {
+    	if(ChronoUnit.DAYS.between(theS, theE) > MAX_LENGTH) {
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    	
+    }
+    
+    /**
      * This method requires a job with a valid start and end date. This method
      * will compare theCandidates start and end dates with this jobs', and will
      * return a boolean to show the status of potential conflicts.
@@ -226,11 +240,11 @@ public class Job implements Serializable {
 	 * true otherwise.
 	 */
 	public static boolean isJobsAmountLegal(JobCollection myJobs) {
-	    boolean isLegal = true;
 		if(myJobs.getSize() > MAX_JOBS) {
-			isLegal = false;
+			return false;
+		} else {
+			return true;
 		}
-		return isLegal;
 	}
     
          // ALWAYS PASS IN users current jobs list.

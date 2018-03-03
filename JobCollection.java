@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
 public class JobCollection implements Serializable {
 
@@ -15,16 +16,12 @@ public class JobCollection implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	//all jobs past and present 
+	private static ArrayList<Job> mySystemsJobs = new ArrayList<Job>();
 	//all current jobs. 
-	private static ArrayList<Job> myJobs;
+	private static ArrayList<Job> myJobs = new ArrayList<Job>();
 	//without the schedule conflicts. 
-	private static ArrayList<Job> myFilteredJobs;
-	
-	public JobCollection() {
-	    myJobs = new ArrayList<Job>();
-	    myFilteredJobs = new ArrayList<Job>();
-	}
-	
+	private static ArrayList<Job> myFilteredJobs = new ArrayList<Job>();
 	/**
 	 * Serializes the Jobs ArrayList to store all Jobs.
 	 */
@@ -113,18 +110,18 @@ public class JobCollection implements Serializable {
 		
 		return myFilteredJobs;
 	}
-	//ALWAYS PASS IN users current jobs list.
-	//will not allow user to cancell a job if it is too far.
-	public static ArrayList<Job> filterForCancellation(ArrayList<Job> theJobList) {
-		ArrayList<Job> myCancellationJobs = new ArrayList<Job>();
-		for(int i = 0; i<theJobList.size(); i++) {
-			if(!theJobList.get(i).isMoreThanMinimumDaysUnvol()) {
-				myCancellationJobs.add(theJobList.get(i));
-			}
-		}
-		return myCancellationJobs;
-		
-	}
+//	//ALWAYS PASS IN users current jobs list.
+//	//will not allow user to cancell a job if it is too far.
+//	public static ArrayList<Job> filterForCancellation(ArrayList<Job> theJobList) {
+//		ArrayList<Job> myCancellationJobs = new ArrayList<Job>();
+//		for(int i = 0; i<theJobList.size(); i++) {
+//			if(!theJobList.get(i).isMoreThanMinimumDaysUnvol()) {
+//				myCancellationJobs.add(theJobList.get(i));
+//			}
+//		}
+//		return myCancellationJobs;
+//		
+//	}
 	
 	//always pass in current Jobs list. 
 	//returns list that gives list of jobs that are available to be cancelled from. 
