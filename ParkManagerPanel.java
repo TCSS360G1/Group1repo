@@ -28,6 +28,8 @@ public class ParkManagerPanel extends JPanel implements Observer {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private JPanel cancellations;
+	private JPanel myNewJobs;
 	
 	private ParkManager myManager;
 
@@ -55,9 +57,17 @@ public class ParkManagerPanel extends JPanel implements Observer {
 		setVisible(true);
 	}
 	
+	private void addNewJobPanel() {
+		add(myNewJobs, BorderLayout.SOUTH);
+	}
 	
-	
+	private void addCurrentJobPanel() {
+		add(currentJobs, BorderLayout.SOUTH);
+	}
 
+	private void addCancellationsJobPanel() {
+		add(cancellations, BorderLayout.SOUTH);		
+	}
 	public class MenuBar extends JMenuBar {
 
 		/**
@@ -69,12 +79,11 @@ public class ParkManagerPanel extends JPanel implements Observer {
 		private JMenuItem Updates;
 		private JMenuItem NewJob;
 		private JMenuItem ViewCurrent;
-		private JPanel cancellations;
-		private JPanel myNewJobs;
+		
 		public MenuBar() {
 			super();
 			myNewJobs = new ParkManagerNewJobPanel(myManager);
-			
+			currentJobs = new ParkManagerDisplayCurrentJobs(myManager);
 			cancellations = new ParkManagerCancelJobsPanel(Job.filterForCancellation(myManager.getJobs()));
 			current();
 			updates();
@@ -95,7 +104,8 @@ public class ParkManagerPanel extends JPanel implements Observer {
 					myNewJobs.setVisible(false);
 					cancellations.setVisible(false);
 					currentJobs.setVisible(true);
-					add(currentJobs, BorderLayout.SOUTH);
+					addCurrentJobPanel();
+					
 				}
 			});
 			current.add(ViewCurrent);
@@ -115,7 +125,7 @@ public class ParkManagerPanel extends JPanel implements Observer {
 					
 					cancellations.setVisible(false);
 					myNewJobs.setVisible(true);
-					add(myNewJobs, BorderLayout.SOUTH);
+					addNewJobPanel();
 					//JOptionPane.showMessageDialog(null, "Clicked the new job");
 				}
 			});
@@ -140,7 +150,7 @@ public class ParkManagerPanel extends JPanel implements Observer {
 						myNewJobs.setVisible(false);
 						currentJobs.setVisible(false);
 						cancellations.setVisible(true);
-						add(cancellations, BorderLayout.SOUTH);
+						addCancellationsJobPanel();
 					}
 					
 				}
