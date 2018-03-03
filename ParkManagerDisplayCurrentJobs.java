@@ -14,15 +14,15 @@ public class ParkManagerDisplayCurrentJobs extends JPanel {
 	ParkManager myManager;
 	public ParkManagerDisplayCurrentJobs(ParkManager theManager){
 		myManager = theManager;
-		this.setBorder(BorderFactory.createTitledBorder("Your Jobs:"));
-		setLayout(new BorderLayout());
 		displayCurrentJobs(myManager);
+		
 	}
 
 	/*Display all of the managers current Jobs. */
 	private void displayCurrentJobs(ParkManager theManager) {
 		currentJobs = new JPanel();
 		currentJobs.setLayout(new GridLayout(theManager.getJobs().size(), 1));
+		this.setBorder(BorderFactory.createTitledBorder("Your Jobs:"));
 		JLabel myJobLabels = new JLabel();
 		//create a new label for each job and add
 		for (int i = 0; i<theManager.getJobs().size(); i++){
