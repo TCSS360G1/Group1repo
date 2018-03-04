@@ -1,8 +1,12 @@
 package user_interface;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.Volunteer;
@@ -20,9 +24,12 @@ public class VolunteerCurrentJobsPanel extends JPanel {
     }
     
     private void setupPanel() {
-        //TODO: Needs to have whatever method for getting information form model
-        //look and feel will be decided after everything else works.
-        //needs listeners for selection once the talking to model is established
-        //the menubar will turn off and on the different panels.
+    	setPreferredSize(new Dimension(900,900));
+        setLayout(new GridLayout(myVolunteer.getJobs().size(),1));
+        setBorder(BorderFactory.createTitledBorder("Your Jobs"));
+        for(int i = 0; i<myVolunteer.getJobs().size(); i++) {
+        	JLabel j = new JLabel(myVolunteer.getJobs().toString());
+        	add(j);
+        }
     }
 }
