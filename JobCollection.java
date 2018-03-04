@@ -113,13 +113,14 @@ public class JobCollection implements Serializable, PropertyChangeListener {
 		for(int i = 0; i<theManager.getJobs().size(); i++) {
 			System.out.println(theManager.getJobs().get(i));
 			if(theManager.getJobs().get(i).toString().equals(theJob)) {
-				theManager.getJobs().remove((Job) theManager.getJobs().get(i));
+				theManager.removeJob((Job) theManager.getJobs().get(i));
 				System.out.println("found job");
 				//System.out.println(theJob);
 				
 			}
 		}
 		System.out.println("AFTER manager removes size(job collection) " + theManager.getJobs().size());
+		
 	}
 	
 	/*filter out all past jobs.*/
@@ -141,22 +142,7 @@ public class JobCollection implements Serializable, PropertyChangeListener {
 		
 		return myFilteredJobs;
 	}
-	
-//	//ALWAYS PASS IN users current jobs list.
-//	//will not allow user to cancell a job if it is too far.
-//	public static ArrayList<Job> filterForCancellation(ArrayList<Job> theJobList) {
-//		ArrayList<Job> myCancellationJobs = new ArrayList<Job>();
-//		for(int i = 0; i<theJobList.size(); i++) {
-//			if(!theJobList.get(i).isMoreThanMinimumDaysUnvol()) {
-//				myCancellationJobs.add(theJobList.get(i));
-//			}
-//		}
-//		return myCancellationJobs;
-//		
-//	}
-	
-	//always pass in current Jobs list. 
-	//returns list that gives list of jobs that are available to be cancelled from. 
+ 
 	public static ArrayList<Job> filterNewJobsVolunteer(ArrayList<Job> theJobList) {
 		ArrayList<Job> myNewJobsFilters = new ArrayList<Job>();
 		for(int i = 0; i<theJobList.size(); i++) {
