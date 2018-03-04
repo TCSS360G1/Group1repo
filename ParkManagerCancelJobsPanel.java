@@ -61,10 +61,8 @@ public class ParkManagerCancelJobsPanel extends JPanel implements PropertyChange
 				// ///////////////////////////////////**********
 				 JOptionPane.showMessageDialog(null, item.toString() + "was removed from "
 				 		+ "jobs.");
-				 //myUpdatePanel.setVisible(false);
-				/////////////////////////////////// REMOVE FROM ALL JOBS
-				 //myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(theManager);
-				 //add(myCurrentJobsPanel, BorderLayout.CENTER);
+				 firePropertyChange("Manager remove", theManager, null); //*******need to pass in the job in newValue
+				 
 			}
 		});
 		
@@ -83,11 +81,7 @@ public class ParkManagerCancelJobsPanel extends JPanel implements PropertyChange
 
 	}
 
-	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 
 }

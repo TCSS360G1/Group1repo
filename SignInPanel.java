@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -32,7 +34,7 @@ import model.Volunteer;
  * @version February 28, 2018
  */
 
-public class SignInPanel extends JPanel implements Observer {
+public class SignInPanel extends JPanel implements PropertyChangeListener {
 
 	private static final Dimension DEFAULT_SIZE = new Dimension(300, 150);
     private static final int TEXT_FIELD_WIDTH = 30;
@@ -40,6 +42,7 @@ public class SignInPanel extends JPanel implements Observer {
     private static JFrame myFrame;
     private final JLabel myUsernameLabel;
     private final JButton mySignInButton;
+	private ParkManagerPanel managerPanel;
     private static UserCollection myUsers = new UserCollection();
     private static JobCollection myJobs = new JobCollection();
     
@@ -122,7 +125,8 @@ public class SignInPanel extends JPanel implements Observer {
     					
     					ParkManager manager = (ParkManager)theUsers.getIndex(i);
     					System.out.println(manager.getJobs().get(0));
-    					ParkManagerPanel managerPanel = new ParkManagerPanel(manager, myJobs.filterPast());
+    					managerPanel = new ParkManagerPanel(manager, myJobs.filterPast());
+    					
     					myFrame.getContentPane().add(managerPanel, BorderLayout.CENTER);
     					myFrame.setResizable(true);
     					myFrame.pack();
@@ -161,12 +165,26 @@ public class SignInPanel extends JPanel implements Observer {
 		}
 	}
 
-    
 	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(evt.getPropertyName().equals("Manager add")) {
+			ParkManager manager = (ParkManager) evt.getOldValue();
+			System.out.println(myJobs.getSize()+"  "+ manager.getJobs().size());
+			//manager has a new job to add. 
+			myJobs.addNewJob((Job) evt.getNewValue());
+			
+			manager.addJob((Job) evt.getNewValue());
+			System.out.println(myJobs.getSize()+"  "+ manager.getJobs().size());
+		} else if(evt.getPropertyName().equals("Manager add")) {
+			ParkManager manager = (ParkManager) evt.getOldValue();
+			//delete the job
+		}
+
 		
 	}
+
+    
+	
 	
 	
 }

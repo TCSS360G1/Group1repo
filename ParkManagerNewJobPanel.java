@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -26,7 +28,7 @@ import model.ParkManager;
  * @author deepjot
  *
  */
-public class ParkManagerNewJobPanel extends JPanel {
+public class ParkManagerNewJobPanel extends JPanel  {
 	private JPanel myNewJob;
 	private ParkManager myManager;
 	private LocalDate startDate;
@@ -35,7 +37,7 @@ public class ParkManagerNewJobPanel extends JPanel {
 
 	public ParkManagerNewJobPanel(ParkManager theManager) {
 		myManager = theManager;
-		System.out.println("xxx");
+		//System.out.println("xxx");
 		this.setBorder(BorderFactory.createTitledBorder("New Job:"));
 		setLayout(new BorderLayout());
 		newJobPanel(myManager);
@@ -295,6 +297,7 @@ public class ParkManagerNewJobPanel extends JPanel {
 						startDate, endDate);
 				theManager.addJob(newJob);
 				System.out.println(newJob.toString());
+				firePropertyChange("Manager add", myManager, newJob);
 				ParkManagerDisplayCurrentJobs myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(theManager);
 				//myNewJob.setVisible(false);
 				//add(myCurrentJobsPanel, BorderLayout.CENTER);
@@ -305,4 +308,6 @@ public class ParkManagerNewJobPanel extends JPanel {
 		
 
 	}
+
+	
 }
