@@ -3,6 +3,8 @@ package user_interface;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -16,14 +18,15 @@ import javax.swing.JRadioButton;
 import model.Job;
 import model.ParkManager;
 
-public class ParkManagerCancelJobsPanel extends JPanel {
+public class ParkManagerCancelJobsPanel extends JPanel implements PropertyChangeListener{
 	JPanel myUpdatePanel;
 	public ParkManagerCancelJobsPanel(ParkManager theManager, ArrayList<Job> theList) {
 		
 		this.setBorder(BorderFactory.createTitledBorder("Cancel Job:"));
 		setLayout(new BorderLayout());
 		
-			updatesPanel(theManager, theList);
+		updatesPanel(theManager, theList);
+		
 	}
 	
 	private void updatesPanel(ParkManager theManager, ArrayList<Job> listOfCancellationsJobs) {
@@ -78,6 +81,12 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 		}
 		return 0;
 
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

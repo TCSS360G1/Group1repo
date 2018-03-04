@@ -33,7 +33,7 @@ public class VolunteerMenuBar extends JMenuBar {
     private void currentJobsButton() {
         myCurrentJobsButton = new JButton("Current Jobs");
         myCurrentJobsButton.setEnabled(false);
-        add(myCurrentJobsButton);
+        this.add(myCurrentJobsButton);
         myCurrentJobsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
@@ -43,6 +43,7 @@ public class VolunteerMenuBar extends JMenuBar {
                 myVolunteerPanels[0].setVisible(true);
                 myVolunteerPanels[1].setVisible(false);
                 myVolunteerPanels[2].setVisible(false);
+                
             }
         });
     }
@@ -50,7 +51,7 @@ public class VolunteerMenuBar extends JMenuBar {
     private void availableJobsButton() {
         myAvailableJobsButton = new JButton("Volunteer!");
         myAvailableJobsButton.setEnabled(false);
-        add(myAvailableJobsButton);
+        this.add(myAvailableJobsButton);
         myAvailableJobsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
@@ -66,7 +67,7 @@ public class VolunteerMenuBar extends JMenuBar {
 
     private void unVolunteerButton() {
         myUnvolunteerButton = new JButton("Unvolunteer");
-        add(myUnvolunteerButton);
+        this.add(myUnvolunteerButton);
         myUnvolunteerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
@@ -82,7 +83,7 @@ public class VolunteerMenuBar extends JMenuBar {
     
     private void signOutButton() {
         mySignOutButton = new JButton("Sign Out");
-        add(mySignOutButton);
+        this.add(mySignOutButton);
         mySignOutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent theEvent) {
