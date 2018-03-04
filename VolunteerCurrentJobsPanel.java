@@ -28,8 +28,11 @@ public class VolunteerCurrentJobsPanel extends JPanel {
         setLayout(new GridLayout(myVolunteer.getJobs().size(),1));
         setBorder(BorderFactory.createTitledBorder("Your Jobs"));
         for(int i = 0; i<myVolunteer.getJobs().size(); i++) {
-        	JLabel j = new JLabel(myVolunteer.getJobs().toString());
-        	add(j);
+        	if(!myVolunteer.getJobs().get(i).isInPast()){
+        		JLabel j = new JLabel(myVolunteer.getJobs().toString());
+            	add(j);
+        	}
+        	
         }
     }
 }
