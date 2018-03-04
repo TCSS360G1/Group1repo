@@ -3,25 +3,71 @@ package user_interface;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
+import model.AlreadySignedUpException;
+import model.Job;
+import model.JobCollection;
+import model.MinimumDaysException;
+import model.ScheduleConflictException;
 import model.Volunteer;
 
 public class VolunteerAvailableJobsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     
     private Volunteer myVolunteer;
-    
-    public VolunteerAvailableJobsPanel(Volunteer theVolunteer) {
+    private ArrayList<Job> myJobs;
+    private JPanel myAvailableJobs;
+    public VolunteerAvailableJobsPanel(Volunteer theVolunteer, ArrayList<Job> theJobs) {
         System.out.println("Available");
+        myVolunteer = theVolunteer;
+        myJobs = theJobs;
         setupPanel();
     }
 
     private void setupPanel() {
-        //TODO: panel setup. use filters from JobCollection and display jobs
-        //probably in a text field.
+        this.setBorder(BorderFactory.createTitledBorder("All jobs that are available"));
+        myAvailableJobs = new JPanel();
+        setLayout(new BorderLayout());
+        displayAvailableJobs(myJobs); 
     }
+
+	private void displayAvailableJobs(ArrayList<Job> theJobs) {
+		JButton add = new JButton("Signup");
+		ButtonGroup BG = new ButtonGroup();
+		for(int i=0; i<theJobs.size(); i++) {
+			JRadioButton j = new JRadioButton((i+1)+". "+theJobs.get(i).toString());
+			BG.add(j);
+			myAvailableJobs.add(j);
+		}
+		add(add);
+		add.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String selected = BG.getSelection().toString();
+				String[] split = selected.split(".");
+				int index = Integer.parseInt(split[0]);
+				
+				try {
+					myVolunteer.addJob(myJobs.get(index));
+				} catch (AlreadySignedUpException | MinimumDaysException
+						| ScheduleConflictException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		
+	}
 }

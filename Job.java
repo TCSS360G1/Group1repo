@@ -261,6 +261,23 @@ public class Job implements Serializable {
 
 	}
 	
+	//CHECKS FOR VOLUNTEERS AVAILABLE JOBS.
+	public static ArrayList<Job> filterForVolunteerAvailableJobs(Volunteer theVolunteer, ArrayList<Job> theJobs) {
+		ArrayList<Job> filtered = new ArrayList<Job>();
+		for(int i = 0; i<theJobs.size(); i++) {
+			if(!theJobs.get(i).isInPast()) {
+				if(theJobs.get(i).isMoreThanMinimumDaysVol()&&theVolunteer.isNoScheduleConflicts(theJobs.get(i))
+						&& !theVolunteer.getJobs().contains(theJobs.get(i))) {
+					//if the volunteer doesnt contain it
+					//if its more than min days away and there are not schedule conflicts
+					filtered.add(theJobs.get(i));
+				}
+			}
+		}
+		return filtered;
+		
+	}
+	
 	
 	//---Getters and setters ---//
     /**
@@ -367,4 +384,6 @@ public class Job implements Serializable {
 	public static int getLegalJobAmount() {
 		return MAX_JOBS;
 	}
+
+	
 }

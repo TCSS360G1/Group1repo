@@ -133,7 +133,7 @@ public class SignInPanel extends JPanel implements Observer {
     					this.setVisible(false);
     					
     					Volunteer volunteer = (Volunteer) (myUsers.getIndex(i));
-    					VolunteerPanel volunteerPanel = new VolunteerPanel();
+    					VolunteerPanel volunteerPanel = new VolunteerPanel((Volunteer) myUsers.getIndex(i), myJobs);
     					//myFrame.getContentPane().add(volPanel, BorderLayout.CENTER);
     					myFrame.setResizable(true);
     					myFrame.pack();
