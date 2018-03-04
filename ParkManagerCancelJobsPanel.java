@@ -16,9 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import model.Job;
+import model.JobCollection;
 import model.ParkManager;
 
-public class ParkManagerCancelJobsPanel extends JPanel implements PropertyChangeListener{
+public class ParkManagerCancelJobsPanel extends JPanel {
 	JPanel myUpdatePanel;
 	public ParkManagerCancelJobsPanel(ParkManager theManager, ArrayList<Job> theList) {
 		
@@ -57,11 +58,11 @@ public class ParkManagerCancelJobsPanel extends JPanel implements PropertyChange
 				// remove.
 				String item = myJobsGroup.getSelection().toString();
 				 int index = cancelJob(item, listOfCancellationsJobs);
-				 listOfCancellationsJobs.remove(listOfCancellationsJobs.get(index));
+				 
 				// ///////////////////////////////////**********
 				 JOptionPane.showMessageDialog(null, item.toString() + "was removed from "
 				 		+ "jobs.");
-				 firePropertyChange("Manager remove", theManager, null); //*******need to pass in the job in newValue
+				 firePropertyChange("Manager remove", theManager, item); //*******need to pass in the job in newValue
 				 
 			}
 		});
