@@ -295,6 +295,10 @@ public class ParkManagerNewJobPanel extends JPanel {
 						startDate, endDate);
 				theManager.addJob(newJob);
 				System.out.println(newJob.toString());
+				ParkManagerDisplayCurrentJobs myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(theManager);
+				//myNewJob.setVisible(false);
+				//add(myCurrentJobsPanel, BorderLayout.CENTER);
+				//myCurrentJobsPanel.setVisible(true);
 			}
 
 		});

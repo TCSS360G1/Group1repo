@@ -45,7 +45,7 @@ public class ParkManagerPanel extends JPanel implements Observer {
 		System.out.println(theManager.getFirstName());
 		mySystemJobs = theJobs;
 		myManager = theManager;
-		System.out.println(Job.filterForCancellation(myManager.getJobs()).size());
+		//System.out.println(Job.filterForCancellation(myManager.getJobs()).size());
 		//Job j = new Job("");
 		//myManager.addJob(j);
 		setLayout(new BorderLayout());
@@ -88,7 +88,7 @@ public class ParkManagerPanel extends JPanel implements Observer {
 			super();
 			myNewJobs = new ParkManagerNewJobPanel(myManager);
 			myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(myManager);
-			myCancellations = new ParkManagerCancelJobsPanel(Job.filterForCancellation(myManager.getJobs()));
+			myCancellations = new ParkManagerCancelJobsPanel(myManager, Job.filterForCancellation(myManager.getJobs()));
 			current();
 			updates();
 			newJob();
@@ -152,7 +152,7 @@ public class ParkManagerPanel extends JPanel implements Observer {
 				@Override
 				public void actionPerformed(final ActionEvent theEvent) {
 					
-					
+					//System.out.println(Job.filterForCancellation(myManager.getJobs())).size());
 					
 					if((Job.filterForCancellation(myManager.getJobs())).size() == 0) {
 						myCancellations.setVisible(false);

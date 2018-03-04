@@ -14,21 +14,19 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import model.Job;
+import model.ParkManager;
 
 public class ParkManagerCancelJobsPanel extends JPanel {
 	JPanel myUpdatePanel;
-	public ParkManagerCancelJobsPanel(ArrayList<Job> theList) {
+	public ParkManagerCancelJobsPanel(ParkManager theManager, ArrayList<Job> theList) {
+		
 		this.setBorder(BorderFactory.createTitledBorder("Cancel Job:"));
 		setLayout(new BorderLayout());
 		
-			updatesPanel(theList);
-		
-		
-		
-		
+			updatesPanel(theManager, theList);
 	}
 	
-	private void updatesPanel(ArrayList<Job> listOfCancellationsJobs) {
+	private void updatesPanel(ParkManager theManager, ArrayList<Job> listOfCancellationsJobs) {
 		myUpdatePanel = new JPanel();
 		JButton cancel = new JButton("Cancel");
 		ButtonGroup myJobsGroup = new ButtonGroup();
@@ -42,29 +40,30 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 				j.setText(listOfCancellationsJobs.get(i).toString());
 				myJobsGroup.add(j);
 				myUpdatePanel.add(j);
-			}
-			
-			cancel.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(final ActionEvent theEvent) {
-					// find the button and then find the corresponding job and
-					// remove.
-					String item = myJobsGroup.getSelection().toString();
-					 int index = cancelJob(item, listOfCancellationsJobs);
-					 listOfCancellationsJobs.remove(listOfCancellationsJobs.get(index));
-					// ///////////////////////////////////**********
-					 JOptionPane.showMessageDialog(null, item + "was removed from "
-					 		+ "jobs.");
-					 myUpdatePanel.setVisible(false);
-					/////////////////////////////////// REMOVE FROM ALL JOBS
-
-				}
-			});
+			} 
 		} else {
 			JLabel noneAvail = new JLabel("There are no Jobs to Cancel");
 			add(noneAvail);
 		}
- 
+		cancel.addActionListener(new ActionListener() {
+			private ParkManagerDisplayCurrentJobs myCurrentJobsPanel;
+
+			@Override
+			public void actionPerformed(final ActionEvent theEvent) {
+				// find the button and then find the corresponding job and
+				// remove.
+				String item = myJobsGroup.getSelection().toString();
+				 int index = cancelJob(item, listOfCancellationsJobs);
+				 listOfCancellationsJobs.remove(listOfCancellationsJobs.get(index));
+				// ///////////////////////////////////**********
+				 JOptionPane.showMessageDialog(null, item.toString() + "was removed from "
+				 		+ "jobs.");
+				 //myUpdatePanel.setVisible(false);
+				/////////////////////////////////// REMOVE FROM ALL JOBS
+				 //myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(theManager);
+				 //add(myCurrentJobsPanel, BorderLayout.CENTER);
+			}
+		});
 		
 		myUpdatePanel.add(cancel, BorderLayout.SOUTH);
 		add(myUpdatePanel, BorderLayout.CENTER);
