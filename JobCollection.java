@@ -1,5 +1,7 @@
 package model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
-public class JobCollection implements Serializable {
+public class JobCollection implements Serializable, PropertyChangeListener {
 
 	/**
 	 * 
@@ -71,7 +73,7 @@ public class JobCollection implements Serializable {
 	}
 	
 	/*Clear jobs in serializable.*/
-	public void clearJobs() {
+	public static void clearJobs() {
 		myJobs.clear();
 		
 	}
@@ -91,6 +93,35 @@ public class JobCollection implements Serializable {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public static void removeJob(String theJob, ParkManager theManager) {
+		System.out.println(theJob);
+		System.out.println();
+		System.out.println();
+		//loop through the list and find the string that matches the job.
+		//then remove the string from myjobs and the mananger.
+		System.out.println("removeJob Method in job collection");
+		System.out.println(myJobs.size());
+		for(int i = 0; i < myJobs.size(); i++) {
+			System.out.println(myJobs.get(i));
+			if(myJobs.get(i).toString().equals(theJob)) {
+				myJobs.remove(i);
+			}
+		}
+		System.out.println("2removeJob Method in job collection");
+		System.out.println("Before manager removes size(JobCollection)" + theManager.getJobs().size());
+		for(int i = 0; i<theManager.getJobs().size(); i++) {
+			System.out.println(theManager.getJobs().get(i));
+			if(theManager.getJobs().get(i).toString().equals(theJob)) {
+				theManager.getJobs().remove((Job) theManager.getJobs().get(i));
+				System.out.println("found job");
+				//System.out.println(theJob);
+				
+			}
+		}
+		System.out.println("AFTER manager removes size(job collection) " + theManager.getJobs().size());
+	}
+	
 	/*filter out all past jobs.*/
 	public static ArrayList<Job> filterPast() {
 //		for(int i = 0; i<myJobs.size(); i++){
@@ -110,6 +141,7 @@ public class JobCollection implements Serializable {
 		
 		return myFilteredJobs;
 	}
+	
 //	//ALWAYS PASS IN users current jobs list.
 //	//will not allow user to cancell a job if it is too far.
 //	public static ArrayList<Job> filterForCancellation(ArrayList<Job> theJobList) {
@@ -133,6 +165,11 @@ public class JobCollection implements Serializable {
 			}
 		}
 		return myNewJobsFilters;
+	}
+	@Override
+	public void propertyChange(PropertyChangeEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -43,8 +44,8 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
     private final JLabel myUsernameLabel;
     private final JButton mySignInButton;
 	private ParkManagerPanel managerPanel;
-    private static UserCollection myUsers = new UserCollection();
-    private static JobCollection myJobs = new JobCollection();
+    private static UserCollection myUsers;
+    private static JobCollection myJobs;
     
     /**
      * 
@@ -126,7 +127,8 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
     					ParkManager manager = (ParkManager)theUsers.getIndex(i);
     					System.out.println(manager.getJobs().get(0));
     					managerPanel = new ParkManagerPanel(manager, myJobs.filterPast());
-    					
+    ///////////////////	ADDED LISTENERS HERE
+    					managerPanel.addPropertyChangeListener(this);
     					myFrame.getContentPane().add(managerPanel, BorderLayout.CENTER);
     					myFrame.setResizable(true);
     					myFrame.pack();
@@ -175,9 +177,12 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 			
 			manager.addJob((Job) evt.getNewValue());
 			System.out.println(myJobs.getSize()+"  "+ manager.getJobs().size());
-		} else if(evt.getPropertyName().equals("Manager add")) {
+		} else if(evt.getPropertyName().equals("Manager remove")) {
+			System.out.println("ORIGINAL BEFORE REMOVING SIZE "+myJobs.getSize());
 			ParkManager manager = (ParkManager) evt.getOldValue();
 			//delete the job
+			JobCollection.removeJob(evt.getNewValue().toString(), manager);
+			System.out.println("AFTER REMOVING SIZE "+myJobs.getSize());
 		}
 
 		

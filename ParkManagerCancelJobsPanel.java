@@ -1,14 +1,18 @@
 package user_interface;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -50,19 +54,29 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 			add(noneAvail);
 		}
 		cancel.addActionListener(new ActionListener() {
-			private ParkManagerDisplayCurrentJobs myCurrentJobsPanel;
+
 
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
-				// find the button and then find the corresponding job and
+				// find the button and then find the corresponding job text and
 				// remove.
-				String item = myJobsGroup.getSelection().toString();
-				 int index = cancelJob(item, listOfCancellationsJobs);
+				String job = "";
+				for(Enumeration<AbstractButton> item = myJobsGroup.getElements(); item.hasMoreElements();) {
+					AbstractButton b = item.nextElement();
+					if(b.isSelected()) {
+						job = b.getText();
+					}
+				}
+				
+				
+				
 				 
 				// ///////////////////////////////////**********
-				 JOptionPane.showMessageDialog(null, item.toString() + "was removed from "
+				 JOptionPane.showMessageDialog(null, job + "     was removed from "
 				 		+ "jobs.");
-				 firePropertyChange("Manager remove", theManager, item); //*******need to pass in the job in newValue
+				 firePropertyChange("Manager remove", theManager, job); 
+				 
+				 
 				 
 			}
 		});
@@ -72,15 +86,7 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 
 	}
 
-	private int cancelJob(String item, ArrayList<Job> listOfCancellationsJobs) {
-		for (int i = 0; i < listOfCancellationsJobs.size(); i++) {
-			if (item.equals(listOfCancellationsJobs.get(i))) {
-				return i;
-			}
-		}
-		return 0;
-
-	}
+	
 
 	
 	
