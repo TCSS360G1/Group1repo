@@ -34,7 +34,7 @@ public class UrbanParksPanel extends JPanel implements Observer {
 
 	private UrbanParksEmployee myEmployee;
 	private JobCollection myJobs;
-
+	private JMenuBar myMenuBar;
 	private ParkEmployeeDisplayJobs currentJobs;
 	private SignInPanel mySignIn;
 	
@@ -47,15 +47,15 @@ public class UrbanParksPanel extends JPanel implements Observer {
 		this.setSize(1000, 1000);
 
 		this.setBackground(Color.CYAN);
-
-		add(new MenuBar(), BorderLayout.NORTH);
+		myMenuBar = new MenuBar();
+		add(myMenuBar, BorderLayout.NORTH);
 		currentJobs = new ParkEmployeeDisplayJobs(myJobs);
 		add(currentJobs, BorderLayout.CENTER);
 
 	}
 	
 	private void addPanels(SignInPanel mySignIn) {
-		add(mySignIn, BorderLayout.CENTER);
+		add(mySignIn);
 		
 	}
 
@@ -174,8 +174,10 @@ public class UrbanParksPanel extends JPanel implements Observer {
 				public void actionPerformed(final ActionEvent theEvent) {
 					mySignIn = new SignInPanel();
 					mySignIn.setVisible(true);
-					x.setVisible(false);
+					myMenuBar.setVisible(false);
 					addPanels(mySignIn);
+					x.setVisible(false); 
+					
 				}
 
 				

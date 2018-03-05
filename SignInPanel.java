@@ -43,7 +43,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 	private final JLabel myUsernameLabel;
 	private final JButton mySignInButton;
 	private static UserCollection myUsers;
-	private static JobCollection myJobs;
+	private static JobCollection myJobs; 
 
 	/**
 	 * 
@@ -73,6 +73,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 		myUsernameText = new JTextField("", TEXT_FIELD_WIDTH);
 		mySignInButton = new JButton("Sign In");
 		setUpPanel();
+		this.setVisible(false);
 	}
 
 	/**
@@ -119,7 +120,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 		if (name.equals("exit")) {
 			// Dummy branch
 		} else {
-
+			this.setVisible(false);
 			for (int i = 0; i < theUsers.getSize(); i++) {
 				System.out.println("-Made it to for loop-");
 				if (theUsers.getIndex(i).getName().toLowerCase()
@@ -127,6 +128,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 					ArrayList<Job> currentJobs = theJobs.filterPast();
 					userFound = true;
 					System.out.println("-Found a User-");
+					
 					if (theUsers.getIndex(i).getType().equals("Manager")) {
 						// TODO: Go to Park Manager
 						this.setVisible(false);
@@ -159,7 +161,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 							.equals("Urban Parks Employee")) {
 						// TODO: Go to Employee
 						this.setVisible(false);
-
+						
 						UrbanParksEmployee employee = (UrbanParksEmployee) (myUsers
 								.getIndex(i));
 						UrbanParksPanel employeePanel = new UrbanParksPanel(
@@ -185,26 +187,9 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("Manager add")) {
-			// ParkManager manager = (ParkManager) evt.getOldValue();
-			// System.out.println(
-			// myJobs.getSize() + " " + manager.getJobs().size());
-			// // manager has a new job to add.
-			// myJobs.addNewJob((Job) evt.getNewValue());
-			//
-			// manager.addJob((Job) evt.getNewValue());
-			// System.out.println(
-			// myJobs.getSize() + " " + manager.getJobs().size());
 			firePropertyChange("Manager add", evt.getOldValue(),
 					evt.getNewValue());
 		} else if (evt.getPropertyName().equals("Manager remove")) {
-			// System.out.println(
-			// "ORIGINAL BEFORE REMOVING SIZE " + myJobs.getSize());
-			// ParkManager manager = (ParkManager) evt.getOldValue();
-			// // delete the job
-			// JobCollection.removeJob(evt.getNewValue().toString(), manager);
-			// System.out.println("AFTER REMOVING SIZE " + myJobs.getSize());
-			// for (int i = 0; i < myJobs.getSize(); i++) {
-			// System.out.println(myJobs.getIndex(i));
 			firePropertyChange("Manager remove", evt.getOldValue(),
 					evt.getNewValue());
 		}

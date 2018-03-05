@@ -35,7 +35,7 @@ public class UrbanParksFrame extends JFrame implements PropertyChangeListener{
     private static JobCollection JOBS;
     private static UserCollection USERS;
     /**
-     * Construct the GUI.
+     * Construct the GUI. 
      */
     public UrbanParksFrame() {
         myFrame = new JFrame("TCSS 360 - Urban Parks");
@@ -44,9 +44,11 @@ public class UrbanParksFrame extends JFrame implements PropertyChangeListener{
         USERS = new UserCollection();
 		JOBS = new JobCollection();
 		fillCollections();
-        
-        
-        
+        System.out.println(USERS.getIndex(0));
+        System.out.println(USERS.getIndex(1));
+        System.out.println(USERS.getIndex(2));
+        System.out.println(USERS.getIndex(3));
+        System.out.println(USERS.getIndex(4));
         mySignInPanel = new SignInPanel(myFrame, USERS, JOBS);
         mySignInPanel.addPropertyChangeListener(this);
         
