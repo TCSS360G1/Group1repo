@@ -32,7 +32,7 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 
 	private JPanel myCancellations;
 	private JPanel myNewJobs;
-
+	private JPanel mySignIn;
 	private ParkManager myManager;
 
 	private JMenuBar myJMenuBar;
@@ -66,16 +66,14 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 		setVisible(true);
 	}
 
-	private void addNewJobPanel() {
-		add(myNewJobs, BorderLayout.CENTER);
-	}
 
-	private void addCurrentJobPanel() {
-		add(myCurrentJobsPanel, BorderLayout.CENTER);
+	private void addPanels(JPanel theP) {
+		add(theP, BorderLayout.CENTER);
 	}
-
-	private void addCancellationsJobPanel() {
-		add(myCancellations, BorderLayout.CENTER);
+	private void addListener(JPanel theP) {
+		// TODO Auto-generated method stub
+		theP.addPropertyChangeListener(this);
+		
 	}
 
 	public class MenuBar extends JMenuBar {
@@ -109,8 +107,9 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 					myNewJobs.setVisible(false);
 					myCancellations.setVisible(false);
 					myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(myManager);
+					addListener(myCurrentJobsPanel);
 					myCurrentJobsPanel.setVisible(true);
-					addCurrentJobPanel();
+					addPanels(myCurrentJobsPanel);
 
 				}
 			});
@@ -131,8 +130,9 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 						myCurrentJobsPanel.setVisible(false);
 						myCancellations.setVisible(false);
 						myNewJobs = new ParkManagerNewJobPanel(myManager);
+						addListener(myNewJobs);
 						myNewJobs.setVisible(true);
-						addNewJobPanel();
+						addPanels(myNewJobs);
 					}
 
 					// JOptionPane.showMessageDialog(null, "Clicked the new
@@ -160,11 +160,14 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 						myNewJobs.setVisible(false);
 						myCurrentJobsPanel.setVisible(false);
 						myCancellations = new ParkManagerCancelJobsPanel(myManager, Job.filterForCancellation(myManager.getJobs()));
+						addListener(myCancellations);
 						myCancellations.setVisible(true);
-						addCancellationsJobPanel();
+						addPanels(myCancellations);
 					}
 
 				}
+
+				
 			}); 
 			add(myUpdates);
 		}
@@ -174,7 +177,12 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 			mySignOut.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent theEvent) {
-
+					mySignIn = new SignInPanel();
+					myNewJobs.setVisible(false);
+					myCurrentJobsPanel.setVisible(false);
+					myCancellations.setVisible(false);
+					mySignIn.setVisible(true);
+					addPanels(mySignIn);
 				}
 			});
 			add(mySignOut);
