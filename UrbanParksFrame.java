@@ -125,9 +125,9 @@ public class UrbanParksFrame extends JFrame implements PropertyChangeListener{
         
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //myFrame.pack();
-        myFrame.setMinimumSize(new Dimension(1000,1000));
-       // myFrame.pack();
-        myFrame.setResizable(false);
+        //myFrame.setMinimumSize(new Dimension(1000,1000));
+        myFrame.pack();
+        myFrame.setResizable(true);
         myFrame.setVisible(true);
     }
 	/**
@@ -167,23 +167,13 @@ public class UrbanParksFrame extends JFrame implements PropertyChangeListener{
 			
 		} else if(evt.getPropertyName().equals("Volunteer remove")){
 			Volunteer v = (Volunteer) evt.getOldValue();
-			System.out.println(evt.getNewValue());
-			v.removeJob((Job)evt.getNewValue());
+			Job aJob = JOBS.findJob((String) evt.getNewValue());
+			v.removeJob(aJob);
 		} else if(evt.getPropertyName().equals("Volunteer add")) {
-			System.out.println("volunteer is adding.");
 			Volunteer v = (Volunteer) evt.getOldValue();
-			try {
-				v.addJob((Job)evt.getNewValue());
-			} catch (AlreadySignedUpException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (MinimumDaysException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ScheduleConflictException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			System.out.println("EVT: " + evt.getNewValue());
+			Job aJob = JOBS.findJob((String) evt.getNewValue());
+				v.addJob(aJob);
 		}
 		JOBS.serializeJobCollection();
 		USERS.serializeUserCollection();

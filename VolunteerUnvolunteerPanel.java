@@ -78,6 +78,7 @@ public class VolunteerUnvolunteerPanel extends JPanel {
 						job = b.getText();
 					}
 				}
+				System.out.println(job);
 				JOptionPane.showMessageDialog(null,
 						job + " was removed from volunteered jobs.");
 

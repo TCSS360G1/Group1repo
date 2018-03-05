@@ -36,7 +36,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
         System.out.println("--"+ theJobs.size());
         myVolunteer = theVolunteer;
         mySystemJobs = theJobs;
-        System.out.println("size:" + mySystemJobs.size());
+        System.out.println("size in VolPanel:" + mySystemJobs.size());
         System.out.println("Volunteer jobs: " + theVolunteer.getJobs());
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(600, 600));
@@ -45,10 +45,12 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
         
         myCurrentJobs = new VolunteerCurrentJobsPanel(myVolunteer);
         myViewJobs = new VolunteerAvailableJobsPanel(myVolunteer,
-                        JobCollection.filterForVolunteerAvailableJobs(theVolunteer,
+                        Job.filterForVolunteerAvailableJobs(theVolunteer,
                         theJobs));
-        System.out.println("this is "+JobCollection.filterForVolunteerAvailableJobs(theVolunteer,
+        System.out.println("size of filtered "+Job.filterForVolunteerAvailableJobs(theVolunteer,
                         theJobs).size());
+        System.out.println(myVolunteer.getJobs());
+        System.out.println("FILT" + Job.filterForCancellation(myVolunteer.getJobs()));
         myUnvolunteer = new VolunteerUnvolunteerPanel(myVolunteer,
                         Job.filterForCancellation(myVolunteer.getJobs()));
         
@@ -62,9 +64,6 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
 
         add(theP, BorderLayout.CENTER);
 
-    }
-    private void addPanels2(JPanel theP) {
-    	add(theP);
     }
 
     private void addListener(JPanel theP) {
@@ -112,7 +111,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
                         myCurrentJobs.setVisible(false);
                         myUnvolunteer.setVisible(false);
                         myViewJobs = new VolunteerAvailableJobsPanel(myVolunteer,
-                        		JobCollection.filterForVolunteerAvailableJobs(myVolunteer,
+                        		Job.filterForVolunteerAvailableJobs(myVolunteer,
                                         mySystemJobs));
                         addListener(myViewJobs);
                         myNewJob.setVisible(true);
@@ -127,8 +126,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
                 @Override
                 public void actionPerformed(final ActionEvent theEvent) {
                     // System.out.println(Job.filterForCancellation(myManager.getJobs())).size());
-                    if ((Job.filterForVolunteerAvailableJobs(myVolunteer,
-                                myVolunteer.getJobs())).size() == 0) {
+                    if (Job.filterForCancellation(myVolunteer.getJobs()).size() == 0) {
                         myUnvolunteer.setVisible(false);
                         JOptionPane.showMessageDialog(null,
                                 "Sorry, you currently do not have any jobs"
@@ -157,9 +155,8 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
                     myNewJob.setVisible(false);
                     myCurrentJobs.setVisible(false);
                     myUnvolunteer.setVisible(false);
-                    myMenuBar.setVisible(false);
                     mySignIn.setVisible(true);
-                    addPanels2(mySignIn);
+                    addPanels(mySignIn);
                 }
             });
             add(mySignOut);
@@ -171,8 +168,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
         // get the add event and then fire a listener to the sign in panel.
         if (evt.getPropertyName().equals("Volunteer add")) {
             Volunteer volunteer = (Volunteer) evt.getOldValue();
-            System.out.println("change recieved in pmp");
-            System.out.println(evt.getNewValue());
+            System.out.println("change recieved in vol");
             firePropertyChange("Volunteer add", volunteer, evt.getNewValue());
         } else if (evt.getPropertyName().equals("Volunteer remove")) {
             Volunteer volunteer = (Volunteer) evt.getOldValue();

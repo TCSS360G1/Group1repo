@@ -157,6 +157,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 						Volunteer volunteer = (Volunteer) (myUsers.getIndex(i));
 						volunteerPanel = new VolunteerPanel(
 								volunteer, currentJobs);
+						volunteerPanel.addPropertyChangeListener(this);
 						 myFrame.getContentPane().add(volunteerPanel,
 						 BorderLayout.CENTER);
 						myFrame.setResizable(true);
@@ -204,11 +205,17 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 			firePropertyChange("Manager remove", evt.getOldValue(),
 					evt.getNewValue());
 		} else if((evt.getPropertyName().equals("Volunteer remove"))) {
+		    String str = (String) evt.getNewValue();
+		    System.out.println("length" + str.length());
+		    str = str.substring(3);
 			firePropertyChange("Volunteer remove", evt.getOldValue(),
-					evt.getNewValue());
+					str);
 		} else if(evt.getPropertyName().equals("Volunteer add")) {
+		    System.out.println("RECEVED IN SIGNIN");
+		    String str = (String) evt.getNewValue();
+            str = str.substring(3);
 			firePropertyChange("Volunteer add", evt.getOldValue(),
-					evt.getNewValue());
+					str);
 		}
 	}
 
