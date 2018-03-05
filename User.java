@@ -121,11 +121,5 @@ public abstract class User implements Serializable{
 		return getName() + " " + getType();
 	}
 	
-	public static void setLegalJobAmount(int theLegalJobAmount) {
-		myLegalJobAmount = theLegalJobAmount;
-	}
 	
-	public static int getLegalJobAmount() {
-		return myLegalJobAmount;
-	}
 }

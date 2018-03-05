@@ -49,7 +49,7 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 		cancel.setEnabled(false);
  
 		if (listOfCancellationsJobs.size() != 0) {
-			System.out.println("size is greater than 0");
+			//System.out.println("size is greater than 0");
 			cancel.setEnabled(true);
 			for (int i = 0; i < listOfCancellationsJobs.size(); i++) {
 				JRadioButton j = new JRadioButton();
@@ -75,7 +75,7 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 						job = b.getText();
 					}
 				}
-
+				
 				// ///////////////////////////////////**********
 				JOptionPane.showMessageDialog(null,
 						job + "     was removed from "

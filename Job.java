@@ -272,7 +272,7 @@ public class Job implements Serializable {
 		for (int i = 0; i < theJobs.size(); i++) {
 			if (!theJobs.get(i).isInPast()) {
 				if (theJobs.get(i).isMoreThanMinimumDaysVol()
-						&& theJobs.get(i).isNoScheduleConflicts(theJobs.get(i))
+						&& theVolunteer.isNoScheduleConflicts(theJobs.get(i))
 						&& !theVolunteer.getJobs().contains(theJobs.get(i))) {
 					// if the volunteer doesnt contain it
 					// if its more than min days away and there are not schedule

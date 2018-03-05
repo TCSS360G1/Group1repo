@@ -6,7 +6,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -33,6 +35,7 @@ public class VolunteerAvailableJobsPanel extends JPanel {
 		System.out.println("Available");
 		myVolunteer = theVolunteer;
 		myJobs = theJobs;
+		System.out.println(myJobs.toString());
 		setupPanel();
 	}
 
@@ -60,13 +63,25 @@ public class VolunteerAvailableJobsPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String selected = BG.getSelection().toString();
-				String[] split = selected.split(".");
-				int index = Integer.parseInt(split[0]);
-
-				// myVolunteer.addJob(myJobs.get(index));
+				System.out.println("inside ");
+				String job = "";
+				for (Enumeration<AbstractButton> item = BG
+						.getElements(); item.hasMoreElements();) {
+					AbstractButton b = item.nextElement();
+					System.out.println(BG.getButtonCount());
+					System.out.println("in for loop");
+					if (b.isSelected()) {
+						job = b.getText();
+					}
+				}
+				System.out.println(job);
+				String[] j = job.split(". ");
+				//System.out.println(j.toString());
+				System.out.println("j is"+j[0]);
+				int index = Integer.parseInt(j[0]);
+				
 				firePropertyChange("Volunteer add", myVolunteer,
-						myJobs.get(index));
+						myJobs.get(index-1));
 
 			}
 

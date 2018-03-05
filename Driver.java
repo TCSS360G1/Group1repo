@@ -204,7 +204,7 @@ public class Driver {
 		} else if (choice.equals("2")) {
 			//add all of this to the collection. 
 			if(Job.isJobsAmountLegal(myJobs)) {
-				newParkJob(theManager, myUsers, myJobs, myCurrentJobs, myCurrentCancellations);
+				//newParkJob(theManager, myUsers, myJobs, myCurrentJobs, myCurrentCancellations);
 			}
 			else {
 				System.out.println("Sorry, we are currently filled with the max"
@@ -309,103 +309,103 @@ public class Driver {
 	}
 	
 	
-	/**
-	 * Asks for information for a new job. Checks to see if the job
-	 * length is max days or under. Checks to see if the job is not
-	 * too far away, and checks to see how many jobs there are.
-	 * 
-	 * @param theManager the Park Manager that has signed in.
-	 * @param myUsers the Users that are in the system.
-	 * @param myJobs the Jobs that are in the System.
-	 */
-	public static void newParkJob(ParkManager theManager, 
-			UserCollection myUsers, JobCollection myJobs, ArrayList<Job> myCurrentJobs, ArrayList<Job> myCurrentCancellation) {
-		
-		System.out.println("-Please provide a job title-");
-		System.out.print("Job Title: ");
-		String t = user.nextLine();
-		while(t.isEmpty()) {
-			System.out.println("-Please provide a VALID job title-");
-			System.out.print("Job Title: ");
-			t = user.nextLine();
-		}
-		
-		System.out.println("-Please provide a job location-");
-		System.out.print("Job Location: ");
-		String l = user.nextLine();
-		while(l.isEmpty()){
-			System.out.println("-Please provide a VALID job location-");
-			System.out.print("Job Location: ");
-			l = user.nextLine();
-		}
-		
-		System.out.println("-What is the starting date for this job?-");
-		System.out.print("Date (MM/DD/YYYY): ");
-		String s = user.nextLine();
-		while(s.isEmpty()){
-			System.out.println("-Please provide a VALID job starting date-");
-			System.out.print("Date (MM/DD/YYYY): ");
-			s = user.nextLine();
-		}
-		String[] dateArray = s.split("/");
-		LocalDate start = LocalDate.of(Integer.parseInt(dateArray[2]), 
-				Integer.parseInt(dateArray[0]), 
-				Integer.parseInt(dateArray[1]));
-		
-		while(!theManager.isJobNotTooFar(start)
-				|| ChronoUnit.DAYS.between(LocalDate.now(), start)< 0) { 
-			
-			//while this is false. ask for a new input
-			System.out.println("This date is too far or is in the past. Please input a date that "
-					+ "is closer.");
-			System.out.print("Date (MM/DD/YYYY): ");
-			s = user.nextLine();
-			dateArray = s.split("/");
-			start = LocalDate.of(Integer.parseInt(dateArray[2]), 
-					Integer.parseInt(dateArray[0]), 
-					Integer.parseInt(dateArray[1]));
-		}
-
-		System.out.println("-What is the ending date for this job?-");
-		System.out.print("Date (MM/DD/YYYY): ");
-		String e = user.nextLine();
-		while(e.isEmpty()){
-			System.out.println("-Please provide a VALID job ending date-");
-			System.out.print("Date (MM/DD/YYYY): ");
-			e = user.nextLine();
-		}
-		LocalDate end;
-		String[] dateArray2 = e.split("/");
-		end = LocalDate.of(Integer.parseInt(dateArray2[2]), 
-				Integer.parseInt(dateArray2[0]), 
-				Integer.parseInt(dateArray2[1]));
-		while(!theManager.isMaxDaysUnder(start, end)) {
-			System.out.println("Please limit your job to 3 days or under.");
-			System.out.print("Date (MM/DD/YYYY): ");
-			e = user.nextLine();
-			dateArray2 = e.split("/");
-			end = LocalDate.of(Integer.parseInt(dateArray2[2]), 
-					Integer.parseInt(dateArray2[0]), 
-					Integer.parseInt(dateArray2[1]));
-		}
-		
-		System.out.println("-Please provide a job description-");
-		System.out.print("Job Description: ");
-		String d = user.nextLine();
-		while(d.isEmpty()){
-			System.out.println("-Please provide a valid job description-");
-			System.out.print("Job Description: ");
-			d = user.nextLine();
-		}
-		Job newJob = new Job(t,d,l, start, end);
-		System.out.println("-This job has been created-");
-
-		System.out.println(newJob.toString());
-		myJobs.addNewJob(newJob);
-		theManager.addJob(newJob);
-		myCurrentJobs.add(newJob);
-		showParkManagerMenu(theManager, myUsers, myJobs, myCurrentJobs,  myCurrentCancellation);
-	}
+//	/**
+//	 * Asks for information for a new job. Checks to see if the job
+//	 * length is max days or under. Checks to see if the job is not
+//	 * too far away, and checks to see how many jobs there are.
+//	 * 
+//	 * @param theManager the Park Manager that has signed in.
+//	 * @param myUsers the Users that are in the system.
+//	 * @param myJobs the Jobs that are in the System.
+//	 */
+//	public static void newParkJob(ParkManager theManager, 
+//			UserCollection myUsers, JobCollection myJobs, ArrayList<Job> myCurrentJobs, ArrayList<Job> myCurrentCancellation) {
+//		
+//		System.out.println("-Please provide a job title-");
+//		System.out.print("Job Title: ");
+//		String t = user.nextLine();
+//		while(t.isEmpty()) {
+//			System.out.println("-Please provide a VALID job title-");
+//			System.out.print("Job Title: ");
+//			t = user.nextLine();
+//		}
+//		
+//		System.out.println("-Please provide a job location-");
+//		System.out.print("Job Location: ");
+//		String l = user.nextLine();
+//		while(l.isEmpty()){
+//			System.out.println("-Please provide a VALID job location-");
+//			System.out.print("Job Location: ");
+//			l = user.nextLine();
+//		}
+//		
+//		System.out.println("-What is the starting date for this job?-");
+//		System.out.print("Date (MM/DD/YYYY): ");
+//		String s = user.nextLine();
+//		while(s.isEmpty()){
+//			System.out.println("-Please provide a VALID job starting date-");
+//			System.out.print("Date (MM/DD/YYYY): ");
+//			s = user.nextLine();
+//		}
+//		String[] dateArray = s.split("/");
+//		LocalDate start = LocalDate.of(Integer.parseInt(dateArray[2]), 
+//				Integer.parseInt(dateArray[0]), 
+//				Integer.parseInt(dateArray[1]));
+//		
+//		while(!theManager.isJobNotTooFar(start)
+//				|| ChronoUnit.DAYS.between(LocalDate.now(), start)< 0) { 
+//			
+//			//while this is false. ask for a new input
+//			System.out.println("This date is too far or is in the past. Please input a date that "
+//					+ "is closer.");
+//			System.out.print("Date (MM/DD/YYYY): ");
+//			s = user.nextLine();
+//			dateArray = s.split("/");
+//			start = LocalDate.of(Integer.parseInt(dateArray[2]), 
+//					Integer.parseInt(dateArray[0]), 
+//					Integer.parseInt(dateArray[1]));
+//		}
+//
+//		System.out.println("-What is the ending date for this job?-");
+//		System.out.print("Date (MM/DD/YYYY): ");
+//		String e = user.nextLine();
+//		while(e.isEmpty()){
+//			System.out.println("-Please provide a VALID job ending date-");
+//			System.out.print("Date (MM/DD/YYYY): ");
+//			e = user.nextLine();
+//		}
+//		LocalDate end;
+//		String[] dateArray2 = e.split("/");
+//		end = LocalDate.of(Integer.parseInt(dateArray2[2]), 
+//				Integer.parseInt(dateArray2[0]), 
+//				Integer.parseInt(dateArray2[1]));
+//		while(!theManager.isMaxDaysUnder(start, end)) {
+//			System.out.println("Please limit your job to 3 days or under.");
+//			System.out.print("Date (MM/DD/YYYY): ");
+//			e = user.nextLine();
+//			dateArray2 = e.split("/");
+//			end = LocalDate.of(Integer.parseInt(dateArray2[2]), 
+//					Integer.parseInt(dateArray2[0]), 
+//					Integer.parseInt(dateArray2[1]));
+//		}
+//		
+//		System.out.println("-Please provide a job description-");
+//		System.out.print("Job Description: ");
+//		String d = user.nextLine();
+//		while(d.isEmpty()){
+//			System.out.println("-Please provide a valid job description-");
+//			System.out.print("Job Description: ");
+//			d = user.nextLine();
+//		}
+//		Job newJob = new Job(t,d,l, start, end);
+//		System.out.println("-This job has been created-");
+//
+//		System.out.println(newJob.toString());
+//		myJobs.addNewJob(newJob);
+//		theManager.addJob(newJob);
+//		myCurrentJobs.add(newJob);
+//		showParkManagerMenu(theManager, myUsers, myJobs, myCurrentJobs,  myCurrentCancellation);
+//	}
 	
 	
 	

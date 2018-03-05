@@ -71,5 +71,9 @@ public class UserCollection {
 		return myUsers.get(i);
 		
 	}
+	public void add(User x){
+		myUsers.add(x);
+		
+	}
 
 }

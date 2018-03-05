@@ -9,27 +9,35 @@ import javax.swing.JPanel;
 import model.JobCollection;
 import model.UrbanParksEmployee;
 
+/**
+ * A panel that displays the current jobs the park manager has in their list of
+ * jobs.
+ */
 public class ParkEmployeeDisplayJobs extends JPanel {
 	JPanel currentJobs;
 	UrbanParksEmployee myEmployee;
 	JobCollection myJobs;
-	public ParkEmployeeDisplayJobs(JobCollection theJobs){
+
+	public ParkEmployeeDisplayJobs(JobCollection theJobs) {
 		myJobs = theJobs;
-		this.setBorder(BorderFactory.createTitledBorder("All UrbanParks Jobs:"));
+		this.setBorder(
+				BorderFactory.createTitledBorder("All UrbanParks Jobs:"));
 		setLayout(new BorderLayout());
 		displayCurrentJobs(theJobs);
 	}
 
-	/*Display all of the Jobs. */
+	/** Display all of the Jobs by looping through the list of jobs. 
+	 * @preCondition: pass in a non null job collection
+	 */
 	private void displayCurrentJobs(JobCollection theJobs) {
 		currentJobs = new JPanel();
 		currentJobs.setLayout(new GridLayout(theJobs.getSize(), 1));
-		//System.out.println("--"+theJobs.getSize());
-		
-		//create a new label for each job and add
-	
-		for (int i = 0; i<theJobs.getSize(); i++){
-			//System.out.println(i);
+		// System.out.println("--"+theJobs.getSize());
+
+		// create a new label for each job and add
+
+		for (int i = 0; i < theJobs.getSize(); i++) {
+			// System.out.println(i);
 			JLabel myJobLabels = new JLabel();
 			myJobLabels.setText(theJobs.getIndex(i).toString());
 			currentJobs.add(myJobLabels);

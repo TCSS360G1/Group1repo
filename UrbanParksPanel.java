@@ -179,7 +179,6 @@ public class UrbanParksPanel extends JPanel implements Observer {
 					myMenuBar.setVisible(false);
 					addPanels(mySignIn);
 					
-					
 				}
 
 				
