@@ -52,27 +52,18 @@ public class Job implements Serializable {
 		endDate = theEndDate;
 	}
 
-	
-	public Job() {
-        title = "Basic Title";
-        description = "basic description";
-        location = "basic location";
-        startDate = LocalDate.now();
-        endDate = LocalDate.now().plusDays(1);
-    }
 	// ---Validation methods---//
 
-	
-
-    /**
-     * precondition: This method requires a data (assumed to be the start date
-     * of a job) and tests if it is less than or equal to the maximum days away
-     * for a job to start at. MAX_DISTANCE is the maximum days away. Generally
-     * for the of testing if a potential jobs' start date would be an issue.
-     * 
-     * postcondition: true is returned if the date is greater than the
-     * MAX_DISTANCE days allowed, otherwise false is returned.
-     */
+	/**
+	 * This method requires a data (assumed to be the start date of a job) and
+	 * tests if it is less than or equal to the maximum days away for a job to
+	 * start at. MAX_DISTANCE is the maximum days away. Generally for the of
+	 * testing if a potential jobs' start date would be an issue.
+	 * 
+	 * @param theDate
+	 *            is the date to see if it is less than the max days away.
+	 * @return True if the date is too far out, false otherwise.
+	 */
 	public static boolean isDateTooFar(LocalDate theDate) {
 		boolean tooFar = false;
 		LocalDate currentDate = LocalDate.now();
@@ -84,15 +75,9 @@ public class Job implements Serializable {
 	}
 
 	/**
-     * precondition: This method requires a job with a valid start and end date.
-     * This method will compare theCandidates start and end dates with this
-     * jobs', and will return a boolean to show the status of potential
-     * conflicts.
-     * 
-     * postcondition: true is returned when there is no job schedule conflict,
-     * false otherwise.
-     */
-
+	 * @precondition: Dates that are passed in are non null dates
+	 * @return false is the job is more than length specified
+	 */
 	public static boolean isJobNotTooLong(LocalDate theS, LocalDate theE) {
 		if (ChronoUnit.DAYS.between(theS, theE) > MAX_LENGTH - 1) {
 			return false;
@@ -102,23 +87,46 @@ public class Job implements Serializable {
 
 	}
 
-	 /**
-     * precondition: This method requires a candidate job with a valid start
-     * date. It will compare to see if this job is occurring when theCandidate
-     * starts. A boolean is returned for the status of the potential conflict.
-     * It is expected that isNoScheduleConflicts() is called instead, as it
-     * will call this method and sister method isGoodEnd().
-     * 
-     * postcondition: true is returned when there is no conflict with the jobs'
-     * starting day, false otherwise.
-     */
-
+	/**
+	 * This method requires a job with a valid start and end date. This method
+	 * will compare theCandidates start and end dates with this jobs', and will
+	 * return a boolean to show the status of potential conflicts.
+	 * 
+	 * @param theCandidate
+	 *            A job that has a potential conflicting start and end date.
+	 * @return true when there is no conflict, false otherwise.
+	 * 
+	 */
 	public boolean isNoScheduleConflicts(Job theCandidate) {
 		boolean isGood = true;
 		isGood = (isGoodStart(theCandidate) && isGoodEnd(theCandidate));
 		return isGood;
 	}
 
+	
+	/**
+	 * This method requires a job with a valid start and end date. This method
+	 * will compare theCandidates start and end dates with this jobs', and will
+	 * return a boolean to show the status of potential conflicts.
+	 * 
+	 * @param theCandidate
+	 *            A job that has a potential conflicting start and end date.
+	 * @return true when there is no conflict, false otherwise.
+	 * 
+	 */
+
+	public boolean isInbetween(LocalDate theUserStartDate, LocalDate theJobStartDate, LocalDate theUserEndDate, LocalDate theJobEndDate) {
+		boolean isGood = false;
+		if(theJobStartDate.isEqual(theUserStartDate) || theJobStartDate.isAfter(theUserStartDate)){
+			isGood = true;
+		}
+		if(theJobEndDate.isEqual(theUserStartDate) || theJobEndDate.isBefore(theUserStartDate)){
+			isGood = true;
+		}
+		
+		return isGood;
+	}
+	
 	/**
 	 * This method requires a candidate job with a valid start date. It will
 	 * compare to see if this job is occurring when theCandidate starts. A
@@ -146,18 +154,19 @@ public class Job implements Serializable {
 
 		return isGood;
 	}
- 
-    /**
-     * postcondition: This method requires a candidate job with a valid end
-     * date. It will compare to see if this job is occurring when theCandidate
-     * ends. A boolean is returned for the status of the potential conflict.
-     * It is expected that isNoScheduleConflicts() is called instead, as it
-     * will call this method and sister method isGoodEnd().
-     * 
-     * postcondition: true is returned when there is no conflict with the jobs'
-     * ending day, false otherwise.
-     * 
-     */
+
+	/**
+	 * This method requires a candidate job with a valid end date. It will
+	 * compare to see if this job is occurring when theCandidate ends. A boolean
+	 * is returned for the status of the potential conflict. It is expected that
+	 * isNoScheduleConflicts() is called instead, as it will call this method
+	 * and sister method isGoodEnd().
+	 * 
+	 * @param theCandidate
+	 *            A job that has a potential conflicting start date.
+	 * @return true when there is no conflict, false otherwise.
+	 * 
+	 */
 	public boolean isGoodEnd(Job theCandidate) {
 		boolean isGood = true;
 
@@ -174,13 +183,13 @@ public class Job implements Serializable {
 		return isGood;
 	}
 
-	  /**
-     * precondition: This method tests to see if this job's start date is more
-     * than or equal to the minimum days for a job to be signed up for.
-     * 
-     * postcondition: true if the time between now and the job's date is valid,
-     * false otherwise.
-     */
+	/**
+	 * This method tests to see if this job's start date is more than or equal
+	 * to the minimum days for a job to be signed up for.
+	 * 
+	 * @return true if the time between now and the job's date is valid, false
+	 *         otherwise.
+	 */
 	public boolean isMoreThanMinimumDaysVol() {
 		boolean isGood = true;
 
@@ -196,11 +205,10 @@ public class Job implements Serializable {
 	}
 
 	/**
-     * precondition: This method tests to see if this job is too close to be
-     * unvolunteered for.
-     * 
-     * postcondition: true is returned if the job is too close, false otherwise.
-     */
+	 * Tests to see if this job is too close to be unvolunteered for.
+	 * 
+	 * @return True if the job is too close, false otherwise.
+	 */
 	public boolean isMoreThanMinimumDaysUnvol() {
 		boolean isGood = true;
 
@@ -214,12 +222,12 @@ public class Job implements Serializable {
 	}
 
 	/**
-     * precondition: Tests to see if this job is currently active. Active is defined as having
-     * started before or on the current day, and ending on or after the current
-     * day.
-     * 
-     * postcondition: true is returned if the job is active, false otherwise.
-     */
+	 * Tests to see if this job is currently active. Active is defined as having
+	 * started before or on the current day, and ending on or after the current
+	 * day.
+	 * 
+	 * @return true if the job is active, false otherwise.
+	 */
 	public boolean isActiveJob() {
 		boolean isActive = false;
 		LocalDate currentDate = LocalDate.now();
@@ -234,12 +242,11 @@ public class Job implements Serializable {
 	}
 
 	/**
-     * precondition: This method tests if this job is in the past; Being in the
-     * past is defined as a job that has ended before today.
-     * 
-     * postcondition: true is returned if the job checked is in the past,
-     * false otherwise.
-     */
+	 * This method tests if this job is in the past; Being in the past is
+	 * defined as a job that has ended before today.
+	 * 
+	 * @return True if the job is in the past, false otherwise.
+	 */
 	public boolean isInPast() {
 		boolean inPast = false;
 
@@ -251,13 +258,14 @@ public class Job implements Serializable {
 		return inPast;
 	}
 
-	/***
-	 * precondition: This method requires a valid JobCollection, and will test
-	 * the number of jobs within the JobCollection to see if it is more than
-	 * the max amount of jobs.
+	/**
+	 * This method requires a valid JobCollection, and will test the number of
+	 * jobs within the JobCollection to see if it is more than the max.
 	 * 
-	 * postcondition: false if there are too many jobs a Volunteer can carry,
-	 * true otherwise.
+	 * @param myJobs
+	 *            the Jobs that the User has signed up for.
+	 * @return false if there are too many jobs a Volunteer can carry, true
+	 *         otherwise.
 	 */
 	public static boolean isJobsAmountLegal(JobCollection myJobs) {
 		if (myJobs.getSize() > MAX_JOBS) {
@@ -267,12 +275,8 @@ public class Job implements Serializable {
 		}
 	}
 
-	 /**
-     * precondition: ALWAYS PASS IN users current jobs list.
-     * will not allow user to cancel a job if it is too far.
-     * 
-	 * postcondition: The ArrayList<Job> for Cancellations is returned.
-	 */
+	// ALWAYS PASS IN users current jobs list.
+	// will not allow user to cancell a job if it is too far.
 	public static ArrayList<Job> filterForCancellation(
 			ArrayList<Job> theJobList) {
 		ArrayList<Job> myCancellationJobs = new ArrayList<Job>();
@@ -285,41 +289,21 @@ public class Job implements Serializable {
 
 	}
 
-	/** CHECKS FOR VOLUNTEERS AVAILABLE JOBS.
-	@precondtiton: a non null volunteer and non null job array
-	@postcondition: remove jobs that have conflicts with scheduling, past dates.
-	*/
+	// CHECKS FOR VOLUNTEERS AVAILABLE JOBS.
 	public static ArrayList<Job> filterForVolunteerAvailableJobs(
 			Volunteer theVolunteer, ArrayList<Job> theJobs) {
 		ArrayList<Job> filtered = new ArrayList<Job>();
-		//System.out.println("in Filter");
-		//System.out.println(theJobs);
-		
-		boolean flag = true;
 		for (int i = 0; i < theJobs.size(); i++) {
-		    System.out.println("--" + theJobs.get(i) + "--");
-			if (theJobs.get(i).isInPast()) {
-			    System.out.println("PAST");
-			    flag = false;
-			    continue;
+			if (!theJobs.get(i).isInPast()) {
+				if (theJobs.get(i).isMoreThanMinimumDaysVol()
+						&& theVolunteer.isNoScheduleConflicts(theJobs.get(i))
+						&& !theVolunteer.getJobs().contains(theJobs.get(i))) {
+					// if the volunteer doesnt contain it
+					// if its more than min days away and there are not schedule
+					// conflicts
+					filtered.add(theJobs.get(i));
+				}
 			}
-			if (!theJobs.get(i).isMoreThanMinimumDaysVol()) {
-			    System.out.println("MORE THAN MIN");
-				flag = false;
-				continue;
-			}
-			for (int j = 0; j < theVolunteer.getJobs().size(); j++) {
-			    System.out.println("IDX debug: " + i);
-			    if (!theJobs.get(i).isNoScheduleConflicts(
-			                    theVolunteer.getJobs().get(j))) {
-			        System.out.println("CONFLICT");
-			        flag = false;
-			        break;
-			    }
-			}
-			
-		    if (flag)
-		        filtered.add(theJobs.get(i));
 		}
 		return filtered;
 

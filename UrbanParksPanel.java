@@ -33,15 +33,14 @@ public class UrbanParksPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
 
 	private UrbanParksEmployee myEmployee;
-	private String myEmployeeName;
 	private JobCollection myJobs;
 	private JMenuBar myMenuBar;
 	private ParkEmployeeDisplayJobs currentJobs;
 	private SignInPanel mySignIn;
 	
-	public UrbanParksPanel(String theEmployeeName, JobCollection theJobs) {
+	public UrbanParksPanel(JobCollection theJobs) {
 		myJobs = theJobs;
-		myEmployeeName = theEmployeeName;
+		myEmployee = new UrbanParksEmployee("NoName", "NoName");
 
 		setLayout(new BorderLayout());
 
@@ -50,7 +49,7 @@ public class UrbanParksPanel extends JPanel implements Observer {
 		this.setBackground(Color.CYAN);
 		myMenuBar = new MenuBar();
 		add(myMenuBar, BorderLayout.NORTH);
-		currentJobs = new ParkEmployeeDisplayJobs(theEmployeeName, myJobs);
+		currentJobs = new ParkEmployeeDisplayJobs(myJobs);
 		add(currentJobs, BorderLayout.CENTER);
 
 	}
@@ -69,14 +68,14 @@ public class UrbanParksPanel extends JPanel implements Observer {
 		private JButton Update;
 
 		private JButton ViewJobs;
-		private JPanel x;
+		private ParkEmployeeDisplayJobs x;
 
 		// Or JMenuItem
 
 		public MenuBar() {
 
 			super();
-			x = new ParkEmployeeDisplayJobs(myEmployeeName, myJobs);
+			x = new ParkEmployeeDisplayJobs(myJobs);
 
 			SignOut = new JButton("SignOut");
 
@@ -107,8 +106,12 @@ public class UrbanParksPanel extends JPanel implements Observer {
 				@Override
 
 				public void actionPerformed(final ActionEvent theEvent) {
+					
 					// setVisible(false);
-					x = new ParkEmployeeDisplayJobs(myEmployeeName, myJobs);
+					x = new ParkEmployeeDisplayJobs(myJobs);
+					x.displayDateSearch();
+					x.displaySearchJobs(myJobs);
+					currentJobs.setVisible(false);
 					x.setVisible(true);
 					add(x, BorderLayout.CENTER);
 				}
