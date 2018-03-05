@@ -104,7 +104,7 @@ public class UrbanParksPanel extends JPanel implements Observer {
 				}
 
 			});
-
+ 
 		}
 
 		private void update() {
@@ -125,10 +125,14 @@ public class UrbanParksPanel extends JPanel implements Observer {
 					{
 
 						int newMax = new Integer(userInput);
-
-						myEmployee.changeLegalJobAmount(newMax);
-						System.out.println(Job.getLegalJobAmount());
-						JOptionPane.showMessageDialog(null, "New amount has been updated.");
+						if(newMax >0) {
+							myEmployee.changeLegalJobAmount(newMax);
+							System.out.println(Job.getLegalJobAmount());
+							JOptionPane.showMessageDialog(null, "New amount has been updated.");
+						} else {
+							JOptionPane.showMessageDialog(null, "Please input a non zero NUMBER.");
+						}
+						
 
 					}
 

@@ -23,24 +23,32 @@ import model.Job;
 import model.JobCollection;
 import model.ParkManager;
 
+/**
+ * Panel that displays the jobs that are available to be canceled, and allows
+ * user to only select one.
+ */
 public class ParkManagerCancelJobsPanel extends JPanel {
 	JPanel myUpdatePanel;
-	public ParkManagerCancelJobsPanel(ParkManager theManager, ArrayList<Job> theList) {
-		
+
+	public ParkManagerCancelJobsPanel(ParkManager theManager,
+			ArrayList<Job> theList) {
+
 		this.setBorder(BorderFactory.createTitledBorder("Cancel Job:"));
 		setLayout(new BorderLayout());
-		
+
 		updatesPanel(theManager, theList);
-		
+
 	}
-	
-	private void updatesPanel(ParkManager theManager, ArrayList<Job> listOfCancellationsJobs) {
+	/**
+	 * Panel that */
+	private void updatesPanel(ParkManager theManager,
+			ArrayList<Job> listOfCancellationsJobs) {
 		myUpdatePanel = new JPanel();
 		JButton cancel = new JButton("Cancel");
 		ButtonGroup myJobsGroup = new ButtonGroup();
 		cancel.setEnabled(false);
-		
-		if(listOfCancellationsJobs.size()!=0){
+
+		if (listOfCancellationsJobs.size() != 0) {
 			System.out.println("size is greater than 0");
 			cancel.setEnabled(true);
 			for (int i = 0; i < listOfCancellationsJobs.size(); i++) {
@@ -48,47 +56,38 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 				j.setText(listOfCancellationsJobs.get(i).toString());
 				myJobsGroup.add(j);
 				myUpdatePanel.add(j);
-			} 
+			}
 		} else {
 			JLabel noneAvail = new JLabel("There are no Jobs to Cancel");
 			add(noneAvail);
 		}
 		cancel.addActionListener(new ActionListener() {
 
-
 			@Override
 			public void actionPerformed(final ActionEvent theEvent) {
 				// find the button and then find the corresponding job text and
 				// remove.
 				String job = "";
-				for(Enumeration<AbstractButton> item = myJobsGroup.getElements(); item.hasMoreElements();) {
+				for (Enumeration<AbstractButton> item = myJobsGroup
+						.getElements(); item.hasMoreElements();) {
 					AbstractButton b = item.nextElement();
-					if(b.isSelected()) {
+					if (b.isSelected()) {
 						job = b.getText();
 					}
 				}
-				
-				
-				
-				 
+
 				// ///////////////////////////////////**********
-				 JOptionPane.showMessageDialog(null, job + "     was removed from "
-				 		+ "jobs.");
-				 firePropertyChange("Manager remove", theManager, job); 
-				 
-				 
-				 
+				JOptionPane.showMessageDialog(null,
+						job + "     was removed from "
+								+ "jobs.");
+				firePropertyChange("Manager remove", theManager, job);
+
 			}
 		});
-		
+
 		myUpdatePanel.add(cancel, BorderLayout.SOUTH);
 		add(myUpdatePanel, BorderLayout.CENTER);
 
 	}
-
-	
-
-	
-	
 
 }

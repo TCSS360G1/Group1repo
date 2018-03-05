@@ -29,7 +29,7 @@ import model.ParkManager;
  *
  */
 public class ParkManagerNewJobPanel extends JPanel  {
-	private JPanel myNewJob;
+	private JPanel myNewJob; 
 	private ParkManager myManager;
 	private LocalDate startDate;
 	private LocalDate endDate;
