@@ -167,6 +167,7 @@ public class UrbanParksFrame extends JFrame implements PropertyChangeListener{
 			
 		} else if(evt.getPropertyName().equals("Volunteer remove")){
 			Volunteer v = (Volunteer) evt.getOldValue();
+			System.out.println("In volRemove property" + evt.getNewValue());
 			Job aJob = JOBS.findJob((String) evt.getNewValue());
 			v.removeJob(aJob);
 		} else if(evt.getPropertyName().equals("Volunteer add")) {
