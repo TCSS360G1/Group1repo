@@ -1,25 +1,17 @@
 package user_interface;
 
 import java.awt.BorderLayout;
-
 import java.awt.Color;
-
 import java.awt.event.ActionEvent;
-
 import java.awt.event.ActionListener;
 
 import java.util.Observer;
 
 import javax.swing.JButton;
-
 import javax.swing.JMenu;
-
 import javax.swing.JMenuBar;
-
 import javax.swing.JMenuItem;
-
 import javax.swing.JOptionPane;
-
 import javax.swing.JPanel;
 
 import java.util.Observable;
@@ -37,7 +29,7 @@ public class UrbanParksPanel extends JPanel implements Observer {
 	private JMenuBar myMenuBar;
 	private ParkEmployeeDisplayJobs currentJobs;
 	private SignInPanel mySignIn;
-	
+
 	public UrbanParksPanel(JobCollection theJobs) {
 		myJobs = theJobs;
 		myEmployee = new UrbanParksEmployee("NoName", "NoName");
@@ -53,10 +45,10 @@ public class UrbanParksPanel extends JPanel implements Observer {
 		add(currentJobs, BorderLayout.CENTER);
 
 	}
-	
+
 	private void addPanels(SignInPanel mySignIn) {
 		add(mySignIn);
-		
+
 	}
 
 	public class MenuBar extends JMenuBar {
@@ -68,14 +60,14 @@ public class UrbanParksPanel extends JPanel implements Observer {
 		private JButton Update;
 
 		private JButton ViewJobs;
-		private ParkEmployeeDisplayJobs x;
+		private ParkEmployeeDisplayJobs DisplayJobsPanel;
 
 		// Or JMenuItem
 
 		public MenuBar() {
 
 			super();
-			x = new ParkEmployeeDisplayJobs(myJobs);
+			DisplayJobsPanel = new ParkEmployeeDisplayJobs(myJobs);
 
 			SignOut = new JButton("SignOut");
 
@@ -97,6 +89,12 @@ public class UrbanParksPanel extends JPanel implements Observer {
 
 		}
 
+		/**
+		 * precondition: myJobs != null and displayJobsPanel != null.
+		 * 
+		 * postcondition: Allows an Urban Parks Employee to
+		 * view every job available.
+		 */
 		private void viewJobs() {
 
 			// ViewJobs = new JMenu("View All Jobs");
@@ -106,23 +104,26 @@ public class UrbanParksPanel extends JPanel implements Observer {
 				@Override
 
 				public void actionPerformed(final ActionEvent theEvent) {
-					
-					// setVisible(false);
-					x = new ParkEmployeeDisplayJobs(myJobs);
-					x.displayDateSearch();
-					x.displaySearchJobs(myJobs);
+
+					DisplayJobsPanel = new ParkEmployeeDisplayJobs(myJobs);
+					DisplayJobsPanel.displayDateSearch();
+					DisplayJobsPanel.displaySearchJobs(myJobs);
 					currentJobs.setVisible(false);
-					x.setVisible(true);
-					add(x, BorderLayout.CENTER);
+					DisplayJobsPanel.setVisible(true);
+					add(DisplayJobsPanel, BorderLayout.CENTER);
 				}
 
 			});
 
 		}
 
+		/**
+		 * precondition: myEmployee != null.
+		 * 
+		 * postcondition: Allows an Urban Parks Employee to change the max
+		 * amount of Jobs through a new Input Dialog.
+		 */
 		private void update() {
-
-			// Update = new JMenu("Update Admin options");
 
 			Update.addActionListener(new ActionListener() {
 
@@ -130,8 +131,7 @@ public class UrbanParksPanel extends JPanel implements Observer {
 
 				public void actionPerformed(final ActionEvent theEvent) {
 					System.out.println(Job.getLegalJobAmount());
-					String userInput = JOptionPane
-							.showInputDialog("Enter Max amount of Jobs:");
+					String userInput = JOptionPane.showInputDialog("Enter Max amount of Jobs:");
 
 					try
 
@@ -141,11 +141,9 @@ public class UrbanParksPanel extends JPanel implements Observer {
 						if (newMax > 0) {
 							myEmployee.changeLegalJobAmount(newMax);
 							System.out.println(Job.getLegalJobAmount());
-							JOptionPane.showMessageDialog(null,
-									"New amount has been updated.");
+							JOptionPane.showMessageDialog(null, "New amount has been updated.");
 						} else {
-							JOptionPane.showMessageDialog(null,
-									"Please input a non zero NUMBER.");
+							JOptionPane.showMessageDialog(null, "Please input a non zero NUMBER.");
 						}
 
 					}
@@ -154,8 +152,7 @@ public class UrbanParksPanel extends JPanel implements Observer {
 
 					{
 
-						JOptionPane.showMessageDialog(null,
-								"Please input a NUMBER.");
+						JOptionPane.showMessageDialog(null, "Please input a NUMBER.");
 
 					}
 
@@ -165,27 +162,26 @@ public class UrbanParksPanel extends JPanel implements Observer {
 
 		}
 
+		/**
+		 * precondition: SignOut != null.
+		 * 
+		 * postcondition: Allows the User to Sign Out of their session.
+		 */
 		private void signOut() {
 
-			// SignOut = new JMenu("Sign Out");
-
 			SignOut.addActionListener(new ActionListener() {
-
-				
 
 				@Override
 
 				public void actionPerformed(final ActionEvent theEvent) {
 					mySignIn = new SignInPanel();
-					x.setVisible(false); 
+					DisplayJobsPanel.setVisible(false);
 					mySignIn.setVisible(true);
 					currentJobs.setVisible(false);
 					myMenuBar.setVisible(false);
 					addPanels(mySignIn);
-					
-				}
 
-				
+				}
 
 			});
 
@@ -196,8 +192,6 @@ public class UrbanParksPanel extends JPanel implements Observer {
 	@Override
 
 	public void update(Observable o, Object arg) {
-
-		// TODO Auto-generated method stub
 
 	}
 
