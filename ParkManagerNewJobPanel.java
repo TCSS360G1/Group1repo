@@ -1,6 +1,3 @@
-/**
- * 
- */
 package user_interface;
 
 import java.awt.BorderLayout;
@@ -76,7 +73,11 @@ public class ParkManagerNewJobPanel extends JPanel {
 
 	}
 
-	// create a new panel that has fields for input.
+	/**
+	 * precondition: theManager != null.
+	 * 
+	 * postcondition: Create a new panel that has fields for input.
+	 */
 	private void newJobPanel(ParkManager theManager) {
 		l = new ArrayList<>();
 		myNewJob = new JPanel();
@@ -158,6 +159,11 @@ public class ParkManagerNewJobPanel extends JPanel {
 
 	}
 
+	/**
+	 * precondition: theManager != null.
+	 * 
+	 * postcondition: Clears the current view slate. And adds new listeners.
+	 */
 	private void clearSlate(ParkManager theManager) {
 		tIn.setEnabled(true);
 		tDone.setEnabled(true);
