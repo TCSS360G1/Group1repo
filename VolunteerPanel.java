@@ -63,6 +63,9 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
         add(theP, BorderLayout.CENTER);
 
     }
+    private void addPanels2(JPanel theP) {
+    	add(theP);
+    }
 
     private void addListener(JPanel theP) {
         theP.addPropertyChangeListener(this);
@@ -154,8 +157,9 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
                     myNewJob.setVisible(false);
                     myCurrentJobs.setVisible(false);
                     myUnvolunteer.setVisible(false);
+                    myMenuBar.setVisible(false);
                     mySignIn.setVisible(true);
-                    addPanels(mySignIn);
+                    addPanels2(mySignIn);
                 }
             });
             add(mySignOut);
@@ -168,6 +172,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("Volunteer add")) {
             Volunteer volunteer = (Volunteer) evt.getOldValue();
             System.out.println("change recieved in pmp");
+            System.out.println(evt.getNewValue());
             firePropertyChange("Volunteer add", volunteer, evt.getNewValue());
         } else if (evt.getPropertyName().equals("Volunteer remove")) {
             Volunteer volunteer = (Volunteer) evt.getOldValue();
