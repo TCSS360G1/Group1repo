@@ -63,7 +63,7 @@ public class ParkManager extends User implements Serializable {
 	 * 
 	 * precondition: theJob != null
 	 * 
-	 * postcondition:
+	 * postcondition: add the job
 	 * 
 	 * 
 	 * 
