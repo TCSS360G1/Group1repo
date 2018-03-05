@@ -14,9 +14,6 @@ import model.ParkManager;
 
 public class ParkManagerMenuBar extends JMenuBar {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private JMenuItem SignOut;
@@ -24,6 +21,7 @@ public class ParkManagerMenuBar extends JMenuBar {
 	private JMenuItem NewJob;
 	private JMenuItem ViewCurrent;
 	private ParkManager myManager;
+	
 	public ParkManagerMenuBar(ParkManager theManager) {
 		
 		super();
@@ -34,9 +32,13 @@ public class ParkManagerMenuBar extends JMenuBar {
 		current();
 	}
 	
-
+       /**
+        * precondition: This ParkManagerMenuBar != null.
+        * 
+        * postcondition: Creates the "View Current Jobs" item within the
+        * "Jobs" Menu in this Menu Bar.
+        */
 	private void current() {
-		// TODO Auto-generated method stub
 		JMenu current = new JMenu("Jobs");
 		add(current);
 		ViewCurrent = new JMenuItem("View Current Jobs");
@@ -50,8 +52,13 @@ public class ParkManagerMenuBar extends JMenuBar {
 		current.add(ViewCurrent);
 	}
 
+	/**
+	 * precondition: This ParkManagerMenuBar != null.
+	 * 
+	 * postcondition: Creates the "Create a New Job" item within the
+	 * "NEW" menu in this Menu Bar.
+	 */
 	private void newJob() {
-		// TODO Auto-generated method stub
 		JMenu newJob = new JMenu("NEW");
 		add(newJob);
 		NewJob = new JMenuItem("Create a new Job");
@@ -67,8 +74,13 @@ public class ParkManagerMenuBar extends JMenuBar {
 		newJob.add(NewJob);
 	}
 
+	/**
+	 * precondition: This ParkManagerMenuBar != null.
+	 * 
+	 * postcondition: Creates the "Update Jobs" item within the
+	 * "Cancel" menu in this Menu Bar.
+	 */
 	private void updates() {
-		// TODO Auto-generated method stub
 		JMenu cancel = new JMenu("Cancel");
 		add(cancel);
 		Updates = new JMenuItem("Update Jobs");
@@ -83,8 +95,12 @@ public class ParkManagerMenuBar extends JMenuBar {
 		cancel.add(Updates);
 	}
 
+	/**
+	 * precondition: This ParkManagerMenuBar != null.
+	 * 
+	 * postcondition: Creates a Sign Out button.
+	 */
 	private void signOut() {
-		// TODO Auto-generated method stub
 		JMenu out = new JMenu("SignOut");
 		add(out);
 		SignOut = new JMenuItem("Sign Out");
