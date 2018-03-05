@@ -123,6 +123,20 @@ public class JobCollection implements Serializable{
 		
 	}
 	
+	public static Job findJob(String theJob) {
+	    System.out.println("IN FINDJOB: " + theJob);
+	    Job returnJob = new Job();
+	    for (int i = 0; i < myJobs.size(); i++) {
+	        System.out.println(myJobs.get(i).toString());
+	        System.out.println(theJob);
+	        if (myJobs.get(i).toString().equals(theJob)) {
+	            System.out.println("In the if of collection");
+	            returnJob = myJobs.get(i);
+	        }
+	    }
+	    return returnJob;
+	}
+	
 	/*filter out all past jobs.*/
 	public ArrayList<Job> filterPast() {
 //		for(int i = 0; i<myJobs.size(); i++){
@@ -144,29 +158,4 @@ public class JobCollection implements Serializable{
 		
 		return myFilteredJobs;
 	}
- 
-	// CHECKS FOR VOLUNTEERS AVAILABLE JOBS.
-	public static ArrayList<Job> filterForVolunteerAvailableJobs(
-			Volunteer theVolunteer, ArrayList<Job> theJobs) {
-		ArrayList<Job> filtered = new ArrayList<Job>();
-		for (int i = 0; i < theJobs.size(); i++) {
-			if (!theJobs.get(i).isInPast()) {
-				if (theJobs.get(i).isMoreThanMinimumDaysVol()
-						&& theVolunteer.isNoScheduleConflicts(theJobs.get(i))
-						&& !theVolunteer.getJobs().contains(theJobs.get(i))) {
-					// if the volunteer doesnt contain it
-					// if its more than min days away and there are not schedule
-					// conflicts
-					filtered.add(theJobs.get(i));
-				}
-			}
-		}
-		return filtered;
-
-	}
-
-	
-	
-
-
 }
