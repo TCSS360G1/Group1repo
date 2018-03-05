@@ -32,7 +32,9 @@ public class VolunteerCurrentJobsPanel extends JPanel {
     private void displayCurrentJobs(Volunteer theVolunteer) {
         currentJobs = new JPanel();
         currentJobs.setLayout(new GridLayout(theVolunteer.getJobs().size(), 1));
-        this.setBorder(BorderFactory.createTitledBorder("Your Jobs:"));
+        this.setBorder(BorderFactory.
+        		createTitledBorder("Welcome, " + myVolunteer.getType() + " " 
+                     + myVolunteer.getName() + ". Your Jobs:"));
         //create a new label for each job and add
         for (int i = 0; i < theVolunteer.getJobs().size(); i++){
             JLabel myJobLabels = new JLabel();

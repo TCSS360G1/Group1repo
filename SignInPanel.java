@@ -143,7 +143,6 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 						managerPanel = new ParkManagerPanel(
 								manager, currentJobs);
 						managerPanel.addPropertyChangeListener(this);
-						managerPanel.setVisible(true);
 						myFrame.getContentPane().add(managerPanel,
 								BorderLayout.CENTER);
 						myFrame.setResizable(true);
@@ -158,10 +157,8 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 						Volunteer volunteer = (Volunteer) (myUsers.getIndex(i));
 						volunteerPanel = new VolunteerPanel(
 								volunteer, currentJobs);
-						volunteerPanel.setVisible(true);
 						 myFrame.getContentPane().add(volunteerPanel,
 						 BorderLayout.CENTER);
-						 volunteerPanel.addPropertyChangeListener(this);
 						myFrame.setResizable(true);
 						myFrame.pack();
 
@@ -172,25 +169,21 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 						
 						UrbanParksEmployee employee = (UrbanParksEmployee) (myUsers
 								.getIndex(i));
-						employeePanel = new UrbanParksPanel(
+						employeePanel = new UrbanParksPanel(employee.getName(),
 								theJobs);
 						if(managerPanel != null) {
 							managerPanel.setVisible(false);
-						}
-						if(volunteerPanel != null) {
+						} if(volunteerPanel != null) {
 							volunteerPanel.setVisible(false);
-						} 
-//							if(this!=null) {
-//							this.setVisible(false);
-//						}
-						employeePanel.addPropertyChangeListener(this);
+						} if(this!=null) {
+							this.setVisible(false);
+						}
 						myFrame.getContentPane().add(employeePanel,
 								BorderLayout.CENTER);
-						employeePanel.setVisible(true);
 						myFrame.setResizable(true);
 						myFrame.pack();
-					} 
-				} 
+					}
+				}
 			}
 		}
 
@@ -214,10 +207,8 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 			firePropertyChange("Volunteer remove", evt.getOldValue(),
 					evt.getNewValue());
 		} else if(evt.getPropertyName().equals("Volunteer add")) {
-			System.out.println("blahh");
 			firePropertyChange("Volunteer add", evt.getOldValue(),
 					evt.getNewValue());
-			
 		}
 	}
 

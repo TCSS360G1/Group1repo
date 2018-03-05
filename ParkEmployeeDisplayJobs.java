@@ -18,10 +18,11 @@ public class ParkEmployeeDisplayJobs extends JPanel {
 	UrbanParksEmployee myEmployee;
 	JobCollection myJobs;
 
-	public ParkEmployeeDisplayJobs(JobCollection theJobs) {
+	public ParkEmployeeDisplayJobs(String theEmployeeName, JobCollection theJobs) {
 		myJobs = theJobs;
 		this.setBorder(
-				BorderFactory.createTitledBorder("All UrbanParks Jobs:"));
+				BorderFactory.createTitledBorder("Welcome, " + theEmployeeName 
+						+ ". All Urban Parks Jobs:"));
 		setLayout(new BorderLayout());
 		displayCurrentJobs(theJobs);
 	}
