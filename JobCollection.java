@@ -122,7 +122,9 @@ public class JobCollection implements Serializable{
 		System.out.println("AFTER manager removes size(job collection) " + theManager.getJobs().size());
 		
 	}
-	
+	/*Find jobs in the collection. 
+	@precondition: theJob is non null
+	@post return the job */
 	public static Job findJob(String theJob) {
 	    System.out.println("IN FINDJOB: " + theJob);
 	    Job returnJob = new Job();
@@ -137,7 +139,8 @@ public class JobCollection implements Serializable{
 	    return returnJob;
 	}
 	
-	/*filter out all past jobs.*/
+	/*filter out all past jobs.
+	@return the jobs that are current*/
 	public ArrayList<Job> filterPast() {
 //		for(int i = 0; i<myJobs.size(); i++){
 //			System.out.println(myJobs.get(i).toString());
