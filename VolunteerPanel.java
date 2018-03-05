@@ -38,7 +38,8 @@ public class VolunteerPanel extends JPanel implements Observer {
         myCurrentJobsPanel = new VolunteerCurrentJobsPanel(myVolunteer);
         myAvailableJobsPanel = new VolunteerAvailableJobsPanel(myVolunteer, 
         		Job.filterForVolunteerAvailableJobs(myVolunteer, theJobs.filterPast()));
-        myUnvolunteerPanel = new VolunteerUnvolunteerPanel(myVolunteer);
+        myUnvolunteerPanel = new VolunteerUnvolunteerPanel(myVolunteer, 
+        		Job.filterForVolunteerAvailableJobs(myVolunteer, theJobs.filterPast()));
         myMenuBar = new VolunteerMenuBar(getComponents());
         System.out.println(getComponents().toString());
         setUpPanel();
@@ -54,8 +55,8 @@ public class VolunteerPanel extends JPanel implements Observer {
         add(myMenuBar);
         
         add(myCurrentJobsPanel, BorderLayout.CENTER);
-        //add(myAvailableJobsPanel);
-        //add(myUnvolunteerPanel);
+//        add(myAvailableJobsPanel);
+        add(myUnvolunteerPanel);
         myCurrentJobsPanel.setVisible(true);
         setVisible(true);
     }

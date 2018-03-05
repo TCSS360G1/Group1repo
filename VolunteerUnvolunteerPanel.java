@@ -1,23 +1,78 @@
 package user_interface;
 
-import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Enumeration;
 
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+import model.Job;
+import model.ParkManager;
 import model.Volunteer;
 
 public class VolunteerUnvolunteerPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    private Volunteer myVolunteer;
-    
-    public VolunteerUnvolunteerPanel(Volunteer theVolunteer) {
-        System.out.println("Unvolunteer");
-        myVolunteer = theVolunteer;
-        
-        setupPanel();
-    }
+    JPanel myUpdatePanel;
+	public VolunteerUnvolunteerPanel(Volunteer theVolunteer, ArrayList<Job> theList) {
+		
+		this.setBorder(BorderFactory.createTitledBorder("Unvolunteer from Job:"));
+		setLayout(new BorderLayout());
+		
+		updatesPanel(theVolunteer, theList);
+		
+	}
+	
+	private void updatesPanel(Volunteer theVolunteer, ArrayList<Job> listOfCancellationsJobs) {
+		myUpdatePanel = new JPanel();
+		JButton cancel = new JButton("Unvolunteer");
+		ButtonGroup myJobsGroup = new ButtonGroup();
+		cancel.setEnabled(false);
+		
+		if(listOfCancellationsJobs.size()!=0){
+//			System.out.println("size is greater than 0");
+			cancel.setEnabled(true);
+			for (int i = 0; i < listOfCancellationsJobs.size(); i++) {
+				JRadioButton j = new JRadioButton();
+				j.setText(listOfCancellationsJobs.get(i).toString());
+				myJobsGroup.add(j);
+				myUpdatePanel.add(j);
+			} 
+		} else {
+			JLabel noneAvail = new JLabel("There are no Jobs to Select");
+			add(noneAvail);
+		}
+		cancel.addActionListener(new ActionListener() {
 
-    private void setupPanel() {
-        //TODO: needs a filtered list for jobs that can be unvolunteered. This and
-        //VolunteersAvailable will be practically the same.
-    }
+
+			@Override
+			public void actionPerformed(final ActionEvent theEvent) {
+				// find the button and then find the corresponding job text and
+				// remove.
+				String job = "";
+				for(Enumeration<AbstractButton> item = myJobsGroup.getElements(); item.hasMoreElements();) {
+					AbstractButton b = item.nextElement();
+					if(b.isSelected()) {
+						job = b.getText();
+					}
+				}
+				
+				 JOptionPane.showMessageDialog(null, job + " was removed from volunteered jobs.");
+				 firePropertyChange("Manager remove", theVolunteer, job); //Can Use same Fire???
+			}
+		});
+		
+		myUpdatePanel.add(cancel, BorderLayout.SOUTH);
+		add(myUpdatePanel, BorderLayout.CENTER);
+
+	}
 }
