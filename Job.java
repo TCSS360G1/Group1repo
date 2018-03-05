@@ -189,6 +189,29 @@ public class Job implements Serializable {
 		}
 		return isGood;
 	}
+	
+	/** 
++	 * This method requires a job with a valid start and end date. This method 
++	 * will compare theCandidates start and end dates with this jobs', and will 
++	 * return a boolean to show the status of potential conflicts. 
++	 * 
++	 * @param theCandidate 
++	 *            A job that has a potential conflicting start and end date. 
++	 * @return true when there is no conflict, false otherwise. 
++	 *  
++	 */ 
++ 
++	public boolean isInbetween(LocalDate theUserStartDate, LocalDate theJobStartDate, LocalDate theUserEndDate, LocalDate theJobEndDate) { 
++		boolean isGood = false; 
++		if(theJobStartDate.isEqual(theUserStartDate) || theJobStartDate.isAfter(theUserStartDate)){ 
++			isGood = true; 
++		} 
++		if(theJobEndDate.isEqual(theUserStartDate) || theJobEndDate.isBefore(theUserStartDate)){ 
++			isGood = true; 
++		} 
++		 
++		return isGood; 
++	}
 
 	/**
 	 * Tests to see if this job is too close to be unvolunteered for.
