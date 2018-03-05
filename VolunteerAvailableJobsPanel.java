@@ -22,52 +22,56 @@ import model.ScheduleConflictException;
 import model.Volunteer;
 
 public class VolunteerAvailableJobsPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
-    
-    private Volunteer myVolunteer;
-    private ArrayList<Job> myJobs;
-    private JPanel myAvailableJobs;
-    public VolunteerAvailableJobsPanel(Volunteer theVolunteer, ArrayList<Job> theJobs) {
-        System.out.println("Available");
-        myVolunteer = theVolunteer;
-        myJobs = theJobs;
-        setupPanel();
-    }
+	private static final long serialVersionUID = 1L;
 
-    private void setupPanel() {
-        this.setBorder(BorderFactory.createTitledBorder("All jobs that are available"));
-        myAvailableJobs = new JPanel();
-        setLayout(new BorderLayout());
-        displayAvailableJobs(myJobs); 
-    }
+	private Volunteer myVolunteer;
+	private ArrayList<Job> myJobs;
+	private JPanel myAvailableJobs;
+
+	public VolunteerAvailableJobsPanel(Volunteer theVolunteer,
+			ArrayList<Job> theJobs) {
+		System.out.println("Available");
+		myVolunteer = theVolunteer;
+		myJobs = theJobs;
+		setupPanel();
+	}
+
+	private void setupPanel() {
+		this.setBorder(BorderFactory
+				.createTitledBorder("All jobs that are available"));
+		myAvailableJobs = new JPanel();
+		setLayout(new BorderLayout());
+		displayAvailableJobs(myJobs);
+	}
 
 	private void displayAvailableJobs(ArrayList<Job> theJobs) {
+		System.out.println(theJobs.size());
 		JButton add = new JButton("Signup");
 		ButtonGroup BG = new ButtonGroup();
-		for(int i=0; i<theJobs.size(); i++) {
-			JRadioButton j = new JRadioButton((i+1)+". "+theJobs.get(i).toString());
+		for (int i = 0; i < theJobs.size(); i++) {
+			JRadioButton j = new JRadioButton();
+			j.setText((i + 1) + ". " + theJobs.get(i).toString());
 			BG.add(j);
 			myAvailableJobs.add(j);
 		}
-		add(add);
-		add.addActionListener(new ActionListener(){
+		add(add, BorderLayout.SOUTH);
+
+		add.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String selected = BG.getSelection().toString();
 				String[] split = selected.split(".");
 				int index = Integer.parseInt(split[0]);
-				
-				try {
-					myVolunteer.addJob(myJobs.get(index));
-				} catch (AlreadySignedUpException | MinimumDaysException
-						| ScheduleConflictException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+				// myVolunteer.addJob(myJobs.get(index));
+				firePropertyChange("Volunteer add", myVolunteer,
+						myJobs.get(index));
+
 			}
-			
+
 		});
-		
+		add(myAvailableJobs, BorderLayout.CENTER);
+
 	}
 }

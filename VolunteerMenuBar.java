@@ -20,7 +20,7 @@ public class VolunteerMenuBar extends JMenuBar {
     
     public VolunteerMenuBar(Component[] theComponents) {
         
-        super();
+        super(); 
         myVolunteerPanels = theComponents;
         currentJobsButton();
         availableJobsButton();

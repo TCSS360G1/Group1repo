@@ -126,6 +126,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 				if (theUsers.getIndex(i).getName().toLowerCase()
 						.equals(name.toLowerCase())) {
 					ArrayList<Job> currentJobs = theJobs.filterPast();
+					System.out.println("size is "+ currentJobs.size());
 					userFound = true;
 					System.out.println("-Found a User-");
 					
@@ -151,9 +152,9 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 
 						Volunteer volunteer = (Volunteer) (myUsers.getIndex(i));
 						VolunteerPanel volunteerPanel = new VolunteerPanel(
-								volunteer, theJobs);
-						// myFrame.getContentPane().add(volPanel,
-						// BorderLayout.CENTER);
+								volunteer, currentJobs);
+						 myFrame.getContentPane().add(volunteerPanel,
+						 BorderLayout.CENTER);
 						myFrame.setResizable(true);
 						myFrame.pack();
 
@@ -191,6 +192,12 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 					evt.getNewValue());
 		} else if (evt.getPropertyName().equals("Manager remove")) {
 			firePropertyChange("Manager remove", evt.getOldValue(),
+					evt.getNewValue());
+		} else if((evt.getPropertyName().equals("Volunteer remove"))) {
+			firePropertyChange("Volunteer remove", evt.getOldValue(),
+					evt.getNewValue());
+		} else if(evt.getPropertyName().equals("Volunteer add")) {
+			firePropertyChange("Volunteer add", evt.getOldValue(),
 					evt.getNewValue());
 		}
 	}

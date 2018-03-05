@@ -16,10 +16,14 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
+import model.AlreadySignedUpException;
 import model.Job;
 import model.JobCollection;
+import model.MinimumDaysException;
 import model.ParkManager;
+import model.ScheduleConflictException;
 import model.UserCollection;
+import model.Volunteer;
 
 /**
  * The Graphical User Interface for this program.
@@ -161,6 +165,23 @@ public class UrbanParksFrame extends JFrame implements PropertyChangeListener{
 				System.out.println(JOBS.getIndex(i));
 			}
 			
+		} else if(evt.getPropertyName().equals("Volunteer remove")){
+			Volunteer v = (Volunteer) evt.getOldValue();
+			v.removeJob((Job)evt.getNewValue());
+		} else if(evt.getPropertyName().equals("Volunteer add")) {
+			Volunteer v = (Volunteer) evt.getOldValue();
+			try {
+				v.addJob((Job)evt.getNewValue());
+			} catch (AlreadySignedUpException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MinimumDaysException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ScheduleConflictException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		JOBS.serializeJobCollection();
 		USERS.serializeUserCollection();

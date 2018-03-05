@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Job;
+import model.JobCollection;
 import model.Volunteer;
 
 //This class basically acts as a second frame for the volunteer.
@@ -32,6 +33,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
 	
     public VolunteerPanel(Volunteer theVolunteer, ArrayList<Job> theJobs) {
         super();
+        System.out.println("--"+ theJobs.size());
         myVolunteer = theVolunteer;
         mySystemJobs = theJobs;
         System.out.println("size:" + mySystemJobs.size());
@@ -43,8 +45,10 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
         
         myCurrentJobs = new VolunteerCurrentJobsPanel(myVolunteer);
         myViewJobs = new VolunteerAvailableJobsPanel(myVolunteer,
-                        Job.filterForVolunteerAvailableJobs(theVolunteer,
-                        theVolunteer.getJobs()));
+                        JobCollection.filterForVolunteerAvailableJobs(theVolunteer,
+                        theJobs));
+        System.out.println("this is "+JobCollection.filterForVolunteerAvailableJobs(theVolunteer,
+                        theJobs).size());
         myUnvolunteer = new VolunteerUnvolunteerPanel(myVolunteer,
                         Job.filterForCancellation(myVolunteer.getJobs()));
         
@@ -74,6 +78,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
 
         public MenuBar() {
             super();
+            System.out.println("MENU BAR CALLED");
             current();
             newJob();
             unvolunteer();
@@ -81,6 +86,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
         }
         
         private void current() {
+        	
             myViewCurrent = new JButton("View Current Jobs");
             myViewCurrent.addActionListener(new ActionListener() {
                 @Override
@@ -103,8 +109,8 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
                         myCurrentJobs.setVisible(false);
                         myUnvolunteer.setVisible(false);
                         myViewJobs = new VolunteerAvailableJobsPanel(myVolunteer,
-                                Job.filterForVolunteerAvailableJobs(myVolunteer,
-                                myVolunteer.getJobs()));
+                        		JobCollection.filterForVolunteerAvailableJobs(myVolunteer,
+                                        mySystemJobs));
                         addListener(myViewJobs);
                         myNewJob.setVisible(true);
                         addPanels(myViewJobs);
@@ -165,7 +171,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
             firePropertyChange("Volunteer add", volunteer, evt.getNewValue());
         } else if (evt.getPropertyName().equals("Volunteer remove")) {
             Volunteer volunteer = (Volunteer) evt.getOldValue();
-            firePropertyChange("volunteer remove", volunteer, evt.getNewValue());
+            firePropertyChange("Volunteer remove", volunteer, evt.getNewValue());
         }
     }
 }
