@@ -362,7 +362,7 @@ public class ParkManagerNewJobPanel extends JPanel {
 						lIn.getText(),
 						startDate, endDate);
 				// theManager.addJob(newJob);
-				System.out.println(newJob.toString());
+				//System.out.println(newJob.toString());
 
 				firePropertyChange("Manager add", myManager, newJob);
 
