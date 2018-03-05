@@ -36,6 +36,8 @@ public class UrbanParksPanel extends JPanel implements Observer {
 	private JobCollection myJobs;
 
 	private ParkEmployeeDisplayJobs currentJobs;
+	private SignInPanel mySignIn;
+	
 	public UrbanParksPanel(JobCollection theJobs) {
 		myJobs = theJobs;
 		myEmployee = new UrbanParksEmployee("NoName", "NoName");
@@ -50,6 +52,11 @@ public class UrbanParksPanel extends JPanel implements Observer {
 		currentJobs = new ParkEmployeeDisplayJobs(myJobs);
 		add(currentJobs, BorderLayout.CENTER);
 
+	}
+	
+	private void addPanels(SignInPanel mySignIn) {
+		add(mySignIn, BorderLayout.CENTER);
+		
 	}
 
 	public class MenuBar extends JMenuBar {
@@ -68,6 +75,7 @@ public class UrbanParksPanel extends JPanel implements Observer {
 		public MenuBar() {
 
 			super();
+			x = new ParkEmployeeDisplayJobs(myJobs);
 
 			SignOut = new JButton("SignOut");
 
@@ -98,13 +106,14 @@ public class UrbanParksPanel extends JPanel implements Observer {
 				@Override
 
 				public void actionPerformed(final ActionEvent theEvent) {
-					//setVisible(false);
+					// setVisible(false);
 					x = new ParkEmployeeDisplayJobs(myJobs);
+					x.setVisible(true);
 					add(x, BorderLayout.CENTER);
 				}
 
 			});
- 
+
 		}
 
 		private void update() {
@@ -116,7 +125,7 @@ public class UrbanParksPanel extends JPanel implements Observer {
 				@Override
 
 				public void actionPerformed(final ActionEvent theEvent) {
-
+					System.out.println(Job.getLegalJobAmount());
 					String userInput = JOptionPane
 							.showInputDialog("Enter Max amount of Jobs:");
 
@@ -125,14 +134,15 @@ public class UrbanParksPanel extends JPanel implements Observer {
 					{
 
 						int newMax = new Integer(userInput);
-						if(newMax >0) {
+						if (newMax > 0) {
 							myEmployee.changeLegalJobAmount(newMax);
 							System.out.println(Job.getLegalJobAmount());
-							JOptionPane.showMessageDialog(null, "New amount has been updated.");
+							JOptionPane.showMessageDialog(null,
+									"New amount has been updated.");
 						} else {
-							JOptionPane.showMessageDialog(null, "Please input a non zero NUMBER.");
+							JOptionPane.showMessageDialog(null,
+									"Please input a non zero NUMBER.");
 						}
-						
 
 					}
 
@@ -140,7 +150,8 @@ public class UrbanParksPanel extends JPanel implements Observer {
 
 					{
 
-						JOptionPane.showMessageDialog(null, "Please input a NUMBER.");
+						JOptionPane.showMessageDialog(null,
+								"Please input a NUMBER.");
 
 					}
 
@@ -156,11 +167,18 @@ public class UrbanParksPanel extends JPanel implements Observer {
 
 			SignOut.addActionListener(new ActionListener() {
 
+				
+
 				@Override
 
 				public void actionPerformed(final ActionEvent theEvent) {
-
+					mySignIn = new SignInPanel();
+					mySignIn.setVisible(true);
+					x.setVisible(false);
+					addPanels(mySignIn);
 				}
+
+				
 
 			});
 
