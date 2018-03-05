@@ -257,7 +257,7 @@ public class Job implements Serializable {
 			ArrayList<Job> theJobList) {
 		ArrayList<Job> myCancellationJobs = new ArrayList<Job>();
 		for (int i = 0; i < theJobList.size(); i++) {
-			if (theJobList.get(i).isMoreThanMinimumDaysVol()) {
+			if (theJobList.get(i).isMoreThanMinimumDaysVol() && !theJobList.get(i).isInPast()) {
 				myCancellationJobs.add(theJobList.get(i));
 			}
 		}
@@ -394,5 +394,7 @@ public class Job implements Serializable {
 	public static int getLegalJobAmount() {
 		return MAX_JOBS;
 	}
+	
+	
 
 }

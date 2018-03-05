@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
 
-public class JobCollection implements Serializable, PropertyChangeListener {
+public class JobCollection implements Serializable{
 
 	/**
 	 * 
@@ -23,7 +23,7 @@ public class JobCollection implements Serializable, PropertyChangeListener {
 	//all current jobs. 
 	private static ArrayList<Job> myJobs = new ArrayList<Job>();
 	//without the schedule conflicts. 
-	private static ArrayList<Job> myFilteredJobs = new ArrayList<Job>();
+	private static ArrayList<Job> myFilteredJobs = new ArrayList<Job>(); 
 	/**
 	 * Serializes the Jobs ArrayList to store all Jobs.
 	 */
@@ -124,39 +124,28 @@ public class JobCollection implements Serializable, PropertyChangeListener {
 	}
 	
 	/*filter out all past jobs.*/
-	public static ArrayList<Job> filterPast() {
+	public ArrayList<Job> filterPast() {
 //		for(int i = 0; i<myJobs.size(); i++){
 //			System.out.println(myJobs.get(i).toString());
 //		}
 		//System.out.println();
+		if(myFilteredJobs!=null) 
+			System.out.println(myFilteredJobs.size());
 		for(int i = 0; i<myJobs.size(); i++) {
-			if(myJobs.get(i).isInPast()) {
-				//System.out.println(myJobs.get(i).toString());
+			if(!myJobs.get(i).isInPast()) {
+				System.out.println(myJobs.get(i).toString());
 				myFilteredJobs.add(myJobs.get(i));
 				
 			}
 		}
 		
 		//System.out.println("\n\n filtered out jobs\n\n");
-		//System.out.println(myFilteredJobs.size());
+		System.out.println(myFilteredJobs.size());
 		
 		return myFilteredJobs;
 	}
  
-	public static ArrayList<Job> filterNewJobsVolunteer(ArrayList<Job> theJobList) {
-		ArrayList<Job> myNewJobsFilters = new ArrayList<Job>();
-		for(int i = 0; i<theJobList.size(); i++) {
-			if(theJobList.get(i).isMoreThanMinimumDaysUnvol()) {
-				myNewJobsFilters.add(theJobList.get(i));
-			}
-		}
-		return myNewJobsFilters;
-	}
-	@Override
-	public void propertyChange(PropertyChangeEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 	
 
