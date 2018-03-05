@@ -56,7 +56,7 @@ public class VolunteerUnvolunteerPanel extends JPanel {
 			for (int i = 0; i < listOfCancellationsJobs.size(); i++) {
 				JRadioButton j = new JRadioButton();
 				j.setText(listOfCancellationsJobs.get(i).toString());
-				myJobsGroup.add(j);
+				//myJobsGroup.add(j);
 				myUpdatePanel.add(j);
 			}
 

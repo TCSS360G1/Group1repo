@@ -173,10 +173,12 @@ public class UrbanParksPanel extends JPanel implements Observer {
 
 				public void actionPerformed(final ActionEvent theEvent) {
 					mySignIn = new SignInPanel();
+					x.setVisible(false); 
 					mySignIn.setVisible(true);
+					currentJobs.setVisible(false);
 					myMenuBar.setVisible(false);
 					addPanels(mySignIn);
-					x.setVisible(false); 
+					
 					
 				}
 

@@ -42,6 +42,9 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 	private static JFrame myFrame;
 	private final JLabel myUsernameLabel;
 	private final JButton mySignInButton;
+	private ParkManagerPanel managerPanel;
+	private VolunteerPanel volunteerPanel;
+	private UrbanParksPanel employeePanel;
 	private static UserCollection myUsers;
 	private static JobCollection myJobs; 
 
@@ -73,7 +76,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 		myUsernameText = new JTextField("", TEXT_FIELD_WIDTH);
 		mySignInButton = new JButton("Sign In");
 		setUpPanel();
-		this.setVisible(false);
+		//this.setVisible(false);
 	}
 
 	/**
@@ -137,13 +140,14 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 						ParkManager manager = (ParkManager) theUsers
 								.getIndex(i);
 
-						ParkManagerPanel managerPanel = new ParkManagerPanel(
+						managerPanel = new ParkManagerPanel(
 								manager, currentJobs);
 						managerPanel.addPropertyChangeListener(this);
 						myFrame.getContentPane().add(managerPanel,
 								BorderLayout.CENTER);
 						myFrame.setResizable(true);
 						myFrame.pack();
+						
 
 					} else if (myUsers.getIndex(i).getType()
 							.equals("Volunteer")) {
@@ -151,7 +155,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 						this.setVisible(false);
 
 						Volunteer volunteer = (Volunteer) (myUsers.getIndex(i));
-						VolunteerPanel volunteerPanel = new VolunteerPanel(
+						volunteerPanel = new VolunteerPanel(
 								volunteer, currentJobs);
 						 myFrame.getContentPane().add(volunteerPanel,
 						 BorderLayout.CENTER);
@@ -165,9 +169,15 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 						
 						UrbanParksEmployee employee = (UrbanParksEmployee) (myUsers
 								.getIndex(i));
-						UrbanParksPanel employeePanel = new UrbanParksPanel(
+						employeePanel = new UrbanParksPanel(
 								theJobs);
-
+						if(managerPanel != null) {
+							managerPanel.setVisible(false);
+						} if(volunteerPanel != null) {
+							volunteerPanel.setVisible(false);
+						} if(this!=null) {
+							this.setVisible(false);
+						}
 						myFrame.getContentPane().add(employeePanel,
 								BorderLayout.CENTER);
 						myFrame.setResizable(true);

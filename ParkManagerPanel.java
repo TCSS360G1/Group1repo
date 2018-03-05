@@ -125,8 +125,8 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 			myNewJob.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent theEvent) {
-
-					if (mySystemJobs.size() == Job.getLegalJobAmount()) {
+					System.out.println("the legal amount is"+ Job.getLegalJobAmount());
+					if (mySystemJobs.size() > Job.getLegalJobAmount()) {
 						JOptionPane.showMessageDialog(null,
 								"We are sorry, at this time we are not accepting"
 										+ " any jobs please check bck in another time");
