@@ -286,7 +286,7 @@ public class JobTest {
     }
     @Test
     public void isJobNotTooLong_MaxDays_True() {
-    	assertTrue(Job.isJobNotTooLong(maxDays.getStartDate(), maxDays.getEndDate()));
+    	assertTrue(!Job.isJobNotTooLong(maxDays.getStartDate(), maxDays.getEndDate()));
     }
     @Test
     public void isJobNotTooLong_oneDayLess_True() {
@@ -295,46 +295,23 @@ public class JobTest {
     
     @Test
     public void filterForCancellation_SameDay_False() {
-    	//loop through list if its not in list then assert false
-    	boolean check = false;
-    	for (int i = filter.size();i>0; i--) {
-    		assertFalse(currentDate.toString().equals(filter.get(i).toString()));
-    	}
+    	assertFalse(!filter.contains(currentDate));
     }
     @Test
     public void filterForCancellation_PriorDays_False() {
     	boolean check = false;
-    	for (int i = filter.size();i>0; i--) {
-    		if(priorDate.toString().equals(filter.get(i).toString())) {
-    			check = true;
-    		} 
-    		check = false;
-    	}
-    	assertFalse(check);
+    	
+    	assertFalse(!filter.contains(priorDate));
     	
     }
     @Test
     public void filterForCancellation_minDaysInFuture_True() {
-    	boolean check = false;
-    	for (int i = filter.size();i>0; i--) {
-    		if(minDaysFuture.toString().equals(filter.get(i).toString())) {
-    			//System.out.println("found");
-    			check = true;
-    		} 
-    		check = false;
-    	}
-    	assertTrue(check);
+    	assertTrue(filter.contains(minDaysFuture));
     }
     @Test
     public void filterForCancellation_moreMinDaysInFuture_True() {
-    	boolean check = false;
-    	for (int i = filter.size();i>0; i--) {
-    		if(moreMinDaysFuture.toString().equals(filter.get(i).toString())) {
-    			check = true;
-    		} 
-    		check = false;
-    	}
-    	assertFalse(check);
+    	
+    	assertTrue(filter.contains(moreMinDaysFuture));
     }
     
 }
