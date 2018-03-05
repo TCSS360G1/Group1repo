@@ -50,6 +50,7 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(600, 600));
 		myJMenuBar = new MenuBar();
+		
 		add(myJMenuBar, BorderLayout.NORTH);
 		/////////////////////////////////////////////////////////////////// ADDED
 		/////////////////////////////////////////////////////////////////// LISTENERS
@@ -70,6 +71,10 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 
 	private void addPanels(JPanel theP) {
 		add(theP, BorderLayout.CENTER);
+	}
+	private void addPanels2(JPanel mySignIn) {
+		add(mySignIn);
+		
 	}
 
 	private void addListener(JPanel theP) {
@@ -185,9 +190,13 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 					myNewJobs.setVisible(false);
 					myCurrentJobsPanel.setVisible(false);
 					myCancellations.setVisible(false);
+					System.out.println(this.toString());
+					myJMenuBar.removeAll();
 					mySignIn.setVisible(true);
-					addPanels(mySignIn);
+					addPanels2(mySignIn);
 				}
+
+				
 			});
 			add(mySignOut);
 		}
@@ -201,7 +210,7 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 			ParkManager manager = (ParkManager) evt.getOldValue();
 			System.out.println("change recieved in pmp");
 			firePropertyChange("Manager add", manager, evt.getNewValue());
-		} else if (evt.getPropertyName().equals("Manager remove")) {
+		} else if (evt.getPropertyName().equals("Manager remove")) { 
 			ParkManager manager = (ParkManager) evt.getOldValue();
 			firePropertyChange("Manager remove", manager, evt.getNewValue());
 		} else if(evt.getPropertyName().equals("Change made")) {
