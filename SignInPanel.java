@@ -219,6 +219,7 @@ public class SignInPanel extends JPanel implements PropertyChangeListener {
 		    System.out.println("RECEVED IN SIGNIN");
 		    String str = (String) evt.getNewValue();
             str = str.substring(3);
+            str = str.trim();
 			firePropertyChange("Volunteer add", evt.getOldValue(),
 					str);
 		}

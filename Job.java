@@ -52,9 +52,19 @@ public class Job implements Serializable {
 		endDate = theEndDate;
 	}
 
+	
+	public Job() {
+        title = "Basic Title";
+        description = "basic description";
+        location = "basic location";
+        startDate = LocalDate.now();
+        endDate = LocalDate.now().plusDays(1);
+    }
 	// ---Validation methods---//
 
-	/**
+	
+
+    /**
 	 * This method requires a data (assumed to be the start date of a job) and
 	 * tests if it is less than or equal to the maximum days away for a job to
 	 * start at. MAX_DISTANCE is the maximum days away. Generally for the of
@@ -103,30 +113,6 @@ public class Job implements Serializable {
 		return isGood;
 	}
 
-	
-	/**
-	 * This method requires a job with a valid start and end date. This method
-	 * will compare theCandidates start and end dates with this jobs', and will
-	 * return a boolean to show the status of potential conflicts.
-	 * 
-	 * @param theCandidate
-	 *            A job that has a potential conflicting start and end date.
-	 * @return true when there is no conflict, false otherwise.
-	 * 
-	 */
-
-	public boolean isInbetween(LocalDate theUserStartDate, LocalDate theJobStartDate, LocalDate theUserEndDate, LocalDate theJobEndDate) {
-		boolean isGood = false;
-		if(theJobStartDate.isEqual(theUserStartDate) || theJobStartDate.isAfter(theUserStartDate)){
-			isGood = true;
-		}
-		if(theJobEndDate.isEqual(theUserStartDate) || theJobEndDate.isBefore(theUserStartDate)){
-			isGood = true;
-		}
-		
-		return isGood;
-	}
-	
 	/**
 	 * This method requires a candidate job with a valid start date. It will
 	 * compare to see if this job is occurring when theCandidate starts. A
@@ -293,17 +279,34 @@ public class Job implements Serializable {
 	public static ArrayList<Job> filterForVolunteerAvailableJobs(
 			Volunteer theVolunteer, ArrayList<Job> theJobs) {
 		ArrayList<Job> filtered = new ArrayList<Job>();
+		System.out.println("in Filter");
+		System.out.println(theJobs);
+		
+		boolean flag = true;
 		for (int i = 0; i < theJobs.size(); i++) {
-			if (!theJobs.get(i).isInPast()) {
-				if (theJobs.get(i).isMoreThanMinimumDaysVol()
-						&& theVolunteer.isNoScheduleConflicts(theJobs.get(i))
-						&& !theVolunteer.getJobs().contains(theJobs.get(i))) {
-					// if the volunteer doesnt contain it
-					// if its more than min days away and there are not schedule
-					// conflicts
-					filtered.add(theJobs.get(i));
-				}
+		    flag = true;
+		    System.out.println("--" + theJobs.get(i) + "--");
+			if (theJobs.get(i).isInPast()) {
+			    System.out.println("PAST");
+			    flag = false;
+			    continue;
 			}
+			if (!theJobs.get(i).isMoreThanMinimumDaysVol()) {
+			    System.out.println("MORE THAN MIN");
+				flag = false;
+				continue;
+			}
+			for (int j = 0; j < theVolunteer.getJobs().size(); j++) {
+			    System.out.println("IDX debug: " + i);
+			    if (!theJobs.get(i).isNoScheduleConflicts(
+			                    theVolunteer.getJobs().get(j))) {
+			        System.out.println("CONFLICT");
+			        flag = false;
+			    }
+			}
+			
+		    if (flag)
+		        filtered.add(theJobs.get(i));
 		}
 		return filtered;
 
