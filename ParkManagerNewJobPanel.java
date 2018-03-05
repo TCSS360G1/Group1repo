@@ -310,7 +310,7 @@ public class ParkManagerNewJobPanel extends JPanel {
 							smIn.setEnabled(false);
 							syDone.setEnabled(false);
 							sdIn.setEnabled(false);
-							syIn.setEnabled(false);
+							syIn.setEnabled(false); 
 							lIn.setEnabled(false);
 							lDone.setEnabled(false);
 							tIn.setEnabled(false);
@@ -373,6 +373,8 @@ public class ParkManagerNewJobPanel extends JPanel {
 				for (int i = 0; i < l.size(); i++) {
 					l.get(i).setText("");
 				}
+				
+				firePropertyChange("Change made", "new job", true);
 			}
 
 		});

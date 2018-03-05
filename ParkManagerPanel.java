@@ -51,7 +51,9 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 		setPreferredSize(new Dimension(600, 600));
 		myJMenuBar = new MenuBar();
 		add(myJMenuBar, BorderLayout.NORTH);
-///////////////////////////////////////////////////////////////////ADDED LISTENERS HERE!!!
+		/////////////////////////////////////////////////////////////////// ADDED
+		/////////////////////////////////////////////////////////////////// LISTENERS
+		/////////////////////////////////////////////////////////////////// HERE!!!
 		myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(theManager);
 		myNewJobs = new ParkManagerNewJobPanel(myManager);
 		myNewJobs.addPropertyChangeListener(this);
@@ -66,14 +68,14 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 		setVisible(true);
 	}
 
-
 	private void addPanels(JPanel theP) {
 		add(theP, BorderLayout.CENTER);
 	}
+
 	private void addListener(JPanel theP) {
 		// TODO Auto-generated method stub
 		theP.addPropertyChangeListener(this);
-		
+
 	}
 
 	public class MenuBar extends JMenuBar {
@@ -106,7 +108,8 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 					// currentJobs.setVisible(false);
 					myNewJobs.setVisible(false);
 					myCancellations.setVisible(false);
-					myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(myManager);
+					myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(
+							myManager);
 					addListener(myCurrentJobsPanel);
 					myCurrentJobsPanel.setVisible(true);
 					addPanels(myCurrentJobsPanel);
@@ -116,7 +119,7 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 			add(myViewCurrent);
 		}
 
-		private void newJob() {			
+		private void newJob() {
 			myNewJob = new JButton("Create a new Job");
 			myNewJob.addActionListener(new ActionListener() {
 				@Override
@@ -143,7 +146,7 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 		}
 
 		private void updates() {
-			
+
 			myUpdates = new JButton("Update Jobs");
 			myUpdates.addActionListener(new ActionListener() {
 				@Override
@@ -159,7 +162,9 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 					} else {
 						myNewJobs.setVisible(false);
 						myCurrentJobsPanel.setVisible(false);
-						myCancellations = new ParkManagerCancelJobsPanel(myManager, Job.filterForCancellation(myManager.getJobs()));
+						myCancellations = new ParkManagerCancelJobsPanel(
+								myManager,
+								Job.filterForCancellation(myManager.getJobs()));
 						addListener(myCancellations);
 						myCancellations.setVisible(true);
 						addPanels(myCancellations);
@@ -167,8 +172,7 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 
 				}
 
-				
-			}); 
+			});
 			add(myUpdates);
 		}
 
@@ -200,6 +204,17 @@ public class ParkManagerPanel extends JPanel implements PropertyChangeListener {
 		} else if (evt.getPropertyName().equals("Manager remove")) {
 			ParkManager manager = (ParkManager) evt.getOldValue();
 			firePropertyChange("Manager remove", manager, evt.getNewValue());
+		} else if(evt.getPropertyName().equals("Change made")) {
+			myCurrentJobsPanel = new ParkManagerDisplayCurrentJobs(
+					myManager);
+			if(evt.getOldValue().equals("cancelled")) {
+				myCancellations.setVisible(false);
+			} else{
+				myNewJobs.setVisible(false);
+			}
+			addListener(myCurrentJobsPanel);
+			myCurrentJobsPanel.setVisible(true);
+			addPanels(myCurrentJobsPanel);
 		}
 
 	}

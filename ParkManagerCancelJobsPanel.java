@@ -47,7 +47,7 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 		JButton cancel = new JButton("Cancel");
 		ButtonGroup myJobsGroup = new ButtonGroup();
 		cancel.setEnabled(false);
-
+ 
 		if (listOfCancellationsJobs.size() != 0) {
 			System.out.println("size is greater than 0");
 			cancel.setEnabled(true);
@@ -81,6 +81,7 @@ public class ParkManagerCancelJobsPanel extends JPanel {
 						job + "     was removed from "
 								+ "jobs.");
 				firePropertyChange("Manager remove", theManager, job);
+				firePropertyChange("Change made", "cancelled", null);
 
 			}
 		});

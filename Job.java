@@ -383,7 +383,7 @@ public class Job implements Serializable {
 
 	@Override
 	public String toString() {
-		return getTitle() + " " + getStartDate() + " To " +
+		return getTitle() + " At: " + getLocation()+" From:" + getStartDate() + " To " +
 				getEndDate() + " Description: " + getDescription();
 	}
 
