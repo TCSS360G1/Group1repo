@@ -13,7 +13,7 @@ import java.util.List;
  * @version February 15, 2018
  */
 public class Volunteer extends User implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 7001992405582133870L;
 
 	private List<Job> myCurrentJobs;
 

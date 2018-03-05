@@ -45,9 +45,9 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
         
         myCurrentJobs = new VolunteerCurrentJobsPanel(myVolunteer);
         myViewJobs = new VolunteerAvailableJobsPanel(myVolunteer,
-                        JobCollection.filterForVolunteerAvailableJobs(theVolunteer,
+                        Job.filterForVolunteerAvailableJobs(theVolunteer,
                         theJobs));
-        System.out.println("this is "+JobCollection.filterForVolunteerAvailableJobs(theVolunteer,
+        System.out.println("this is "+Job.filterForVolunteerAvailableJobs(theVolunteer,
                         theJobs).size());
         myUnvolunteer = new VolunteerUnvolunteerPanel(myVolunteer,
                         Job.filterForCancellation(myVolunteer.getJobs()));
@@ -109,7 +109,7 @@ public class VolunteerPanel extends JPanel implements PropertyChangeListener {
                         myCurrentJobs.setVisible(false);
                         myUnvolunteer.setVisible(false);
                         myViewJobs = new VolunteerAvailableJobsPanel(myVolunteer,
-                        		JobCollection.filterForVolunteerAvailableJobs(myVolunteer,
+                        		Job.filterForVolunteerAvailableJobs(myVolunteer,
                                         mySystemJobs));
                         addListener(myViewJobs);
                         myNewJob.setVisible(true);
