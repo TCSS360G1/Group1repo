@@ -53,7 +53,7 @@ public class UrbanParksFrame extends JFrame implements PropertyChangeListener{
         
         
         setupFrame();
-        USERS.serializeUserCollection();
+        
 
 		
     }
@@ -146,7 +146,7 @@ public class UrbanParksFrame extends JFrame implements PropertyChangeListener{
 			System.out.println(
 					JOBS.getSize() + "  " + manager.getJobs().size());
 			
-			//JOBS.serializeJobCollection();
+			
 			
 		} else if (evt.getPropertyName().equals("Manager remove")) {
 			System.out.println(
@@ -158,8 +158,10 @@ public class UrbanParksFrame extends JFrame implements PropertyChangeListener{
 			for (int i = 0; i < JOBS.getSize(); i++) {
 				System.out.println(JOBS.getIndex(i));
 			}
+			
 		}
 		JOBS.serializeJobCollection();
+		USERS.serializeUserCollection();
 
 	}
 
